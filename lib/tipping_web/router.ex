@@ -10,6 +10,14 @@ defmodule TippingWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :auth_callback do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug TippingWeb.CheckGoogleCsrf
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -18,7 +26,12 @@ defmodule TippingWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    post "/auth-callback", AuthController, :log_in
+  end
+
+  scope "/auth-callback", TippingWeb do
+    pipe_through :auth_callback
+
+    post "/", AuthController, :log_in
   end
 
   # Other scopes may use custom stacks.
