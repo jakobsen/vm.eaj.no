@@ -1,5 +1,6 @@
 defmodule Tipping.Accounts.User do
   use Ecto.Schema
+  import Ecto.Changeset
 
   schema "users" do
     field :auth_provider_sub, :string
@@ -8,5 +9,13 @@ defmodule Tipping.Accounts.User do
     field :organization, :string
 
     timestamps(type: :utc_datetime)
+  end
+
+  def changeset(%__MODULE__{} = user, attrs) do
+    user
+    |> cast(attrs, [:auth_provider_sub, :email, :name, :organization])
+    |> validate_required([:auth_provider_sub, :email, :name, :organization])
+    |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:auth_provider_sub)
   end
 end
