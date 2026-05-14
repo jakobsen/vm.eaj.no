@@ -23,8 +23,9 @@ defmodule Tipping.Auth.GoogleJwt do
     end
   end
 
-  defp check_claims(%{"iss" => iss, "exp" => exp, "aud" => aud}) do
+  defp check_claims(%{"iss" => iss, "exp" => exp, "aud" => aud} = claims) do
     cond do
+      Map.get(claims, "hd") == nil -> {:error, :not_workspace_account}
       iss not in @valid_iss -> {:error, :wrong_issuer}
       exp <= System.os_time(:second) -> {:error, :expired}
       aud != @client_id -> {:error, :invalid_audience}
