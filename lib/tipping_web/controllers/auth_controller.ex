@@ -13,6 +13,9 @@ defmodule TippingWeb.AuthController do
       |> put_session(:user_id, user.id)
       |> redirect(to: ~p"/")
     else
+      {:error, :not_workspace_account} ->
+        redirect(conn, to: ~p"/?feil=ikke-bedriftskonto")
+
       {:error, _} ->
         conn
         |> put_flash(:error, "Noe gikk galt ved innlogging. Prøv igjen")
