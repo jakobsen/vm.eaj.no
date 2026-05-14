@@ -18,6 +18,7 @@ defmodule TippingWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    post "/auth-callback", AuthController, :log_in
   end
 
   # Other scopes may use custom stacks.
