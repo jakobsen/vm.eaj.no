@@ -3,6 +3,7 @@ alias Tipping.Accounts.User
 
 alias Tipping.Repo
 
+alias Tipping.WorldCup.Match
 alias Tipping.WorldCup.Team
 
 import Ecto.Query
