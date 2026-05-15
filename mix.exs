@@ -68,7 +68,8 @@ defmodule Tipping.MixProject do
       {:swoosh, "~> 1.16"},
       {:tailwind, "~> 0.3", [runtime: false]},
       {:telemetry_metrics, "~> 1.0"},
-      {:telemetry_poller, "~> 1.0"}
+      {:telemetry_poller, "~> 1.0"},
+      {:tzdata, "~> 1.1"}
     ]
   end
 
