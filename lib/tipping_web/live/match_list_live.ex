@@ -15,6 +15,7 @@ defmodule TippingWeb.MatchListLive do
       <li :for={match <- @matches}>
         {match.stage}, spilles {match.kickoff_at}
         <br />
+        <img height="24" width="24" src={~p"/images/flags/MEX.svg"} />
         {get_in(match.home_team.name) || "?"} vs. {get_in(match.away_team.name) || "?"}
       </li>
     </ul>
