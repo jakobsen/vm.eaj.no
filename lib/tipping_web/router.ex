@@ -29,7 +29,14 @@ defmodule TippingWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/kamper", MatchListLive
+  end
+
+  scope "/", TippingWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated, on_mount: [{TippingWeb.Auth, :require_authenticated}] do
+      live "/kamper", MatchListLive
+    end
   end
 
   scope "/auth-callback", TippingWeb do
