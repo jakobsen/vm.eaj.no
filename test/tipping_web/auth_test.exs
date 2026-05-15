@@ -40,4 +40,29 @@ defmodule TippingWeb.AuthTest do
       assert conn.halted
     end
   end
+
+  describe "on_mount: require_authenticated" do
+    test "authenticates given a valid user ID in the session", %{conn: conn, user: user} do
+      session = conn |> put_session(:user_id, user.id) |> get_session()
+
+      {:cont, updated_socket} =
+        Auth.on_mount(:require_authenticated, %{}, session, %Phoenix.LiveView.Socket{})
+
+      assert updated_socket.assigns.user.id == user.id
+    end
+
+    test "redirects if there is no user in the session", %{conn: conn} do
+      session = get_session(conn)
+
+      socket = %Phoenix.LiveView.Socket{
+        endpoint: TippingWeb.Endpoint,
+        assigns: %{__changed__: %{}, flash: %{}}
+      }
+
+      {:halt, updated_socket} =
+        Auth.on_mount(:require_authenticated, %{}, session, socket)
+
+      assert updated_socket.assigns.user == nil
+    end
+  end
 end
