@@ -1,4 +1,4 @@
-defmodule Tipping.Repo.Migrations.SeedGroupMatches do
+defmodule Tipping.Repo.Migrations.SeedMatches do
   use Ecto.Migration
   import Ecto.Query
 
@@ -53,8 +53,8 @@ defmodule Tipping.Repo.Migrations.SeedGroupMatches do
     offset = String.to_integer(offset_str)
 
     NaiveDateTime.from_iso8601!("#{date}T#{clock_time}:00")
+    |> NaiveDateTime.add(-offset * 3600, :second)
     |> DateTime.from_naive!("Etc/UTC")
-    |> DateTime.add(-offset, :hour)
   end
 
   defp parse_stage(%{"round" => "Matchday" <> _, "group" => "Group " <> group}),
