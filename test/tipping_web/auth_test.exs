@@ -20,4 +20,24 @@ defmodule TippingWeb.AuthTest do
       assert conn.assigns.user.id == user.id
     end
   end
+
+  describe "require_authenticated_user/2" do
+    setup %{conn: conn} do
+      %{conn: Auth.fetch_current_user(conn, [])}
+    end
+
+    test "does nothing when a user is logged in", %{conn: conn, user: user} do
+      conn = conn |> assign(:user, user) |> Auth.require_authenticated_user([])
+
+      refute conn.halted
+      refute conn.status
+    end
+
+    test "redirects when a user is not logged in", %{conn: conn} do
+      conn = conn |> fetch_flash() |> Auth.require_authenticated_user([])
+      assert redirected_to(conn) == ~p"/"
+      assert Phoenix.Flash.get(conn.assigns.flash, :info)
+      assert conn.halted
+    end
+  end
 end
