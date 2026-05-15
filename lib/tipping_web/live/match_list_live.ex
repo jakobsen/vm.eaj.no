@@ -1,6 +1,8 @@
 defmodule TippingWeb.MatchListLive do
   use TippingWeb, :live_view
 
+  import TippingWeb.MatchComponents
+
   alias Tipping.WorldCup
 
   @impl true
@@ -11,14 +13,12 @@ defmodule TippingWeb.MatchListLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <ul>
-      <li :for={match <- @matches}>
-        {match.stage}, spilles {match.kickoff_at}
-        <br />
-        <img height="24" width="24" src={~p"/images/flags/MEX.svg"} />
-        {get_in(match.home_team.name) || "?"} vs. {get_in(match.away_team.name) || "?"}
-      </li>
-    </ul>
+    <main class="p-5">
+      <h1 class="font-bold text-4xl mb-5">Alle kamper</h1>
+      <div class="flex flex-col gap-8 max-w-lg mx-auto">
+        <.match_card :for={match <- @matches} match={match} />
+      </div>
+    </main>
     """
   end
 end
