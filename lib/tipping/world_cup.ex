@@ -4,5 +4,11 @@ defmodule Tipping.WorldCup do
   alias Tipping.Repo
   alias Tipping.WorldCup
 
-  def list_matches(), do: Repo.all(from m in WorldCup.Match, preload: [:home_team, :away_team])
+  def list_matches(),
+    do:
+      Repo.all(
+        from m in WorldCup.Match,
+          order_by: :kickoff_at,
+          preload: [:home_team, :away_team]
+      )
 end

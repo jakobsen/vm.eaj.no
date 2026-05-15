@@ -12,4 +12,12 @@ defmodule Tipping.WorldCupTest do
       assert File.exists?(flag_path), "No flag found for #{team.name} (#{team.fifa_code})"
     end
   end
+
+  describe "list_matches/0" do
+    test "matches are sorted by kickoff time" do
+      matches = WorldCup.list_matches() |> Enum.map(&Map.take(&1, [:id, :kickoff_at]))
+      sorted = Enum.sort_by(matches, & &1.kickoff_at, DateTime)
+      assert matches == sorted
+    end
+  end
 end
