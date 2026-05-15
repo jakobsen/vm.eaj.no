@@ -1,6 +1,7 @@
 defmodule TippingWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :tipping
 
+  @seconds_in_a_day 60 * 60 * 24
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
@@ -8,7 +9,8 @@ defmodule TippingWeb.Endpoint do
     store: :cookie,
     key: "_tipping_key",
     signing_salt: "Idi7R15E",
-    same_site: "Lax"
+    same_site: "Lax",
+    max_age: 60 * @seconds_in_a_day
   ]
 
   socket "/live", Phoenix.LiveView.Socket,
