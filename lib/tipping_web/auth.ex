@@ -6,6 +6,13 @@ defmodule TippingWeb.Auth do
 
   alias Tipping.Accounts
 
+  def log_in_user(conn, %Accounts.User{} = user) do
+    conn
+    |> renew_session(user)
+    |> put_session(:user_id, user.id)
+    |> redirect(to: ~p"/kamper")
+  end
+
   def fetch_current_user(conn, _opts) do
     get_session(conn, :user_id)
     |> Accounts.get_user_by_id()
@@ -46,5 +53,13 @@ defmodule TippingWeb.Auth do
       |> Map.get("user_id")
       |> Accounts.get_user_by_id()
     end)
+  end
+
+  defp renew_session(conn, user) when conn.assigns.user.id == user.id, do: conn
+
+  defp renew_session(conn, _user) do
+    delete_csrf_token()
+
+    conn |> configure_session(renew: true) |> clear_session()
   end
 end

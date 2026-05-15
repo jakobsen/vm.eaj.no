@@ -1,4 +1,4 @@
-defmodule Tipping.Auth.GoogleJwt do
+defmodule TippingWeb.Auth.GoogleJwt do
   @jwks_url "https://www.googleapis.com/oauth2/v3/certs"
   @valid_iss ["https://accounts.google.com", "accounts.google.com"]
   @client_id "54992027643-991u17tde1r2fk9g2mvv2ei4cn25cklm.apps.googleusercontent.com"

@@ -2,16 +2,13 @@ defmodule TippingWeb.AuthController do
   use TippingWeb, :controller
 
   alias Tipping.Accounts
-  alias Tipping.Auth
+  alias TippingWeb.Auth
 
   def log_in(conn, %{"credential" => jwt}) do
     with {:ok, claims} <- Auth.GoogleJwt.verify_and_validate(jwt),
          {:ok, attrs} <- normalize_claims(claims),
          {:ok, user} <- Accounts.get_or_create_user(attrs) do
-      conn
-      |> configure_session(renew: true)
-      |> put_session(:user_id, user.id)
-      |> redirect(to: ~p"/")
+      Auth.log_in_user(conn, user)
     else
       {:error, :not_workspace_account} ->
         redirect(conn, to: ~p"/?feil=ikke-bedriftskonto")
