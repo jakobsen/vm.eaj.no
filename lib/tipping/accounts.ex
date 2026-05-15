@@ -2,6 +2,9 @@ defmodule Tipping.Accounts do
   alias Tipping.Accounts.User
   alias Tipping.Repo
 
+  def get_user_by_id(nil), do: nil
+  def get_user_by_id(id), do: Repo.get(User, id)
+
   def get_or_create_user(attrs) do
     case Repo.get_by(User, auth_provider_sub: Map.get(attrs, :auth_provider_sub, "invalid_attrs")) do
       nil ->

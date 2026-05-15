@@ -1,5 +1,5 @@
 <Layouts.flash_group flash={@flash} />
-<h1 class="m-10 text-center text-2xl">Hei sveis</h1>
+<h1 class="m-10 text-center text-2xl">Hei {get_in(@user.name) || "sveis"}</h1>
 <script src="https://accounts.google.com/gsi/client" async />
 <div
   id="g_id_onload"

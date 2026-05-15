@@ -1,6 +1,8 @@
 defmodule TippingWeb.Router do
   use TippingWeb, :router
 
+  import TippingWeb.Auth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,7 @@ defmodule TippingWeb.Router do
     plug :put_root_layout, html: {TippingWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :auth_callback do
