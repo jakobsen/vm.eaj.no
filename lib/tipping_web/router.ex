@@ -26,6 +26,7 @@ defmodule TippingWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/kamper", MatchListLive
   end
 
   scope "/auth-callback", TippingWeb do
