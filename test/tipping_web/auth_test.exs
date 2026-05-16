@@ -41,6 +41,25 @@ defmodule TippingWeb.AuthTest do
     end
   end
 
+  describe "redirect_authenticated_user/2" do
+    setup %{conn: conn} do
+      %{conn: Auth.fetch_current_user(conn, [])}
+    end
+
+    test "does nothing when no user is logged in", %{conn: conn} do
+      conn = Auth.redirect_authenticated_user(conn, [])
+
+      refute conn.halted
+      refute conn.status
+    end
+
+    test "redirects authenticated user to /kamper", %{conn: conn, user: user} do
+      conn = conn |> assign(:user, user) |> Auth.redirect_authenticated_user([])
+      assert redirected_to(conn) == ~p"/kamper"
+      assert conn.halted
+    end
+  end
+
   describe "on_mount: require_authenticated" do
     test "authenticates given a valid user ID in the session", %{conn: conn, user: user} do
       session = conn |> put_session(:user_id, user.id) |> get_session()

@@ -32,6 +32,18 @@ defmodule TippingWeb.Auth do
     end
   end
 
+  def redirect_authenticated_user(conn, _opts) do
+    case conn.assigns.user do
+      nil ->
+        conn
+
+      %Accounts.User{} ->
+        conn
+        |> redirect(to: ~p"/kamper")
+        |> halt()
+    end
+  end
+
   def on_mount(:require_authenticated, _params, session, socket) do
     socket = mount_current_user(socket, session)
 
