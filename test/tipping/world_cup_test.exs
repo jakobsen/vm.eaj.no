@@ -1,6 +1,10 @@
 defmodule Tipping.WorldCupTest do
   use Tipping.DataCase
 
+  import Ecto.Query
+  import Tipping.AccountsFixtures
+
+  alias Tipping.Game
   alias Tipping.WorldCup
   alias Tipping.Repo
 
@@ -18,6 +22,36 @@ defmodule Tipping.WorldCupTest do
       matches = WorldCup.list_matches() |> Enum.map(&Map.take(&1, [:id, :kickoff_at]))
       sorted = Enum.sort_by(matches, & &1.kickoff_at, DateTime)
       assert matches == sorted
+    end
+  end
+
+  describe "list_matches_with_bets/1" do
+    setup do
+      %{user: user_fixture(), match: Repo.one(from m in WorldCup.Match, limit: 1)}
+    end
+
+    test "a user's bets are included", %{user: user, match: match} do
+      {:ok, bet} = Game.place_bet(user, match, %{home_score: 3, away_score: 2})
+
+      matches_with_bets = WorldCup.list_matches_with_bets(user)
+      assert match_with_bet = Enum.find(matches_with_bets, &(&1.match.id == match.id))
+      assert match_with_bet.bet.id == bet.id
+    end
+
+    test "users can only see their own bets", %{user: user, match: match} do
+      another_user = user_fixture()
+      {:ok, bet} = Game.place_bet(user, match, %{home_score: 3, away_score: 2})
+      {:ok, another_bet} = Game.place_bet(another_user, match, %{home_score: 2, away_score: 0})
+
+      matches_with_bets = WorldCup.list_matches_with_bets(user)
+      assert match_with_bet = Enum.find(matches_with_bets, &(&1.match.id == match.id))
+      assert match_with_bet.bet.id == bet.id
+      refute Enum.find(matches_with_bets, &(get_in(&1.bet.id) == another_bet.id))
+    end
+
+    test "If no bets are made, the bet lists as nil", %{user: user} do
+      matches_with_bets = WorldCup.list_matches_with_bets(user)
+      assert Enum.all?(matches_with_bets, &is_nil(&1.bet))
     end
   end
 end
