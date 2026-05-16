@@ -1,6 +1,8 @@
 alias Tipping.Accounts
 alias Tipping.Accounts.User
 
+alias Tipping.Game.Bet
+
 alias Tipping.Repo
 
 alias Tipping.WorldCup
