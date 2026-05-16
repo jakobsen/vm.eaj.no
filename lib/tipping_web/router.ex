@@ -26,7 +26,7 @@ defmodule TippingWeb.Router do
   end
 
   scope "/", TippingWeb do
-    pipe_through :browser
+    pipe_through [:browser, :redirect_authenticated_user]
 
     get "/", PageController, :home
   end
