@@ -3,6 +3,7 @@ defmodule TippingWeb.MatchListLive do
 
   import TippingWeb.MatchComponents
 
+  alias Tipping.Game
   alias Tipping.WorldCup
 
   @impl true
@@ -31,6 +32,18 @@ defmodule TippingWeb.MatchListLive do
       <% end %>
     </main>
     """
+  end
+
+  @impl true
+  def handle_event("place-bet", %{"home" => home, "away" => away, "match_id" => match_id}, socket) do
+    with %WorldCup.Match{} = match <- WorldCup.get_match(String.to_integer(match_id)) do
+      Game.place_bet(socket.assigns.user, match, %{home_score: home, away_score: away})
+    end
+
+    {:noreply,
+     assign(socket,
+       matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user)
+     )}
   end
 
   defp format_day(%Date{} = day) do

@@ -10,7 +10,11 @@ defmodule TippingWeb.MatchComponents do
 
   def match_card(assigns) do
     ~H"""
-    <article class="relative bg-gray-200 p-5 rounded">
+    <form
+      class="relative bg-gray-200 p-5 rounded"
+      phx-change="place-bet"
+      phx-value-match_id={@match.id}
+    >
       <p class="absolute top-0 -translate-y-1/4 right-5 bg-gray-700 rounded-full text-gray-300 text-sm px-2 py-1">
         {@match.stage}
       </p>
@@ -21,7 +25,7 @@ defmodule TippingWeb.MatchComponents do
         <.bet_display bet={@bet} />
         <.team_display team={@match.away_team} />
       </div>
-    </article>
+    </form>
     """
   end
 
@@ -30,7 +34,7 @@ defmodule TippingWeb.MatchComponents do
   defp bet_display(%{bet: nil} = assigns) do
     ~H"""
     <div>
-      <.bet_pill /> – <.bet_pill />
+      <.bet_pill side="home" /> – <.bet_pill side="away" />
     </div>
     """
   end
@@ -38,18 +42,26 @@ defmodule TippingWeb.MatchComponents do
   defp bet_display(assigns) do
     ~H"""
     <div class="text-2xl">
-      <.bet_pill score={@bet.home_score} /> – <.bet_pill score={@bet.away_score} />
+      <.bet_pill score={@bet.home_score} side="home" /> –
+      <.bet_pill score={@bet.away_score} side="away" />
     </div>
     """
   end
 
   attr :score, :integer, default: nil
+  attr :side, :string, values: ~w(home away), required: true
 
   defp bet_pill(assigns) do
     ~H"""
-    <span class="min-w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded">
-      {@score || "–"}
-    </span>
+    <input
+      name={@side}
+      type="number"
+      min="0"
+      inputmode="numeric"
+      placeholder="–"
+      value={@score}
+      class="min-w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded placeholder:text-gray-500"
+    />
     """
   end
 
