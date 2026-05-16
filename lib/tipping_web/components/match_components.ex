@@ -2,8 +2,10 @@ defmodule TippingWeb.MatchComponents do
   use TippingWeb, :verified_routes
   use Phoenix.Component
 
+  alias Tipping.Game
   alias Tipping.WorldCup
 
+  attr :bet, Game.Bet
   attr :match, WorldCup.Match
 
   def match_card(assigns) do
@@ -14,11 +16,40 @@ defmodule TippingWeb.MatchComponents do
       </p>
       <p class="mb-5">{format_kickoff_time(@match.kickoff_at)}</p>
 
-      <div class="flex justify-between">
+      <div class="flex items-center justify-between">
         <.team_display team={@match.home_team} />
+        <.bet_display bet={@bet} />
         <.team_display team={@match.away_team} />
       </div>
     </article>
+    """
+  end
+
+  attr :bet, Game.Bet
+
+  defp bet_display(%{bet: nil} = assigns) do
+    ~H"""
+    <div>
+      <.bet_pill /> – <.bet_pill />
+    </div>
+    """
+  end
+
+  defp bet_display(assigns) do
+    ~H"""
+    <div class="text-2xl">
+      <.bet_pill score={@bet.home_score} /> – <.bet_pill score={@bet.away_score} />
+    </div>
+    """
+  end
+
+  attr :score, :integer, default: nil
+
+  defp bet_pill(assigns) do
+    ~H"""
+    <span class="min-w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded">
+      {@score || "–"}
+    </span>
     """
   end
 
