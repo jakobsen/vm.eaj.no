@@ -37,6 +37,6 @@ defmodule Tipping.WorldCup do
     end)
     |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
     |> Map.to_list()
-    |> Enum.sort_by(&elem(&1, 0), Date)
+    |> Enum.sort_by(fn {date, _} -> date end, Date)
   end
 end
