@@ -33,7 +33,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_display(%{bet: nil} = assigns) do
     ~H"""
-    <div class="text-2xl">
+    <div class="text-2xl flex gap-1">
       <.bet_pill side="home" /> – <.bet_pill side="away" />
     </div>
     """
@@ -41,7 +41,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_display(assigns) do
     ~H"""
-    <div class="text-2xl">
+    <div class="text-2xl flex gap-1">
       <.bet_pill score={@bet.home_score} side="home" /> –
       <.bet_pill score={@bet.away_score} side="away" />
     </div>
@@ -60,7 +60,7 @@ defmodule TippingWeb.MatchComponents do
       inputmode="numeric"
       placeholder="–"
       value={@score}
-      class="min-w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded placeholder:text-gray-500"
+      class="w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded placeholder:text-gray-500"
     />
     """
   end
