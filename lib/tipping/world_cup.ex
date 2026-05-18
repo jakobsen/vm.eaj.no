@@ -30,12 +30,7 @@ defmodule Tipping.WorldCup do
   def matches_with_bets_grouped_by_day(%Accounts.User{} = user) do
     list_matches_with_bets(user)
     |> Enum.map(fn entry ->
-      match = entry.match
-
-      %{
-        entry
-        | match: %{match | kickoff_at: DateTime.shift_zone!(match.kickoff_at, "Europe/Oslo")}
-      }
+      put_in(entry.match.kickoff_at, DateTime.shift_zone!(entry.match.kickoff_at, "Europe/Oslo"))
     end)
     |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
     |> Map.to_list()
