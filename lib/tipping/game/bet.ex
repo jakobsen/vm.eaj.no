@@ -6,8 +6,8 @@ defmodule Tipping.Game.Bet do
   alias Tipping.WorldCup
 
   schema "bets" do
-    field :home_score, :integer
-    field :away_score, :integer
+    field :home_score, :integer, default: 0
+    field :away_score, :integer, default: 0
     belongs_to :user, Accounts.User
     belongs_to :match, WorldCup.Match
 

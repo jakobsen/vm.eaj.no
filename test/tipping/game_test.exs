@@ -35,5 +35,11 @@ defmodule Tipping.GameTest do
       assert {:error, _} = Game.place_bet(user, match, %{home_score: -1, away_score: 0})
       assert {:error, _} = Game.place_bet(user, match, %{home_score: 0, away_score: -1})
     end
+
+    test "missing scores default to 0", %{user: user, match: match} do
+      assert {:ok, bet} = Game.place_bet(user, match, %{})
+      assert bet.home_score == 0
+      assert bet.away_score == 0
+    end
   end
 end
