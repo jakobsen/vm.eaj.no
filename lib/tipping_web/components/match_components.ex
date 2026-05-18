@@ -33,7 +33,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_display(%{bet: nil} = assigns) do
     ~H"""
-    <div>
+    <div class="text-2xl">
       <.bet_pill side="home" /> – <.bet_pill side="away" />
     </div>
     """
