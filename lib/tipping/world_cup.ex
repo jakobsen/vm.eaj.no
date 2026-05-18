@@ -6,6 +6,8 @@ defmodule Tipping.WorldCup do
   alias Tipping.Repo
   alias Tipping.WorldCup
 
+  def get_match(id), do: Repo.get(WorldCup.Match, id)
+
   def list_matches(),
     do:
       Repo.all(
