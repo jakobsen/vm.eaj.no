@@ -14,6 +14,8 @@ defmodule TippingWeb.MatchComponents do
       class="relative bg-gray-200 p-5 rounded"
       phx-change="place-bet"
       phx-value-match_id={@match.id}
+      phx-hook=".BetForm"
+      id={"match-#{@match.id}-bet"}
     >
       <p class="absolute top-0 -translate-y-1/4 right-5 bg-gray-700 rounded-full text-gray-300 text-sm px-2 py-1">
         {@match.stage}
@@ -26,6 +28,27 @@ defmodule TippingWeb.MatchComponents do
         <.team_display team={@match.away_team} />
       </div>
     </form>
+    <script :type={Phoenix.LiveView.ColocatedHook} name=".BetForm">
+      export default {
+        mounted() {
+          this.el.addEventListener("click", e => {
+            const btn = e.target.closest("button[data-delta]");
+            if (!btn) return;
+            const target = btn.parentElement.querySelector("input");
+            const delta = parseInt(btn.dataset.delta);
+            const currentValue = parseInt(target.value);
+            const isFirstInteraction = isNaN(currentValue);
+
+            if (isFirstInteraction) {
+              this.el.querySelectorAll("input").forEach(i => i.value = 0);
+            } else {
+              target.value = Math.max(0, currentValue + delta);
+            }
+            target.dispatchEvent(new Event("input", { bubbles: true }));
+          })
+        }
+      }
+    </script>
     """
   end
 
@@ -33,7 +56,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_display(%{bet: nil} = assigns) do
     ~H"""
-    <div class="text-2xl flex gap-1">
+    <div class="text-2xl flex items-center gap-1">
       <.bet_pill side="home" /> – <.bet_pill side="away" />
     </div>
     """
@@ -41,7 +64,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_display(assigns) do
     ~H"""
-    <div class="text-2xl flex gap-1">
+    <div class="text-2xl flex items-center gap-1">
       <.bet_pill score={@bet.home_score} side="home" /> –
       <.bet_pill score={@bet.away_score} side="away" />
     </div>
@@ -53,15 +76,19 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_pill(assigns) do
     ~H"""
-    <input
-      name={@side}
-      type="number"
-      min="0"
-      inputmode="numeric"
-      placeholder="–"
-      value={@score}
-      class="w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded placeholder:text-gray-500"
-    />
+    <div class="flex flex-col gap-1">
+      <button class="btn" type="button" data-delta="1">+</button>
+      <input
+        name={@side}
+        type="number"
+        min="0"
+        inputmode="numeric"
+        placeholder="–"
+        value={@score}
+        class="w-[3ch] text-center font-semibold tabular-nums p-1 bg-gray-800 text-gray-200 inline-block rounded placeholder:text-gray-500"
+      />
+      <button class="btn" type="button" data-delta="-1">-</button>
+    </div>
     """
   end
 
