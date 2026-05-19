@@ -7,6 +7,7 @@ defmodule Tipping.Accounts.User do
     field :email, :string
     field :name, :string
     field :organization, :string
+    field :admin?, :boolean, source: :is_admin
 
     timestamps(type: :utc_datetime)
   end
@@ -17,5 +18,10 @@ defmodule Tipping.Accounts.User do
     |> validate_required([:auth_provider_sub, :email, :name, :organization])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:auth_provider_sub)
+  end
+
+  def admin_changeset(%__MODULE__{} = user, admin?) do
+    user
+    |> change(%{admin?: admin?})
   end
 end

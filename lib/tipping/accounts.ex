@@ -18,4 +18,8 @@ defmodule Tipping.Accounts do
         |> Repo.update()
     end
   end
+
+  def make_admin(%User{} = user) do
+    user |> User.admin_changeset(true) |> Repo.update()
+  end
 end

@@ -1,6 +1,8 @@
 defmodule Tipping.AccountsTest do
   use Tipping.DataCase
 
+  import Tipping.AccountsFixtures
+
   alias Tipping.Accounts
 
   describe "get_or_create_user/1" do
@@ -60,6 +62,16 @@ defmodule Tipping.AccountsTest do
       assert second_user.email == "user2@email.com"
       assert second_user.name == "That's an even better name"
       assert second_user.organization == "aidn.no"
+    end
+  end
+
+  describe "make_admin/1" do
+    test "It makes a user an admin" do
+      user = user_fixture()
+      refute user.admin?
+      Accounts.make_admin(user)
+      user = Accounts.get_user_by_id(user.id)
+      assert user.admin?
     end
   end
 end
