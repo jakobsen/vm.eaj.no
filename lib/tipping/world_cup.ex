@@ -36,4 +36,10 @@ defmodule Tipping.WorldCup do
     |> Map.to_list()
     |> Enum.sort_by(fn {date, _} -> date end, Date)
   end
+
+  def update_match(%Accounts.User{admin?: true}, %WorldCup.Match{} = match, attrs) do
+    match
+    |> WorldCup.Match.changeset(attrs)
+    |> Repo.update()
+  end
 end

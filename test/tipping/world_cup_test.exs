@@ -72,4 +72,52 @@ defmodule Tipping.WorldCupTest do
       assert entries == sorted_entries
     end
   end
+
+  describe "update_match/3" do
+    setup do
+      %{
+        user: user_fixture(),
+        admin_user: admin_user_fixture(),
+        match: Repo.one(from m in WorldCup.Match, limit: 1)
+      }
+    end
+
+    test "trying to update a match with a non-admin raises", %{user: user, match: match} do
+      assert_raise(FunctionClauseError, fn -> WorldCup.update_match(user, match, %{}) end)
+    end
+
+    test "an admin user can update a match", %{admin_user: user, match: match} do
+      home_score = Enum.random(0..9)
+      away_score = Enum.random(0..9)
+      [home_team, away_team | _] = Repo.all(WorldCup.Team) |> Enum.shuffle()
+
+      assert {:ok, updated_match} =
+               WorldCup.update_match(user, match, %{
+                 home_score: home_score,
+                 away_score: away_score,
+                 home_team_id: home_team.id,
+                 away_team_id: away_team.id
+               })
+
+      assert updated_match.home_score == home_score
+      assert updated_match.away_score == away_score
+      assert updated_match.home_team_id == home_team.id
+      assert updated_match.away_team_id == away_team.id
+    end
+
+    test "setting only one score returns an error", %{admin_user: user, match: match} do
+      assert {:error, %Ecto.Changeset{}} = WorldCup.update_match(user, match, %{home_score: 0})
+    end
+
+    test "it is possible to set only the score", %{admin_user: user, match: match} do
+      home_score = Enum.random(0..9)
+      away_score = Enum.random(0..9)
+
+      assert {:ok, _match} =
+               WorldCup.update_match(user, match, %{
+                 home_score: home_score,
+                 away_score: away_score
+               })
+    end
+  end
 end
