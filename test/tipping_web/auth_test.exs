@@ -60,6 +60,32 @@ defmodule TippingWeb.AuthTest do
     end
   end
 
+  describe "require_admin_user/2" do
+    setup %{conn: conn} do
+      %{conn: Auth.fetch_current_user(conn, [])}
+    end
+
+    test "responds 404 when no user is logged in", %{conn: conn} do
+      conn = Auth.require_admin_user(conn, [])
+      assert conn.status == 404
+      assert conn.halted
+    end
+
+    test "responds 404 when a non-admin user is logged in", %{conn: conn} do
+      user = user_fixture()
+      conn = conn |> assign(:user, user) |> Auth.require_admin_user([])
+      assert conn.status == 404
+      assert conn.halted
+    end
+
+    test "does nothing when admin user is logged in", %{conn: conn} do
+      user = admin_user_fixture()
+      conn = conn |> assign(:user, user) |> Auth.require_admin_user([])
+      refute conn.status
+      refute conn.halted
+    end
+  end
+
   describe "on_mount: require_authenticated" do
     test "authenticates given a valid user ID in the session", %{conn: conn, user: user} do
       session = conn |> put_session(:user_id, user.id) |> get_session()
