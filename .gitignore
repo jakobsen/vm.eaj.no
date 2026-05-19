@@ -41,3 +41,6 @@ npm-debug.log
 
 .env
 .envrc
+
+# Mac
+.DS_Store
