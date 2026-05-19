@@ -67,6 +67,17 @@ defmodule TippingWeb.Auth do
     end
   end
 
+  def on_mount(:require_admin, _params, session, socket) do
+    socket = mount_current_user(socket, session)
+
+    if get_in(socket.assigns.user.admin?) do
+      {:cont, socket}
+    else
+      socket = Phoenix.LiveView.redirect(socket, to: ~p"/")
+      {:halt, socket}
+    end
+  end
+
   defp mount_current_user(socket, session) do
     Phoenix.Component.assign_new(socket, :user, fn ->
       session

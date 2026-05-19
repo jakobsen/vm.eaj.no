@@ -6,7 +6,7 @@ defmodule TippingWeb.AuthTest do
   alias TippingWeb.Auth
 
   setup %{conn: conn} do
-    %{conn: init_test_session(conn, %{}), user: user_fixture()}
+    %{conn: init_test_session(conn, %{}), user: user_fixture(), admin_user: admin_user_fixture()}
   end
 
   describe "fetch_current_user/2" do
@@ -71,15 +71,13 @@ defmodule TippingWeb.AuthTest do
       assert conn.halted
     end
 
-    test "responds 404 when a non-admin user is logged in", %{conn: conn} do
-      user = user_fixture()
+    test "responds 404 when a non-admin user is logged in", %{conn: conn, user: user} do
       conn = conn |> assign(:user, user) |> Auth.require_admin_user([])
       assert conn.status == 404
       assert conn.halted
     end
 
-    test "does nothing when admin user is logged in", %{conn: conn} do
-      user = admin_user_fixture()
+    test "does nothing when admin user is logged in", %{conn: conn, admin_user: user} do
       conn = conn |> assign(:user, user) |> Auth.require_admin_user([])
       refute conn.status
       refute conn.halted
@@ -108,6 +106,33 @@ defmodule TippingWeb.AuthTest do
         Auth.on_mount(:require_authenticated, %{}, session, socket)
 
       assert updated_socket.assigns.user == nil
+    end
+  end
+
+  describe "on_mount: require_admin" do
+    test "redirects if there is no user in the session", %{conn: conn} do
+      session = get_session(conn)
+
+      assert {:halt, updated_socket} =
+               Auth.on_mount(:require_admin, %{}, session, %Phoenix.LiveView.Socket{})
+
+      assert updated_socket.assigns.user == nil
+    end
+
+    test "redirects if a non-admin user is logged in", %{conn: conn, user: user} do
+      session = conn |> put_session(:user_id, user.id) |> get_session()
+
+      assert {:halt, updated_socket} =
+               Auth.on_mount(:require_admin, %{}, session, %Phoenix.LiveView.Socket{})
+
+      assert updated_socket.assigns.user.id == user.id
+    end
+
+    test "does nothing if an admin is logged in", %{conn: conn, admin_user: user} do
+      session = conn |> put_session(:user_id, user.id) |> get_session()
+
+      assert {:cont, %Phoenix.LiveView.Socket{}} =
+               Auth.on_mount(:require_admin, %{}, session, %Phoenix.LiveView.Socket{})
     end
   end
 end
