@@ -39,6 +39,14 @@ defmodule TippingWeb.Router do
     end
   end
 
+  scope "/admin", TippingWeb do
+    pipe_through [:browser, :require_admin_user]
+
+    live_session :require_admin, on_mount: [{TippingWeb.Auth, :require_admin}] do
+      live "/", Admin.MatchesLive
+    end
+  end
+
   scope "/auth-callback", TippingWeb do
     pipe_through :auth_callback
 
