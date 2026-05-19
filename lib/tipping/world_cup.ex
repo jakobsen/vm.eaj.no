@@ -6,7 +6,7 @@ defmodule Tipping.WorldCup do
   alias Tipping.Repo
   alias Tipping.WorldCup
 
-  def get_match(id), do: Repo.get(WorldCup.Match, id)
+  def get_match(id, preloads \\ []), do: Repo.get(WorldCup.Match, id) |> Repo.preload(preloads)
 
   def list_matches(),
     do:
@@ -27,6 +27,8 @@ defmodule Tipping.WorldCup do
     )
   end
 
+  def list_teams(), do: Repo.all(from t in WorldCup.Team, order_by: t.name)
+
   def matches_with_bets_grouped_by_day(%Accounts.User{} = user) do
     list_matches_with_bets(user)
     |> Enum.map(fn entry ->
@@ -41,5 +43,9 @@ defmodule Tipping.WorldCup do
     match
     |> WorldCup.Match.changeset(attrs)
     |> Repo.update()
+  end
+
+  def change_match(%WorldCup.Match{} = match, attrs \\ %{}) do
+    WorldCup.Match.changeset(match, attrs)
   end
 end

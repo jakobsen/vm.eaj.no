@@ -19,6 +19,10 @@ defmodule TippingWeb.Admin.MatchesLive do
         <:col :let={match} label="Bortelag">{get_in(match.away_team.name)}</:col>
         <:col :let={match} label="Mål hjemme">{match.home_score}</:col>
         <:col :let={match} label="Mål borte">{match.away_score}</:col>
+
+        <:action :let={match}>
+          <.link navigate={~p"/admin/kamper/#{match}"}>Oppdater</.link>
+        </:action>
       </.table>
     </Layouts.app>
     """
