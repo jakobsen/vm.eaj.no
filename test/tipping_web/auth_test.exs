@@ -65,16 +65,14 @@ defmodule TippingWeb.AuthTest do
       %{conn: Auth.fetch_current_user(conn, [])}
     end
 
-    test "responds 404 when no user is logged in", %{conn: conn} do
-      conn = Auth.require_admin_user(conn, [])
-      assert conn.status == 404
-      assert conn.halted
+    test "raises 404 when no user is logged in", %{conn: conn} do
+      assert_raise(Phoenix.Router.NoRouteError, fn -> Auth.require_admin_user(conn, []) end)
     end
 
-    test "responds 404 when a non-admin user is logged in", %{conn: conn, user: user} do
-      conn = conn |> assign(:user, user) |> Auth.require_admin_user([])
-      assert conn.status == 404
-      assert conn.halted
+    test "raises 404 when a non-admin user is logged in", %{conn: conn, user: user} do
+      assert_raise(Phoenix.Router.NoRouteError, fn ->
+        conn |> assign(:user, user) |> Auth.require_admin_user([])
+      end)
     end
 
     test "does nothing when admin user is logged in", %{conn: conn, admin_user: user} do

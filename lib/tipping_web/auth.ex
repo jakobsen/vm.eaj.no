@@ -48,7 +48,7 @@ defmodule TippingWeb.Auth do
     if get_in(conn.assigns.user.admin?) do
       conn
     else
-      conn |> send_resp(404, "Not found") |> halt()
+      raise Phoenix.Router.NoRouteError, conn: conn, router: TippingWeb.Router
     end
   end
 
