@@ -12,6 +12,27 @@ defmodule TippingWeb.Auth.GoogleJwt do
     end
   end
 
+  def normalize_claims(claims) do
+    types = %{
+      auth_provider_sub: :string,
+      email: :string,
+      name: :string,
+      organization: :string
+    }
+
+    prepared_data = %{
+      auth_provider_sub: claims["sub"],
+      email: claims["email"],
+      name: claims["name"],
+      organization: claims["hd"]
+    }
+
+    {%{}, types}
+    |> Ecto.Changeset.cast(prepared_data, Map.keys(types))
+    |> Ecto.Changeset.validate_required(Map.keys(types))
+    |> Ecto.Changeset.apply_action(:normalize)
+  end
+
   defp fetch_signer(kid) do
     with {:ok, %{status: 200, body: %{"keys" => keys}}} <- Req.get(@jwks_url),
          %{} = key <- Enum.find(keys, &(&1["kid"] == kid)) do
