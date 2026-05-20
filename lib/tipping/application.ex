@@ -7,6 +7,8 @@ defmodule Tipping.Application do
 
   @impl true
   def start(_type, _args) do
+    Appsignal.Phoenix.LiveView.attach()
+
     children = [
       TippingWeb.Telemetry,
       Tipping.Repo,
