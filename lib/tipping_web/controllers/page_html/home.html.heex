@@ -1,42 +1,7 @@
 <Layouts.flash_group flash={@flash} />
-<main class="min-h-dvh pb-20">
+<main class="min-h-dvh pb-20 bg-dark-blue text-white">
   <.hero />
-
-  <section class="m-5 flex flex-col gap-4 max-w-lg mx-auto">
-    <p>
-      <span class="font-bold">Konseptet er enkelt.</span>
-      Logg inn med en bedriftskonto, legg inn hva resultatet kommer til å bli i VM-kampene, vinn heder og ære.
-    </p>
-    <h2 class="text-lg font-bold -mb-2">Regler</h2>
-    <ol class="list-decimal list-outside ml-5 space-y-3 space-y-3 marker:text-gray-500 marker:font-medium">
-      <li>Siste frist for å tippe på en kamp er 10 minutter før avspark.</li>
-      <li>
-        Poeng beregnes som følger:
-        <ul class="flex flex-col gap-1.5">
-          <.rule_row label="Korrekt resultat:" points={3} />
-          <.rule_row label="Korrekt målforskjell:" points={2} />
-          <.rule_row label="Korrekt vinner:" points={1} />
-        </ul>
-        Alt annet gir 0 poeng. Merk at korrekt målforskjell inkluderer uavgjort.
-      </li>
-      <li>
-        Å delta er gratis. Premie er heder og ære, og eventuelt muligheten til å
-        kunne skryte en liten stund. Det får dere avtale internt, tenker jeg.
-      </li>
-    </ol>
-
-    <h2 class="text-lg font-bold -mb-2">Litt om personvern og sånn</h2>
-    <p>
-      Når du logger inn lagrer vi en unik identifiaktor som vi får fra Google,
-      navnet ditt og domenet til e-posten. Dette er de tre tingene siden trenger
-      for å fungere, så mer enn det tar vi ikke vare på.
-    </p>
-
-    <h2 class="text-lg font-bold -mb-2">Jeg har noe å melde</h2>
-    <p>
-      Spørsmål, ris og ros kan sendes til <code class="bg-gray-100 border border-gray-300 rounded-sm p-0.5 whitespace-pre">post ætt eaj dått no</code>.
-    </p>
-  </section>
+  <.about_section />
 </main>
 
 <script src="https://accounts.google.com/gsi/client" async />

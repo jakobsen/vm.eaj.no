@@ -110,6 +110,7 @@
     --font-sans: "pacaembu", sans-serif;
     --font-marker: "Permanent Marker", cursive;
     --color-primary-blue: #1052ff;
+    --color-dark-blue: #161450;
     --color-off-white: #fdfdfd;
 }
 
@@ -133,4 +134,12 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
+}
+
+.large-heading {
+    font-size: clamp(6rem, 44vw - 4.3rem, 7.1rem);
+    font-weight: 800;
+    letter-spacing: -1%;
+    line-height: 1;
+    opacity: 0.2;
 }
