@@ -46,6 +46,26 @@ defmodule TippingWeb.MatchListLive do
      )}
   end
 
+  @impl true
+  def handle_event(
+        "recover-bet",
+        %{"home" => home, "away" => away, "match_id" => match_id},
+        socket
+      ) do
+    if home == "" or away == "" do
+      {:noreply, socket}
+    else
+      with %WorldCup.Match{} = match <- WorldCup.get_match(String.to_integer(match_id)) do
+        Game.place_bet(socket.assigns.user, match, %{home_score: home, away_score: away})
+      end
+
+      {:noreply,
+       assign(socket,
+         matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user)
+       )}
+    end
+  end
+
   defp format_day(%Date{} = day) do
     Calendar.strftime(
       day,

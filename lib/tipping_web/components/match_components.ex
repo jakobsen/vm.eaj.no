@@ -13,6 +13,7 @@ defmodule TippingWeb.MatchComponents do
     <form
       class="relative bg-gray-200 p-5 rounded"
       phx-change="place-bet"
+      phx-auto-recover="recover-bet"
       phx-value-match_id={@match.id}
       phx-hook=".BetForm"
       id={"match-#{@match.id}-bet"}
