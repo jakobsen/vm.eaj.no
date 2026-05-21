@@ -1,48 +1,6 @@
 <Layouts.flash_group flash={@flash} />
 <main class="min-h-dvh pb-20">
-  <div class="div pt-10 px-5 pb-20 bg-black text-white flex flex-col gap-4">
-    <p class="text-amber-300 text-xs font-medium text-center" style="font-variant: small-caps;">
-      Fotball-VM 2026
-    </p>
-    <h1 class="font-marker text-center text-pretty text-5xl font-semibold max-w-133 mx-auto">
-      Du vet mer om fotball enn kollegaene dine
-    </h1>
-    <p class="text-center text-xl">Nå kan du endelig bevise det.</p>
-    <div
-      id="g_id_onload"
-      data-client_id="54992027643-991u17tde1r2fk9g2mvv2ei4cn25cklm.apps.googleusercontent.com"
-      data-login_uri={url(~p"/auth-callback")}
-      data-auto_prompt="false"
-      data-hd="*"
-    >
-    </div>
-    <div
-      class="g_id_signin bg-transparent mx-auto flex justify-center"
-      data-type="standard"
-      data-size="large"
-      data-theme="filled_blue"
-      data-width="300"
-      data-locale="no_"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left"
-    >
-    </div>
-    <div :if={@error_message}>{raw(@error_message)}</div>
-  </div>
-  <svg
-    class="block w-full -mt-px"
-    style="height: 40px;"
-    viewBox="0 0 1200 40"
-    preserveAspectRatio="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <path
-      fill="#000000"
-      d="M0,0 L1200,0 L1200,20 C1050,40 850,0 600,20 C350,40 150,0 0,20 Z"
-    />
-  </svg>
+  <.hero />
 
   <section class="m-5 flex flex-col gap-4 max-w-lg mx-auto">
     <p>

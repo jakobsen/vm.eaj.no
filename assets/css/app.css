@@ -107,7 +107,10 @@
 
 /* This file is for your main application CSS */
 @theme {
+    --font-sans: "pacaembu", sans-serif;
     --font-marker: "Permanent Marker", cursive;
+    --color-primary-blue: #1052ff;
+    --color-off-white: #fdfdfd;
 }
 
 @font-face {

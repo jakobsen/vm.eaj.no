@@ -6,6 +6,8 @@ defmodule TippingWeb.PageHTML do
   """
   use TippingWeb, :html
 
+  import TippingWeb.HomeComponents
+
   embed_templates "page_html/*"
 
   attr :label, :string, required: true
