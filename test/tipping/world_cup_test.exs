@@ -71,6 +71,15 @@ defmodule Tipping.WorldCupTest do
       sorted_entries = Enum.sort_by(entries, &elem(&1, 0), Date)
       assert entries == sorted_entries
     end
+
+    test "the matches' kickoff time is listed in the Europe/Oslo time zone", %{user: user} do
+      matches =
+        WorldCup.matches_with_bets_grouped_by_day(user)
+        |> Enum.flat_map(fn {date, matches} -> matches end)
+        |> Enum.map(& &1.match)
+
+      assert Enum.all?(matches, fn match -> match.kickoff_at.time_zone == "Europe/Oslo" end)
+    end
   end
 
   describe "update_match/3" do
