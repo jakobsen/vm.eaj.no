@@ -3,6 +3,7 @@ defmodule Tipping.GameTest do
   use Tipping.DataCase
 
   import Tipping.AccountsFixtures
+  import Tipping.WorldCupFixtures
 
   alias Tipping.Repo
   alias Tipping.Game
@@ -286,5 +287,91 @@ defmodule Tipping.GameTest do
                %Match{home_score: winning_score, away_score: losing_score}
              ) == 0
     end
+  end
+
+  describe "organization_scoreboard/2" do
+    setup do
+      organization = "home_org"
+      user = user_fixture(%{organization: organization})
+
+      %{organization: organization, user: user}
+    end
+
+    test "gets all users belonging to the calling user's organization", %{user: user} do
+      other_users_to_find = [
+        user_fixture(%{organization: user.organization}),
+        user_fixture(%{organization: user.organization}),
+        user_fixture(%{organization: user.organization})
+      ]
+
+      _users_to_ignore = [
+        user_fixture(%{organization: "another_org"}),
+        user_fixture(%{organization: "another_org"}),
+        user_fixture(%{organization: "another_org"})
+      ]
+
+      scoreboard = Game.organization_scoreboard(user)
+      assert length(scoreboard) == 4
+      found_ids = scoreboard |> Enum.map(& &1.user.id) |> MapSet.new()
+      expected_ids = [user.id | Enum.map(other_users_to_find, & &1.id)] |> MapSet.new()
+      assert found_ids == expected_ids
+    end
+
+    test "if a user has made no bets they have 0 points", %{user: user} do
+      assert [%{points: points}] = Game.organization_scoreboard(user)
+      assert points == 0
+    end
+
+    test "if a user has two spot-on bets, they have six points and rank above a user with no bets",
+         %{user: user} do
+      first_match = match_fixture(%{home_score: 2, away_score: 1})
+      second_match = match_fixture(%{home_score: 1, away_score: 1})
+      _another_user = user_fixture(%{organization: user.organization})
+
+      Game.place_bet(
+        user,
+        first_match,
+        %{home_score: 2, away_score: 1},
+        DateTime.shift(first_match.kickoff_at, hour: -1)
+      )
+
+      Game.place_bet(
+        user,
+        second_match,
+        %{home_score: 1, away_score: 1},
+        DateTime.shift(second_match.kickoff_at, hour: -1)
+      )
+
+      assert [%{points: 6}, %{points: 0}] = Game.organization_scoreboard(user)
+    end
+  end
+
+  test "users with the same amount of points are listed alphabetically" do
+    top_scoring_user = user_fixture(%{organization: "alphabet", name: "z"})
+    match = match_fixture(%{home_score: 0, away_score: 0})
+
+    Game.place_bet(
+      top_scoring_user,
+      match,
+      %{home_score: 1, away_score: 1},
+      DateTime.shift(match.kickoff_at, hour: -1)
+    )
+
+    user_c = user_fixture(%{organization: "alphabet", name: "c"})
+    user_a = user_fixture(%{organization: "alphabet", name: "a"})
+    user_f = user_fixture(%{organization: "alphabet", name: "f"})
+    user_b = user_fixture(%{organization: "alphabet", name: "b"})
+    user_å = user_fixture(%{organization: "alphabet", name: "å"})
+
+    scoreboard_user_ids = Game.organization_scoreboard(user_f) |> Enum.map(& &1.user.id)
+
+    assert scoreboard_user_ids == [
+             top_scoring_user.id,
+             user_a.id,
+             user_b.id,
+             user_c.id,
+             user_f.id,
+             user_å.id
+           ]
   end
 end

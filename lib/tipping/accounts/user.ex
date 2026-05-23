@@ -2,11 +2,15 @@ defmodule Tipping.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Tipping.Game
+
   schema "users" do
     field :auth_provider_sub, :string
     field :name, :string
     field :organization, :string
     field :admin?, :boolean, source: :is_admin
+
+    has_many :bets, Game.Bet
 
     timestamps(type: :utc_datetime)
   end

@@ -1,4 +1,6 @@
 defmodule Tipping.Game do
+  import Ecto.Query
+
   alias Tipping.Accounts
   alias Tipping.Game
   alias Tipping.Repo
@@ -24,6 +26,24 @@ defmodule Tipping.Game do
 
   def match_locked?(%WorldCup.Match{} = match, now \\ DateTime.utc_now()) do
     DateTime.diff(match.kickoff_at, now, :second) <= 600
+  end
+
+  def organization_scoreboard(%Accounts.User{} = user) do
+    users =
+      Repo.all(
+        from u in Accounts.User, where: u.organization == ^user.organization, preload: [:bets]
+      )
+
+    matches =
+      Repo.all(WorldCup.Match)
+      |> Map.new(&{&1.id, &1})
+
+    users
+    |> Enum.map(fn u ->
+      total_points = Enum.sum_by(u.bets, &bet_points(&1, Map.fetch!(matches, &1.match_id)))
+      %{user: u, points: total_points}
+    end)
+    |> Enum.sort_by(&{-&1.points, &1.user.name})
   end
 
   def bet_points(%Game.Bet{} = bet, %WorldCup.Match{} = match) do
