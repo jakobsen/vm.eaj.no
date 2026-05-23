@@ -143,3 +143,12 @@ input[type="number"] {
     line-height: 1;
     opacity: 0.2;
 }
+
+.team-card-shadow {
+    box-shadow:
+        72.996px 112.576px 37.634px 0 rgba(0, 0, 0, 0),
+        46.718px 72.023px 34.389px 0 rgba(0, 0, 0, 0.01),
+        26.279px 40.553px 28.874px 0 rgba(0, 0, 0, 0.05),
+        11.679px 18.168px 21.412px 0 rgba(0, 0, 0, 0.09),
+        2.92px 4.542px 11.679px 0 rgba(0, 0, 0, 0.1);
+}

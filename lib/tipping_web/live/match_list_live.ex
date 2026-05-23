@@ -11,7 +11,8 @@ defmodule TippingWeb.MatchListLive do
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket,
-       matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user)
+       matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user),
+       body_class: "bg-dark-blue"
      )}
   end
 
@@ -20,16 +21,21 @@ defmodule TippingWeb.MatchListLive do
     ~H"""
     <main class="p-5">
       <h1 class="font-bold text-4xl mb-5">Alle kamper</h1>
-      <%= for {day, entries} <- @matches_by_day do %>
-        <h2 class="font-bold text-2xl mb-2.5">{format_day(day)}</h2>
-        <div class="flex flex-col gap-8 max-w-lg mx-auto mb-10">
-          <.match_card
-            :for={entry <- entries}
-            bet={entry.bet}
-            match={entry.match}
-          />
+      <div class="relative">
+        <div class="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-[0.5px] bg-white" />
+        <div class="relative">
+          <%= for {day, entries} <- @matches_by_day do %>
+            <.day_label date={day} />
+            <div class="flex flex-col gap-8 max-w-100 mx-auto mb-10">
+              <.match_card
+                :for={entry <- entries}
+                bet={entry.bet}
+                match={entry.match}
+              />
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </main>
     """
   end
@@ -64,17 +70,5 @@ defmodule TippingWeb.MatchListLive do
          matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user)
        )}
     end
-  end
-
-  defp format_day(%Date{} = day) do
-    Calendar.strftime(
-      day,
-      "%d. %B",
-      month_names: fn month ->
-        {"januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september",
-         "oktober", "november", "desember"}
-        |> elem(month - 1)
-      end
-    )
   end
 end
