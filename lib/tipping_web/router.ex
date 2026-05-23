@@ -54,10 +54,11 @@ defmodule TippingWeb.Router do
     post "/", AuthController, :log_in
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", TippingWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TippingWeb do
+    pipe_through :api
+
+    get "/health", HealthController, :health
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:tipping, :dev_routes) do
