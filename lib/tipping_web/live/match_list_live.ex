@@ -32,6 +32,7 @@ defmodule TippingWeb.MatchListLive do
                 :for={entry <- entries}
                 bet={entry.bet}
                 match={entry.match}
+                locked?={entry.match_locked?}
               />
             </div>
           <% end %>
@@ -74,7 +75,10 @@ defmodule TippingWeb.MatchListLive do
   end
 
   def matches_with_bets_grouped_by_day(%Accounts.User{} = user) do
+    now = DateTime.utc_now()
+
     WorldCup.list_matches_with_bets(user)
+    |> Enum.map(&Map.put(&1, :match_locked?, Game.match_locked?(&1.match, now)))
     |> Enum.map(fn entry ->
       update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
     end)

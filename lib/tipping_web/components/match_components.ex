@@ -38,6 +38,7 @@ defmodule TippingWeb.MatchComponents do
 
   attr :bet, Game.Bet
   attr :match, WorldCup.Match
+  attr :locked?, :boolean
 
   def match_card(assigns) do
     ~H"""
@@ -46,12 +47,17 @@ defmodule TippingWeb.MatchComponents do
         {format_kickoff_time(@match.kickoff_at)}
       </p>
       <form
-        class="relative overflow-hidden bg-radial from-[#0099f7] to-[#093ca2] p-[3.24px] border border-[3.24px] border-white/10 rounded-[6.5px]"
+        class={[
+          "relative overflow-hidden p-[3.24px] border border-[3.24px] border-white/10 rounded-[6.5px] bg-radial",
+          @locked? && "from-[#1b3a35] to-[#1a4740]",
+          not @locked? && "from-[#0099f7] to-[#093ca2]"
+        ]}
         phx-change="place-bet"
         phx-auto-recover="recover-bet"
         phx-value-match_id={@match.id}
         phx-hook=".BetForm"
         id={"match-#{@match.id}-bet"}
+        disabled={@locked?}
       >
         <.decorative_circle />
         <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-6">
@@ -61,7 +67,7 @@ defmodule TippingWeb.MatchComponents do
 
           <div class="flex justify-between">
             <.team_display team={@match.home_team} />
-            <.bet_display bet={@bet} />
+            <.bet_display bet={@bet} locked?={@locked?} />
             <.team_display team={@match.away_team} />
           </div>
         </div>
@@ -98,26 +104,31 @@ defmodule TippingWeb.MatchComponents do
   end
 
   attr :bet, Game.Bet
-
-  defp bet_display(%{bet: nil} = assigns) do
-    ~H"""
-    <div class="text-2xl flex">
-      <.bet_column side="home" /><.bet_column side="away" />
-    </div>
-    """
-  end
+  attr :locked?, :boolean
 
   defp bet_display(assigns) do
     ~H"""
-    <div class="text-2xl flex">
-      <.bet_column score={@bet.home_score} side="home" />
-      <.bet_column score={@bet.away_score} side="away" />
+    <div>
+      <p :if={@locked?} class="text-xs text-center small-caps font-light mb-2">Du tippet</p>
+      <div class="text-2xl flex">
+        <.bet_column score={get_in(@bet.home_score)} side="home" locked?={@locked?} />
+        <.bet_column score={get_in(@bet.away_score)} side="away" locked?={@locked?} />
+      </div>
     </div>
     """
   end
 
   attr :score, :integer, default: nil
   attr :side, :string, values: ~w(home away), required: true
+  attr :locked?, :boolean
+
+  defp bet_column(%{locked?: true} = assigns) do
+    ~H"""
+    <div class="h-[2.5rem] w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
+      {@score || "–"}
+    </div>
+    """
+  end
 
   defp bet_column(assigns) do
     assigns =
@@ -126,8 +137,12 @@ defmodule TippingWeb.MatchComponents do
       |> assign(:button_classes, "font-light text-base cursor-pointer hover:bg-black/10")
 
     ~H"""
-    <div class="grid grid-rows-3 border border-white last:border-l-0">
-      <button class={[@shared_classes, @button_classes, "border-b"]} type="button" data-delta="1">
+    <div class="grid border border-white last:border-l-0">
+      <button
+        class={[@shared_classes, @button_classes, "border-b"]}
+        type="button"
+        data-delta="1"
+      >
         +
       </button>
       <input
@@ -143,7 +158,11 @@ defmodule TippingWeb.MatchComponents do
           "text-center text-lg font-semibold border-b"
         ]}
       />
-      <button class={[@shared_classes, @button_classes, "border-t-0"]} type="button" data-delta="-1">
+      <button
+        class={[@shared_classes, @button_classes, "border-t-0"]}
+        type="button"
+        data-delta="-1"
+      >
         -
       </button>
     </div>
