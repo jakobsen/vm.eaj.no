@@ -14,7 +14,6 @@ defmodule Tipping.AccountsTest do
       assert {:ok, %Accounts.User{}} =
                Accounts.get_or_create_user(%{
                  auth_provider_sub: "abc123",
-                 email: "user@email.com",
                  name: "That's a great name",
                  organization: "dreng.no"
                })
@@ -24,7 +23,6 @@ defmodule Tipping.AccountsTest do
       {:ok, %Accounts.User{} = first_user} =
         Accounts.get_or_create_user(%{
           auth_provider_sub: "abc123",
-          email: "user@email.com",
           name: "That's a great name",
           organization: "dreng.no"
         })
@@ -32,7 +30,6 @@ defmodule Tipping.AccountsTest do
       {:ok, %Accounts.User{} = second_user} =
         Accounts.get_or_create_user(%{
           auth_provider_sub: "abc123",
-          email: "user@email.com",
           name: "That's a great name",
           organization: "dreng.no"
         })
@@ -45,7 +42,6 @@ defmodule Tipping.AccountsTest do
       {:ok, %Accounts.User{} = first_user} =
         Accounts.get_or_create_user(%{
           auth_provider_sub: "abc123",
-          email: "user@email.com",
           name: "That's a great name",
           organization: "dreng.no"
         })
@@ -53,13 +49,11 @@ defmodule Tipping.AccountsTest do
       {:ok, %Accounts.User{} = second_user} =
         Accounts.get_or_create_user(%{
           auth_provider_sub: "abc123",
-          email: "user2@email.com",
           name: "That's an even better name",
           organization: "aidn.no"
         })
 
       assert first_user.id == second_user.id
-      assert second_user.email == "user2@email.com"
       assert second_user.name == "That's an even better name"
       assert second_user.organization == "aidn.no"
     end

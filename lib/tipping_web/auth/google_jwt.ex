@@ -15,14 +15,12 @@ defmodule TippingWeb.Auth.GoogleJwt do
   def normalize_claims(claims) do
     types = %{
       auth_provider_sub: :string,
-      email: :string,
       name: :string,
       organization: :string
     }
 
     prepared_data = %{
       auth_provider_sub: claims["sub"],
-      email: claims["email"],
       name: claims["name"],
       organization: claims["hd"]
     }

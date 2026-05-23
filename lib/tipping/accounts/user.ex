@@ -4,7 +4,6 @@ defmodule Tipping.Accounts.User do
 
   schema "users" do
     field :auth_provider_sub, :string
-    field :email, :string
     field :name, :string
     field :organization, :string
     field :admin?, :boolean, source: :is_admin
@@ -14,9 +13,8 @@ defmodule Tipping.Accounts.User do
 
   def changeset(%__MODULE__{} = user, attrs) do
     user
-    |> cast(attrs, [:auth_provider_sub, :email, :name, :organization])
-    |> validate_required([:auth_provider_sub, :email, :name, :organization])
-    |> validate_format(:email, ~r/@/)
+    |> cast(attrs, [:auth_provider_sub, :name, :organization])
+    |> validate_required([:auth_provider_sub, :name, :organization])
     |> unique_constraint(:auth_provider_sub)
   end
 
