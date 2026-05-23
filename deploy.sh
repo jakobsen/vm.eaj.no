@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-set -eo
+set -euo pipefail
 
-pushd /root/vm
+pusd /root/vm
 trap 'popd > /dev/null' EXIT
 
 git pull origin main
