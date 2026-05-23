@@ -11,6 +11,37 @@ defmodule TippingWeb.Layouts do
   # and other static content.
   embed_templates "layouts/*"
 
+  attr :flash, :map, required: true
+  attr :current_page, :atom, values: ~w(kamper)a, required: true
+  slot :inner_block, required: true
+
+  def app(assigns) do
+    assigns =
+      assign(assigns, :nav_items, [
+        {~p"/kamper", :kamper, "Kamper"}
+      ])
+
+    ~H"""
+    <header class="p-5 text-off-white font-light">
+      <ul>
+        <li>
+          <.link
+            :for={{path, id, label} <- @nav_items}
+            navigate={path}
+            class={["text-sm", "hover:underline", @current_page == id && "font-semibold"]}
+          >
+            {label}
+          </.link>
+        </li>
+      </ul>
+    </header>
+    <main class="p-5 text-off-white max-w-110 mx-auto">
+      {render_slot(@inner_block)}
+    </main>
+    <.flash_group flash={@flash} />
+    """
+  end
+
   attr :flash, :map, required: true, doc: "the map of flash messages"
 
   slot :inner_block, required: true

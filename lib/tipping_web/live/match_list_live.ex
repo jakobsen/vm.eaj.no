@@ -20,14 +20,14 @@ defmodule TippingWeb.MatchListLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <main class="p-5 text-off-white">
+    <Layouts.app flash={@flash} current_page={:kamper}>
       <h1 class="font-bold text-4xl mb-5">Alle kamper</h1>
       <div class="relative">
         <div class="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-[0.5px] bg-white" />
         <div class="relative">
           <%= for {day, entries} <- @matches_by_day do %>
             <.day_label date={day} />
-            <div class="flex flex-col gap-8 max-w-100 mx-auto mb-10">
+            <div class="flex flex-col gap-8 mx-auto mb-10">
               <.match_card
                 :for={entry <- entries}
                 bet={entry.bet}
@@ -38,7 +38,7 @@ defmodule TippingWeb.MatchListLive do
           <% end %>
         </div>
       </div>
-    </main>
+    </Layouts.app>
     """
   end
 
