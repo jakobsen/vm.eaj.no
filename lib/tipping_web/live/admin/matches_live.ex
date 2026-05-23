@@ -11,7 +11,7 @@ defmodule TippingWeb.Admin.MatchesLive do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash}>
+    <Layouts.admin flash={@flash}>
       <.table id="matches-table" rows={@matches}>
         <:col :let={match} label="Avspark">{format_kickoff(match)}</:col>
         <:col :let={match} label="Type">{match.stage}</:col>
@@ -24,7 +24,7 @@ defmodule TippingWeb.Admin.MatchesLive do
           <.link navigate={~p"/admin/kamper/#{match}"}>Oppdater</.link>
         </:action>
       </.table>
-    </Layouts.app>
+    </Layouts.admin>
     """
   end
 

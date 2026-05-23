@@ -16,7 +16,7 @@ defmodule TippingWeb.Admin.MatchFormLive do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash}>
+    <Layouts.admin flash={@flash}>
       <.header>
         {get_in(@match.home_team.name) || "TBD"}–{get_in(@match.away_team.name) || "TBD"}
         <:subtitle>
@@ -43,7 +43,7 @@ defmodule TippingWeb.Admin.MatchFormLive do
           <.button phx-disable-with="Lagrer..." variant="primary">Oppdater kamp</.button>
         </footer>
       </.form>
-    </Layouts.app>
+    </Layouts.admin>
     """
   end
 
