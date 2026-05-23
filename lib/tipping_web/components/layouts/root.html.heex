@@ -30,7 +30,7 @@
       })();
     </script>
   </head>
-  <body class={assigns[:body_class]}>
+  <body class={[assigns[:body_class], "min-h-dvh"]}>
     {@inner_content}
   </body>
 </html>

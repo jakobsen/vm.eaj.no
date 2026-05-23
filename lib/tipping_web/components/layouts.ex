@@ -12,23 +12,23 @@ defmodule TippingWeb.Layouts do
   embed_templates "layouts/*"
 
   attr :flash, :map, required: true
-  attr :current_page, :atom, values: ~w(kamper)a, required: true
+  attr :current_page, :atom, values: ~w(kamper tabell)a, required: true
   slot :inner_block, required: true
 
   def app(assigns) do
     assigns =
       assign(assigns, :nav_items, [
-        {~p"/kamper", :kamper, "Kamper"}
+        {~p"/kamper", :kamper, "Kamper"},
+        {~p"/tabell", :tabell, "Tabell"}
       ])
 
     ~H"""
     <header class="p-5 text-off-white font-light">
-      <ul>
-        <li>
+      <ul class="flex justify-end gap-5">
+        <li :for={{path, id, label} <- @nav_items}>
           <.link
-            :for={{path, id, label} <- @nav_items}
             navigate={path}
-            class={["text-sm", "hover:underline", @current_page == id && "font-semibold"]}
+            class={["text-sm", "hover:underline", @current_page == id && "font-bold"]}
           >
             {label}
           </.link>

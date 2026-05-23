@@ -36,6 +36,7 @@ defmodule TippingWeb.Router do
 
     live_session :require_authenticated, on_mount: [{TippingWeb.Auth, :require_authenticated}] do
       live "/kamper", MatchListLive
+      live "/tabell", PointsTableLive
     end
   end
 
