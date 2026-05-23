@@ -3,6 +3,7 @@ defmodule TippingWeb.MatchListLive do
 
   import TippingWeb.MatchComponents
 
+  alias Tipping.Accounts
   alias Tipping.Game
   alias Tipping.WorldCup
 
@@ -11,7 +12,7 @@ defmodule TippingWeb.MatchListLive do
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket,
-       matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user),
+       matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user),
        body_class: "bg-dark-blue"
      )}
   end
@@ -48,7 +49,7 @@ defmodule TippingWeb.MatchListLive do
 
     {:noreply,
      assign(socket,
-       matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user)
+       matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user)
      )}
   end
 
@@ -67,8 +68,18 @@ defmodule TippingWeb.MatchListLive do
 
       {:noreply,
        assign(socket,
-         matches_by_day: WorldCup.matches_with_bets_grouped_by_day(socket.assigns.user)
+         matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user)
        )}
     end
+  end
+
+  def matches_with_bets_grouped_by_day(%Accounts.User{} = user) do
+    WorldCup.list_matches_with_bets(user)
+    |> Enum.map(fn entry ->
+      update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
+    end)
+    |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
+    |> Map.to_list()
+    |> Enum.sort_by(fn {date, _} -> date end, Date)
   end
 end
