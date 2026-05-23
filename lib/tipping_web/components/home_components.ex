@@ -6,7 +6,7 @@ defmodule TippingWeb.HomeComponents do
     ~H"""
     <div class="relative pt-23 px-3 bg-primary-blue text-off-white overflow-hidden">
       <.hero_top_decoration />
-      <.hero_bottom_deocration />
+      <.hero_bottom_decoration />
       <div class="relative">
         <h2 class="text-center text-xl font-bold uppercase mb-15.5">Fotball-VM 2026</h2>
         <h1 class="text-[2rem] font-extrabold uppercase mb-12">
@@ -80,6 +80,30 @@ defmodule TippingWeb.HomeComponents do
     """
   end
 
+  def footer(assigns) do
+    ~H"""
+    <footer class="relative bg-primary-blue pt-100 h-[998px]">
+      <.footer_top_decoration />
+      <.hero_bottom_decoration />
+
+      <h2 class="relative text-xl text-center">
+        <span class="font-light">
+          Laget i Sogndal av<br />
+        </span>
+        <a class="underline hover:no-underline" href="https://dreng.studio">
+          dreng.studio
+        </a>
+      </h2>
+
+      <img
+        class="w-[281px] absolute left-1/2 -translate-x-1/2 bottom-0"
+        src={~p"/images/maradona.webp"}
+        alt=""
+      />
+    </footer>
+    """
+  end
+
   attr :number, :integer
   slot :inner_block
 
@@ -120,16 +144,22 @@ defmodule TippingWeb.HomeComponents do
 
   defp hero_top_decoration(assigns) do
     ~H"""
-    <div class="h-[230px] w-screen bg-[#212a82] rounded-br-[50%] absolute top-0 left-0" />
+    <div class="h-[228px] w-screen bg-[#212a82] rounded-br-full absolute top-0 left-0" />
     """
   end
 
-  defp hero_bottom_deocration(assigns) do
+  defp hero_bottom_decoration(assigns) do
     ~H"""
     <div class={[
       "size-[max(100vw,998px)] bg-red-300 absolute right-0 bottom-0 rounded-tr-[50%]",
       "bg-linear-to-b from-[#1451ff] to-[#192381]"
     ]} />
+    """
+  end
+
+  defp footer_top_decoration(assigns) do
+    ~H"""
+    <div class="h-[228px] w-screen bg-dark-blue absolute top-0 left-0 rounded-br-[50%]" />
     """
   end
 
