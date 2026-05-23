@@ -6,6 +6,7 @@ defmodule Tipping.GameTest do
 
   alias Tipping.Repo
   alias Tipping.Game
+  alias Tipping.Game.Bet
   alias Tipping.WorldCup.Match
 
   describe "place_bet/3" do
@@ -135,6 +136,155 @@ defmodule Tipping.GameTest do
       match = %Match{kickoff_at: ~U[2026-07-01 15:00:00Z]}
       now = ~U[2026-07-02 00:00:00Z]
       assert Game.match_locked?(match, now)
+    end
+  end
+
+  describe "bet_score/2" do
+    test "An unfinished match is worth 0 points" do
+      home_score = Enum.random(0..10)
+      away_score = Enum.random(0..10)
+
+      points =
+        Game.bet_points(
+          %Bet{home_score: home_score, away_score: away_score},
+          %Match{}
+        )
+
+      assert points == 0
+    end
+
+    test "A bet predicting the exact score is worth 3 points" do
+      home_score = Enum.random(0..10)
+      away_score = Enum.random(0..10)
+
+      points =
+        Game.bet_points(
+          %Bet{home_score: home_score, away_score: away_score},
+          %Match{
+            home_score: home_score,
+            away_score: away_score
+          }
+        )
+
+      assert points == 3
+    end
+
+    test "A bet predicting a tie exactly right is worth 3 points" do
+      score = Enum.random(1..10)
+
+      points =
+        Game.bet_points(
+          %Bet{home_score: score, away_score: score},
+          %Match{
+            home_score: score,
+            away_score: score
+          }
+        )
+
+      assert points == 3
+    end
+
+    test "A bet correctly predicting a tie with an offset is worth 2 points" do
+      match_score = Enum.random(0..3)
+      bet_score = match_score + Enum.random(1..4)
+
+      points =
+        Game.bet_points(
+          %Bet{home_score: bet_score, away_score: bet_score},
+          %Match{
+            home_score: match_score,
+            away_score: match_score
+          }
+        )
+
+      assert points == 2
+    end
+
+    test "A bet predicting the correct goal difference is worth 2 points" do
+      losing_score = Enum.random(0..5)
+      winning_score = losing_score + Enum.random(1..4)
+      bet_offset = Enum.random(1..3)
+
+      # home wins
+      assert Game.bet_points(
+               %Bet{
+                 home_score: winning_score + bet_offset,
+                 away_score: losing_score + bet_offset
+               },
+               %Match{
+                 home_score: winning_score,
+                 away_score: losing_score
+               }
+             ) == 2
+
+      # away wins
+      assert Game.bet_points(
+               %Bet{
+                 home_score: losing_score + bet_offset,
+                 away_score: winning_score + bet_offset
+               },
+               %Match{
+                 home_score: losing_score,
+                 away_score: winning_score
+               }
+             ) == 2
+    end
+
+    test "A bet predicting the correct winner, but not the correct score or GD, is worth 1 point" do
+      losing_score = Enum.random(0..5)
+      winning_score = losing_score + Enum.random(1..4)
+      bet_offset = Enum.random(1..7)
+
+      # home wins
+      assert Game.bet_points(
+               %Bet{
+                 home_score: winning_score + bet_offset,
+                 away_score: losing_score
+               },
+               %Match{
+                 home_score: winning_score,
+                 away_score: losing_score
+               }
+             ) == 1
+
+      # away wins
+      assert Game.bet_points(
+               %Bet{
+                 home_score: losing_score,
+                 away_score: winning_score + bet_offset
+               },
+               %Match{
+                 home_score: losing_score,
+                 away_score: winning_score
+               }
+             ) == 1
+    end
+
+    test "A bet which misses all of the above is worth 0 points" do
+      losing_score = Enum.random(0..5)
+      winning_score = losing_score + Enum.random(1..4)
+      bet_offset = Enum.random(0..5)
+
+      # Incorrectly betted on a home win
+      assert Game.bet_points(
+               %Bet{home_score: winning_score + bet_offset, away_score: losing_score},
+               %Match{
+                 home_score: losing_score,
+                 away_score: winning_score
+               }
+             ) == 0
+
+      # Incorrectly betted on an away win, actually a tie
+      assert Game.bet_points(
+               %Bet{home_score: losing_score, away_score: winning_score},
+               %Match{home_score: winning_score, away_score: winning_score}
+             ) == 0
+
+      # Incorrectly betted on a tie, home win
+      assert Game.bet_points(
+               %Bet{home_score: winning_score, away_score: winning_score},
+               %Match{home_score: winning_score, away_score: losing_score}
+             ) == 0
     end
   end
 end
