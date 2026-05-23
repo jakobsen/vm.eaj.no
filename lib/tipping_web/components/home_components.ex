@@ -8,8 +8,10 @@ defmodule TippingWeb.HomeComponents do
       <.hero_top_decoration />
       <.hero_bottom_decoration />
       <div class="relative">
-        <h2 class="text-center text-xl font-bold uppercase mb-15.5">Fotball-VM 2026</h2>
-        <h1 class="text-[2rem] font-extrabold uppercase mb-12">
+        <h2 class="text-center leading-none tracking-[7%] text-xl font-bold uppercase mb-15.5">
+          Fotball-VM 2026
+        </h2>
+        <h1 class="text-[2rem] tracking-[2%] font-extrabold uppercase mb-6 leading-none">
           Du vet mer<br />om fotball enn<br />kollegaene dine
         </h1>
         <p class="mb-8.5">Nå gjenstår det bare å bevise det.</p>
@@ -151,7 +153,7 @@ defmodule TippingWeb.HomeComponents do
   defp hero_bottom_decoration(assigns) do
     ~H"""
     <div class={[
-      "size-[max(100vw,998px)] bg-red-300 absolute right-0 bottom-0 rounded-tr-[50%]",
+      "size-[max(100vw,998px)] absolute right-0 bottom-0 rounded-tr-[50%]",
       "bg-linear-to-b from-[#1451ff] to-[#192381]"
     ]} />
     """
