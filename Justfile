@@ -4,6 +4,7 @@ default:
 
 # Deploy the current remote main branch to prod
 deploy:
+    mix test
     ssh root@eaj.no 'bash -lc /root/vm/deploy.sh'
 
 # Run the dev server
