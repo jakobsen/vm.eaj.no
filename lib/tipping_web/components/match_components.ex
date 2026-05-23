@@ -37,10 +37,19 @@ defmodule TippingWeb.MatchComponents do
   end
 
   attr :bet, Game.Bet
-  attr :match, WorldCup.Match
-  attr :locked?, :boolean
+  attr :match, WorldCup.Match, required: true
+  attr :locked?, :boolean, required: true
 
   def match_card(assigns) do
+    status =
+      cond do
+        assigns.locked? -> :locked
+        is_nil(assigns.match.home_team_id) or is_nil(assigns.match.away_team_id) -> :disabled
+        true -> :open
+      end
+
+    assigns = assign(assigns, :status, status)
+
     ~H"""
     <div class="mb-15">
       <p class="p-2.5 mb-2.5 bg-dark-blue text-center tracking-[3%] leading-none text-lg">
@@ -49,8 +58,9 @@ defmodule TippingWeb.MatchComponents do
       <form
         class={[
           "relative overflow-hidden p-[3.24px] border border-[3.24px] border-white/10 rounded-[6.5px] bg-radial",
-          @locked? && "from-[#1b3a35] to-[#1a4740]",
-          not @locked? && "from-[#0099f7] to-[#093ca2]"
+          @status == :locked && "from-[#1b3a35] to-[#1a4740]",
+          @status == :disabled && "from-gray-500 to-gray-600",
+          @status == :open && "from-[#0099f7] to-[#093ca2]"
         ]}
         phx-change="place-bet"
         phx-auto-recover="recover-bet"
@@ -61,15 +71,14 @@ defmodule TippingWeb.MatchComponents do
       >
         <.decorative_circle />
         <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-6">
-          <p class="absolute top-1.5 right-5 bg-dark-blue rounded-full text-sm px-2 py-1">
-            {@match.stage}
-          </p>
-
           <div class="flex justify-between">
             <.team_display team={@match.home_team} />
-            <.bet_display bet={@bet} locked?={@locked?} />
+            <.bet_display bet={@bet} status={@status} />
             <.team_display team={@match.away_team} />
           </div>
+          <p class="absolute top-1.5 right-1.5 bg-dark-blue rounded-full text-sm px-2 py-1">
+            {@match.stage}
+          </p>
         </div>
       </form>
     </div>
@@ -104,15 +113,15 @@ defmodule TippingWeb.MatchComponents do
   end
 
   attr :bet, Game.Bet
-  attr :locked?, :boolean
+  attr :status, :atom, values: ~w(open locked disabled)a, required: true
 
   defp bet_display(assigns) do
     ~H"""
     <div>
-      <p :if={@locked?} class="text-xs text-center small-caps font-light mb-2">Du tippet</p>
+      <p :if={@status == :locked} class="text-xs text-center small-caps font-light mb-2">Du tippet</p>
       <div class="text-2xl flex">
-        <.bet_column score={get_in(@bet.home_score)} side="home" locked?={@locked?} />
-        <.bet_column score={get_in(@bet.away_score)} side="away" locked?={@locked?} />
+        <.bet_column score={get_in(@bet.home_score)} side="home" status={@status} />
+        <.bet_column score={get_in(@bet.away_score)} side="away" status={@status} />
       </div>
     </div>
     """
@@ -120,9 +129,9 @@ defmodule TippingWeb.MatchComponents do
 
   attr :score, :integer, default: nil
   attr :side, :string, values: ~w(home away), required: true
-  attr :locked?, :boolean
+  attr :status, :atom
 
-  defp bet_column(%{locked?: true} = assigns) do
+  defp bet_column(%{status: :locked} = assigns) do
     ~H"""
     <div class="h-[2.5rem] w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
       {@score || "–"}
@@ -134,14 +143,18 @@ defmodule TippingWeb.MatchComponents do
     assigns =
       assigns
       |> assign(:shared_classes, "block h-[2.5rem] w-[2.8rem]")
-      |> assign(:button_classes, "font-light text-base cursor-pointer hover:bg-black/10")
+      |> assign(:button_classes, [
+        "font-light text-base",
+        assigns.status == :open && "hover:bg-black/10 cursor-pointer"
+      ])
 
     ~H"""
-    <div class="grid border border-white last:border-l-0">
+    <div class={["grid border border-white last:border-l-0", @status == :disabled && "opacity-50"]}>
       <button
         class={[@shared_classes, @button_classes, "border-b"]}
         type="button"
         data-delta="1"
+        disabled={@status == :disabled}
       >
         +
       </button>
@@ -162,6 +175,7 @@ defmodule TippingWeb.MatchComponents do
         class={[@shared_classes, @button_classes, "border-t-0"]}
         type="button"
         data-delta="-1"
+        disabled={@status == :disabled}
       >
         -
       </button>
