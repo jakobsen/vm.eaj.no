@@ -2,7 +2,7 @@
 
 set -eo
 
-pusd /root/vm
+pushd /root/vm
 trap 'popd > /dev/null' EXIT
 
 git pull origin main
