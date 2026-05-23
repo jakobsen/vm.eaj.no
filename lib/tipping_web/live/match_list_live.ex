@@ -19,7 +19,7 @@ defmodule TippingWeb.MatchListLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <main class="p-5">
+    <main class="p-5 text-off-white">
       <h1 class="font-bold text-4xl mb-5">Alle kamper</h1>
       <div class="relative">
         <div class="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-[0.5px] bg-white" />
