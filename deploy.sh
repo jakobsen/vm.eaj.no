@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 
-set -e
+set -eo
+
+pusd /root/vm
+trap 'popd > /dev/null' EXIT
 
 git pull origin main
 
+set -a; source "./.env"; set +a
 
 mix deps.get --only prod
 MIX_ENV=prod mix compile
+MIX_ENV=prod mix assets.setup
 MIX_ENV=prod mix assets.deploy
-
 MIX_ENV=prod mix release --overwrite
 
-set -a
-source "./.env"
-set +a
+
 _build/prod/rel/tipping/bin/migrate
 
 systemctl restart vm_tipping
