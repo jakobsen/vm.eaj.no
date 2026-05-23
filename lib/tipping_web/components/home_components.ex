@@ -2,6 +2,8 @@ defmodule TippingWeb.HomeComponents do
   use Phoenix.Component
   use TippingWeb, :verified_routes
 
+  attr :error_message, :string, default: nil
+
   def hero(assigns) do
     ~H"""
     <div class="relative pt-23 px-3 bg-primary-blue text-off-white overflow-hidden">
@@ -16,6 +18,9 @@ defmodule TippingWeb.HomeComponents do
         </h1>
         <p class="mb-8.5">Nå gjenstår det bare å bevise det.</p>
         <.sign_in_with_google />
+        <div :if={@error_message} class="font-light text-sm opacity-90 my-5">
+          {Phoenix.HTML.raw(@error_message)}
+        </div>
         <div>
           <img
             class="w-[305px] rounded-tl-full rounded-bl-full absolute -right-3 bottom-6"
