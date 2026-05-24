@@ -142,9 +142,9 @@ defmodule TippingWeb.MatchComponents do
   defp bet_column(assigns) do
     assigns =
       assigns
-      |> assign(:shared_classes, "block size-11")
+      |> assign(:shared_classes, "block size-12")
       |> assign(:button_classes, [
-        "font-light text-base",
+        "font-light text-base touch-manipulation",
         assigns.status == :open && "hover:bg-black/10 cursor-pointer"
       ])
 
