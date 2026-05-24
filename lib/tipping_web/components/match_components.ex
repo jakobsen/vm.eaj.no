@@ -70,7 +70,7 @@ defmodule TippingWeb.MatchComponents do
         disabled={@locked?}
       >
         <.decorative_circle />
-        <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-6">
+        <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-3">
           <div class="flex justify-between">
             <.team_display team={@match.home_team} />
             <.bet_display bet={@bet} status={@status} />
@@ -142,7 +142,7 @@ defmodule TippingWeb.MatchComponents do
   defp bet_column(assigns) do
     assigns =
       assigns
-      |> assign(:shared_classes, "block h-[2.5rem] w-[2.8rem]")
+      |> assign(:shared_classes, "block size-11")
       |> assign(:button_classes, [
         "font-light text-base",
         assigns.status == :open && "hover:bg-black/10 cursor-pointer"
