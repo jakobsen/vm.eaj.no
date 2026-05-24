@@ -12,8 +12,7 @@ defmodule TippingWeb.MatchListLive do
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket,
-       matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user),
-       body_class: "bg-dark-blue"
+       matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user)
      )}
   end
 

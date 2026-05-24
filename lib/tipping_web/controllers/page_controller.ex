@@ -2,7 +2,7 @@ defmodule TippingWeb.PageController do
   use TippingWeb, :controller
 
   def home(conn, params) do
-    render(conn, :home, error_message: error_message(params["feil"]), body_class: "bg-dark-blue")
+    render(conn, :home, error_message: error_message(params["feil"]))
   end
 
   defp error_message("ikke-bedriftskonto"),

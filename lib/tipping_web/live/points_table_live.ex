@@ -16,7 +16,6 @@ defmodule TippingWeb.PointsTableLive do
 
     {:ok,
      socket
-     |> assign(:body_class, "bg-dark-blue")
      |> assign(:scores, scores)
      |> assign(:all_alone?, all_alone?)}
   end
