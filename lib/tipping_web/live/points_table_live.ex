@@ -1,18 +1,27 @@
 defmodule TippingWeb.PointsTableLive do
   use TippingWeb, :live_view
 
+  import TippingWeb.PointsTableComponents
+
   alias Tipping.Game
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :body_class, "bg-dark-blue")}
+    scores =
+      socket.assigns.user
+      |> Game.organization_scoreboard()
+      |> prepare_table()
+
+    {:ok, socket |> assign(:body_class, "bg-dark-blue") |> assign(:scores, scores)}
   end
 
   @impl true
   def render(assigns) do
     ~H"""
     <Layouts.app current_page={:tabell} flash={@flash}>
-      Hei {@user.name}!
+      <h1 class="large-heading mb-10">Tabell</h1>
+      <p class="mb-3">Stillingen i {@user.organization} så langt:</p>
+      <.scoreboard scores={@scores} />
     </Layouts.app>
     """
   end
