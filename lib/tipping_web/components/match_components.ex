@@ -145,7 +145,7 @@ defmodule TippingWeb.MatchComponents do
       |> assign(:shared_classes, "block size-12")
       |> assign(:button_classes, [
         "font-light text-base touch-manipulation",
-        assigns.status == :open && "hover:bg-black/10 cursor-pointer"
+        assigns.status == :open && "hover:bg-white/10 active:bg-black/10 cursor-pointer"
       ])
 
     ~H"""
