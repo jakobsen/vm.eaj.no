@@ -187,7 +187,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp team_display(assigns) do
     ~H"""
-    <div class="text-black rounded-xs bg-white/90 text-sm text-center p-2 mt-8 w-20 max-w-20 border border-black/5 team-card-shadow">
+    <div class="text-black rounded-xs bg-white/90 text-sm text-center p-2 mt-8 w-20 max-w-20 h-min border border-black/5 team-card-shadow">
       <.flag team={@team} />
       <span class="inline-block mt-2">
         {get_in(@team.fifa_code) || "—"}
