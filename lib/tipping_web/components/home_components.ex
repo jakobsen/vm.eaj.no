@@ -6,29 +6,43 @@ defmodule TippingWeb.HomeComponents do
 
   def hero(assigns) do
     ~H"""
-    <div class="relative pt-23 px-3 bg-primary-blue text-off-white overflow-hidden">
+    <div class={[
+      "relative pt-23 px-3 bg-primary-blue text-off-white overflow-hidden",
+      "md:px-20 md:pb-30"
+    ]}>
       <.hero_top_decoration />
       <.hero_bottom_decoration />
       <div class="relative">
-        <h2 class="text-center leading-none tracking-[7%] text-xl font-bold uppercase mb-15.5">
+        <h2 class={[
+          "text-center leading-none tracking-[7%] text-xl font-bold uppercase mb-15.5",
+          "md:text-left"
+        ]}>
           Fotball-VM 2026
         </h2>
-        <h1 class="text-[2rem] tracking-[2%] font-extrabold uppercase mb-6 leading-none">
-          Du vet mer<br />om fotball enn<br />kollegaene dine
-        </h1>
-        <p class="mb-8.5">Nå gjenstår det bare å bevise det.</p>
+        <div class="sm:text-center md:text-left">
+          <h1 class="text-[2rem] tracking-[2%] font-extrabold uppercase mb-6 leading-[1.08]">
+            Du vet mer<br />om fotball enn<br />kollegaene dine
+          </h1>
+          <p class="mb-8.5">Nå gjenstår det bare å bevise det.</p>
+        </div>
         <.sign_in_with_google />
         <div :if={@error_message} class="font-light text-sm opacity-90 my-5">
           {Phoenix.HTML.raw(@error_message)}
         </div>
         <div>
           <img
-            class="w-[305px] rounded-tl-full rounded-bl-full absolute -right-3 bottom-6"
+            class={[
+              "w-[305px] rounded-tl-full rounded-bl-full absolute -right-3 bottom-6",
+              "md:-right-20 md:-bottom-24"
+            ]}
             src={~p"/images/misunnelig.webp"}
             alt=""
           />
           <img
-            class="w-[281px] pt-[125px] relative left-1/2 -translate-x-1/2 -bottom-8"
+            class={[
+              "w-[281px] pt-[125px] relative left-1/2 -translate-x-1/2 -bottom-8",
+              "md:translate-x-[unset] md:left-[unset] md:absolute md:right-16 md:-bottom-40"
+            ]}
             src={~p"/images/maradona.webp"}
             alt=""
           />
@@ -43,7 +57,7 @@ defmodule TippingWeb.HomeComponents do
       assigns
       |> assign(
         :wrapper_class,
-        "mb-20 px-2.5 leading-[1.5] tracking-[1%]"
+        "mb-20 px-2.5 leading-[1.5] tracking-[1%] max-w-100 mx-auto"
       )
       |> assign(:header_class, "font-bold text-xl leading-none mb-5")
 
@@ -158,8 +172,9 @@ defmodule TippingWeb.HomeComponents do
   defp hero_bottom_decoration(assigns) do
     ~H"""
     <div class={[
-      "size-[max(100vw,998px)] absolute right-0 bottom-0 rounded-tr-[50%]",
-      "bg-linear-to-b from-[#1451ff] to-[#192381]"
+      "w-[max(100vw,998px)] h-[998px] absolute right-0 bottom-0 rounded-tr-[50%]",
+      "bg-linear-to-b from-[#1451ff] to-[#192381]",
+      "md:top-0 md:right-43"
     ]} />
     """
   end
@@ -181,7 +196,7 @@ defmodule TippingWeb.HomeComponents do
     >
     </div>
     <div
-      class="g_id_signin bg-transparent mx-auto flex justify-center"
+      class={["g_id_signin bg-transparent mx-auto flex justify-center", "md:justify-start"]}
       data-type="standard"
       data-size="large"
       data-theme="filled_blue"
