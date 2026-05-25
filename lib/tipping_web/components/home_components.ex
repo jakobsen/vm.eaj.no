@@ -65,16 +65,17 @@ defmodule TippingWeb.HomeComponents do
     <section class={[@wrapper_class, "pt-42"]}>
       <p class="mb-5">Konseptet er enkelt.</p>
       <p class="mb-20">
-        Logg inn med en bedriftskonto, legg inn hva resultatet kommer til å bli i VM-kampene,
+        Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,
         og vinn heder og ære.
       </p>
 
       <h2 class="large-heading mb-15">Regler</h2>
       <ol>
-        <.rule number={1}>Siste frist for å tippe på en kamp er 10 minutter før avspark.</.rule>
-        <.rule number={2}>Poeng beregnes som følger:</.rule>
+        <.rule number={1}>Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder.</.rule>
+        <.rule number={2}>Siste frist for å tippe på en kamp er 10 minutter før avspark.</.rule>
+        <.rule number={3}>Poeng beregnes som følger:</.rule>
         <.points_table />
-        <.rule number={3}>
+        <.rule number={4}>
           Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt
           muligheten til å skryte en liten stund. Det får dere avklare internt,
           tenker jeg.
