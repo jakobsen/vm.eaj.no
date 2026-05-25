@@ -25,7 +25,17 @@ defmodule TippingWeb.HomeComponents do
           </h1>
           <p class="mb-8.5">Nå gjenstår det bare å bevise det.</p>
         </div>
-        <.sign_in_with_google />
+        <div class="grid gap-3">
+          <.login_button href={~p"/logg-inn/google"}>
+            <.google_logo /> Logg inn med Google
+          </.login_button>
+          <.login_button href={~p"/logg-inn/microsoft"}>
+            <.ms_logo /> Logg inn med Microsoft
+          </.login_button>
+          <p class="text-sm font-light opacity-90">
+            Bruk en bedriftskonto, så finner vi kollegaene dine :)
+          </p>
+        </div>
         <div :if={@error_message} class="font-light text-sm opacity-90 my-5">
           {Phoenix.HTML.raw(@error_message)}
         </div>
@@ -186,9 +196,67 @@ defmodule TippingWeb.HomeComponents do
     """
   end
 
-  defp sign_in_with_google(assigns) do
+  attr :href, :string, required: true
+  slot :inner_block, required: true
+
+  defp login_button(assigns) do
     ~H"""
-    <a href={~p"/logg-inn/google"}>Logg inn med Google</a>
+    <a
+      href={@href}
+      class="max-w-91.5 font-roboto block rounded-full p-0.75 bg-linear-to-r from-white/30 to-[#858585]/30"
+    >
+      <div class={[
+        "py-2.5 px-6 bg-[hsl(226,_76%,_46%)] rounded-full flex gap-2.5 justify-center items-center",
+        "hover:bg-[hsl(226,_76%,_51%)]"
+      ]}>
+        {render_slot(@inner_block)}
+      </div>
+    </a>
+    """
+  end
+
+  defp ms_logo(assigns) do
+    ~H"""
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+    >
+      <rect x="0" y="0" width="9" height="9" fill="#f25022" />
+      <rect x="0" y="10" width="9" height="9" fill="#00a4ef" />
+      <rect x="10" y="0" width="9" height="9" fill="#7fba00" />
+      <rect x="10" y="10" width="9" height="9" fill="#ffb900" />
+    </svg>
+    """
+  end
+
+  defp google_logo(assigns) do
+    ~H"""
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19.6 10.2273C19.6 9.5182 19.5364 8.8364 19.4182 8.1818H10V12.05H15.3818C15.15 13.3 14.4455 14.3591 13.3864 15.0682V17.5773H16.6182C18.5091 15.8364 19.6 13.2727 19.6 10.2273Z"
+        fill="#4285F4"
+      />
+      <path
+        d="M10 20C12.7 20 14.9636 19.1045 16.6181 17.5773L13.3863 15.0682C12.4909 15.6682 11.3454 16.0227 10 16.0227C7.3954 16.0227 5.1909 14.2636 4.4045 11.9H1.0636V14.4909C2.7091 17.7591 6.0909 20 10 20Z"
+        fill="#34A853"
+      />
+      <path
+        d="M4.4045 11.9C4.2045 11.3 4.0909 10.6591 4.0909 10C4.0909 9.3409 4.2045 8.7 4.4045 8.1V5.5091H1.0636C0.3864 6.8591 0 8.3864 0 10C0 11.6136 0.3864 13.1409 1.0636 14.4909L4.4045 11.9Z"
+        fill="#FBBC04"
+      />
+      <path
+        d="M10 3.9773C11.4681 3.9773 12.7863 4.4818 13.8227 5.4727L16.6909 2.6045C14.9591 0.9909 12.6954 0 10 0C6.0909 0 2.7091 2.2409 1.0636 5.5091L4.4045 8.1C5.1909 5.7364 7.3954 3.9773 10 3.9773Z"
+        fill="#E94235"
+      />
+    </svg>
     """
   end
 end

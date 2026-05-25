@@ -7,6 +7,12 @@
     <.live_title default="Tipping" suffix=" · Phoenix Framework" phx-no-format>{assigns[:page_title]}</.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/styles/fonts.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
     {Application.get_env(:live_debugger, :live_debugger_tags)}

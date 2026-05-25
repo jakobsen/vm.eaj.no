@@ -71,7 +71,7 @@
 /* This file is for your main application CSS */
 @theme {
     --font-sans: "pacaembu", sans-serif;
-    --font-marker: "Permanent Marker", cursive;
+    --font-roboto: "roboto", sans-serif;
     --color-primary-blue: #1052ff;
     --color-dark-blue: #161450;
     --color-off-white: #fdfdfd;
