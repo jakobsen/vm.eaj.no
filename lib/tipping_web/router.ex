@@ -21,15 +21,14 @@ defmodule TippingWeb.Router do
     pipe_through [:browser, :redirect_authenticated_user]
 
     get "/", PageController, :home
+    get "/logg-inn/google", AuthController, :google_login
+    get "/logg-inn/microsoft", AuthController, :microsoft_login
   end
 
   scope "/auth", TippingWeb do
     pipe_through :browser
 
-    get "/google", AuthController, :google_login
     get "/google/callback", AuthController, :google_callback
-
-    get "/microsoft", AuthController, :microsoft_login
     get "/microsoft/callback", AuthController, :microsoft_callback
   end
 

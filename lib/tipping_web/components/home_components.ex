@@ -188,7 +188,7 @@ defmodule TippingWeb.HomeComponents do
 
   defp sign_in_with_google(assigns) do
     ~H"""
-    <a href={~p"/auth/google"}>Logg inn med Google</a>
+    <a href={~p"/logg-inn/google"}>Logg inn med Google</a>
     """
   end
 end
