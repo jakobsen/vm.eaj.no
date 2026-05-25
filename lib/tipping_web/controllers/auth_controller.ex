@@ -6,7 +6,7 @@ defmodule TippingWeb.AuthController do
   alias TippingWeb.Auth
 
   def google_login(conn, _params) do
-    state = :crypto.strong_rand_bytes(16) |> Base.url_encode64(padding: false)
+    state = generate_state()
     redirect_to = Auth.Google.oauth2_url(state)
 
     conn |> put_session(:g_state, state) |> redirect(external: redirect_to)
@@ -33,6 +33,37 @@ defmodule TippingWeb.AuthController do
         |> put_flash(:error, "Noe gikk galt ved innlogging. Prøv igjen")
         |> redirect(to: ~p"/")
     end
+  end
+
+  def microsoft_login(conn, _params) do
+    state = generate_state()
+    redirect_to = Auth.Microsoft.oauth2_url(state)
+
+    conn |> put_session(:ms_state, state) |> redirect(external: redirect_to)
+  end
+
+  def microsoft_callback(conn, %{"code" => code} = params) do
+    cookie_state = get_session(conn, :ms_state)
+    conn = delete_session(conn, :ms_state)
+
+    with :ok <- verify_state(cookie_state, params),
+         {:ok, jwt} <- Auth.Microsoft.fetch_id_token(code),
+         {:ok, claims} <- Auth.Microsoft.verify_id_token(jwt),
+         {:ok, attrs} <- Auth.Microsoft.normalize_claims(claims),
+         {:ok, user} <- Accounts.get_or_create_user(attrs) do
+      Auth.log_in_user(conn, user)
+    else
+      {:error, error} ->
+        Logger.error("Google login failed", error: inspect(error))
+
+        conn
+        |> put_flash(:error, "Noe gikk galt ved innlogging. Prøv igjen")
+        |> redirect(to: ~p"/")
+    end
+  end
+
+  defp generate_state() do
+    :crypto.strong_rand_bytes(16) |> Base.url_encode64(padding: false)
   end
 
   defp verify_state(cookie_state, params) do

@@ -28,6 +28,9 @@ defmodule TippingWeb.Router do
 
     get "/google", AuthController, :google_login
     get "/google/callback", AuthController, :google_callback
+
+    get "/microsoft", AuthController, :microsoft_login
+    get "/microsoft/callback", AuthController, :microsoft_callback
   end
 
   scope "/", TippingWeb do
