@@ -166,7 +166,7 @@ defmodule TippingWeb.HomeComponents do
 
   defp hero_top_decoration(assigns) do
     ~H"""
-    <div class="h-[228px] w-screen bg-[#212a82] rounded-br-full absolute top-0 left-0" />
+    <div class="h-[228px] bg-[#212a82] rounded-br-full absolute top-0 left-0 right-0" />
     """
   end
 
@@ -182,7 +182,7 @@ defmodule TippingWeb.HomeComponents do
 
   defp footer_top_decoration(assigns) do
     ~H"""
-    <div class="h-[228px] w-screen bg-dark-blue absolute top-0 left-0 rounded-br-[50%]" />
+    <div class="h-[228px] bg-dark-blue absolute top-0 left-0 right-0 rounded-br-[50%]" />
     """
   end
 
