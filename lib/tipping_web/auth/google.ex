@@ -37,6 +37,7 @@ defmodule TippingWeb.Auth.Google do
       response_type: "code",
       scope: "openid profile email",
       access_type: "offline",
+      prompt: "select_account",
       state: state
     }
     |> URI.encode_query()

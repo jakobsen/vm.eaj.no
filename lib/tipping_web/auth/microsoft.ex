@@ -78,6 +78,7 @@ defmodule TippingWeb.Auth.Microsoft do
       redirect_uri: redirect_uri(),
       response_mode: "query",
       scope: "openid profile email",
+      prompt: "select_account",
       state: state
     })
   end
