@@ -13,14 +13,6 @@ defmodule TippingWeb.Router do
     plug :fetch_current_user
   end
 
-  pipeline :auth_callback do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug TippingWeb.CheckGoogleCsrf
-    plug :put_secure_browser_headers
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -29,6 +21,13 @@ defmodule TippingWeb.Router do
     pipe_through [:browser, :redirect_authenticated_user]
 
     get "/", PageController, :home
+  end
+
+  scope "/auth", TippingWeb do
+    pipe_through :browser
+
+    get "/google", AuthController, :google_login
+    get "/google/callback", AuthController, :google_callback
   end
 
   scope "/", TippingWeb do
@@ -47,12 +46,6 @@ defmodule TippingWeb.Router do
       live "/", Admin.MatchesLive
       live "/kamper/:id", Admin.MatchFormLive
     end
-  end
-
-  scope "/auth-callback", TippingWeb do
-    pipe_through :auth_callback
-
-    post "/", AuthController, :log_in
   end
 
   scope "/api", TippingWeb do

@@ -23,6 +23,10 @@ end
 config :tipping, TippingWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
+config :tipping, TippingWeb.Auth.Google,
+  client_id: System.fetch_env!("GOOGLE_CLIENT_ID"),
+  client_secret: System.fetch_env!("GOOGLE_CLIENT_SECRET")
+
 if config_env() == :prod do
   database_path =
     System.get_env("DATABASE_PATH") ||

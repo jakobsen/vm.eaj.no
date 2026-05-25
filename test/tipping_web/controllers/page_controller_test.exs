@@ -3,7 +3,7 @@ defmodule TippingWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ ~s/id="g_id_onload"/
+    assert html_response(conn, 200) =~ "fotball"
   end
 
   test "GET /?error=ikke-bedriftskonto", %{conn: conn} do

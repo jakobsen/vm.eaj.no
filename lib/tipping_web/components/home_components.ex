@@ -187,26 +187,7 @@ defmodule TippingWeb.HomeComponents do
 
   defp sign_in_with_google(assigns) do
     ~H"""
-    <div
-      id="g_id_onload"
-      data-client_id="54992027643-991u17tde1r2fk9g2mvv2ei4cn25cklm.apps.googleusercontent.com"
-      data-login_uri={url(~p"/auth-callback")}
-      data-auto_prompt="false"
-      data-hd="*"
-    >
-    </div>
-    <div
-      class={["g_id_signin bg-transparent mx-auto flex justify-center", "md:justify-start"]}
-      data-type="standard"
-      data-size="large"
-      data-theme="filled_blue"
-      data-width="350"
-      data-locale="no_"
-      data-text="sign_in_with"
-      data-shape="pill"
-      data-logo_alignment="left"
-    >
-    </div>
+    <a href={~p"/auth/google"}>Logg inn med Google</a>
     """
   end
 end
