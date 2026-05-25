@@ -63,7 +63,7 @@ defmodule TippingWeb.Auth.Google do
     }
 
     prepared_data = %{
-      auth_provider_sub: claims["sub"],
+      auth_provider_sub: "google:#{claims["sub"]}",
       name: claims["name"],
       organization: claims["hd"]
     }
