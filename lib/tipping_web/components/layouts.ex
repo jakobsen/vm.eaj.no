@@ -24,15 +24,16 @@ defmodule TippingWeb.Layouts do
 
     ~H"""
     <header class="p-5 text-off-white font-light">
-      <ul class="flex justify-end gap-5">
+      <ul class="flex justify-end gap-5 text-sm">
         <li :for={{path, id, label} <- @nav_items}>
           <.link
             navigate={path}
-            class={["text-sm", "hover:underline", @current_page == id && "font-bold"]}
+            class={["hover:underline", @current_page == id && "font-bold"]}
           >
             {label}
           </.link>
         </li>
+        <li><.link href={~p"/logg-ut"} method="post">Logg ut</.link></li>
       </ul>
     </header>
     <main class="p-5 text-off-white max-w-110 mx-auto">

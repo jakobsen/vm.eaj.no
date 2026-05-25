@@ -62,6 +62,14 @@ defmodule TippingWeb.AuthController do
     end
   end
 
+  def log_out(conn, _params) do
+    conn
+    |> configure_session(renew: true)
+    |> clear_session()
+    |> put_flash(:info, "Du er logget ut. Velkommen tilbake!")
+    |> redirect(to: ~p"/")
+  end
+
   defp generate_state() do
     :crypto.strong_rand_bytes(16) |> Base.url_encode64(padding: false)
   end

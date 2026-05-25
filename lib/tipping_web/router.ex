@@ -35,6 +35,8 @@ defmodule TippingWeb.Router do
   scope "/", TippingWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    post "/logg-ut", AuthController, :log_out
+
     live_session :require_authenticated, on_mount: [{TippingWeb.Auth, :require_authenticated}] do
       live "/kamper", MatchListLive
       live "/tabell", PointsTableLive
