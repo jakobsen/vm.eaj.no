@@ -17,4 +17,4 @@ remote:
 
 # Run tests in watch mode
 watch:
-    fd --hidden -e ex -e exs -e heex | entr mix test --stale
+    fd --hidden -e ex -e exs -e heex -e svg | entr mix test --stale

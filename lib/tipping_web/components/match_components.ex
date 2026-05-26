@@ -197,10 +197,10 @@ defmodule TippingWeb.MatchComponents do
 
   defp team_display(assigns) do
     ~H"""
-    <div class="text-black aspect-23/30 rounded-xs bg-white/90 text-sm text-center p-2 mt-8 w-23 border border-black/5 team-card-shadow last:justify-self-end">
+    <div class="grid text-black aspect-23/30 rounded-xs bg-white/90 text-xs text-center p-2 mt-8 w-23 border border-black/5 team-card-shadow last:justify-self-end">
       <.flag team={@team} />
       <span class="inline-block mt-2">
-        {get_in(@team.fifa_code) || "—"}
+        {get_in(@team.name) || "—"}
       </span>
     </div>
     """
@@ -222,7 +222,6 @@ defmodule TippingWeb.MatchComponents do
       class="flag-shadow"
       src={static_path(TippingWeb.Endpoint, "/images/flags/#{@team.fifa_code}.svg")}
       alt={@team.name}
-      title={@team.name}
     />
     """
   end
