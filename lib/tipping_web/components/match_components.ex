@@ -196,8 +196,8 @@ defmodule TippingWeb.MatchComponents do
   attr :team, WorldCup.Team
 
   defp team_display(assigns) do
-    rotation = Enum.random(-2..8)
-    y_offset = Enum.random(-10..10)
+    rotation = :erlang.phash2(get_in(assigns.team.name) || 0, 13) - 2
+    y_offset = :erlang.phash2(get_in(assigns.team.name) || 0, 21) - 10
     assigns = assigns |> assign(:rotation, rotation) |> assign(:y_offset, y_offset)
 
     ~H"""
