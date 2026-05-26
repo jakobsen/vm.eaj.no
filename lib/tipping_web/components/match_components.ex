@@ -221,6 +221,8 @@ defmodule TippingWeb.MatchComponents do
     <img
       class="flag-shadow"
       src={static_path(TippingWeb.Endpoint, "/images/flags/#{@team.fifa_code}.svg")}
+      alt={@team.name}
+      title={@team.name}
     />
     """
   end
