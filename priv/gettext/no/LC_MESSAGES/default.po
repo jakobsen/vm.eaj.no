@@ -1,0 +1,143 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/tipping_web/components/layouts.ex:105
+#, elixir-autogen, elixir-format
+msgid "Beklager, nå surrer vi litt"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:43
+#, elixir-autogen, elixir-format
+msgid "Bruk en bedriftskonto, så finner vi kollegaene dine :)"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:95
+#, elixir-autogen, elixir-format
+msgid "Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:31
+#, elixir-autogen, elixir-format
+msgid "Du vet mer<br />om fotball enn<br />kollegaene dine"
+msgstr ""
+
+#: lib/tipping_web/components/layouts.ex:110
+#, elixir-autogen, elixir-format
+msgid "Et par sekunder bare, vi leter etter internett"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:24
+#, elixir-autogen, elixir-format
+msgid "Fotball-VM 2026"
+msgstr ""
+
+#: lib/tipping_web/components/core_components.ex:375
+#, elixir-autogen, elixir-format
+msgid "Handlinger"
+msgstr ""
+
+#: lib/tipping_web/components/layouts.ex:117
+#, elixir-autogen, elixir-format
+msgid "Hm, nå skjedde det noe"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:86
+#, elixir-autogen, elixir-format
+msgid "Konseptet er enkelt."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:189
+#, elixir-autogen, elixir-format
+msgid "Korrekt målforskjell"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:185
+#, elixir-autogen, elixir-format
+msgid "Korrekt resultat"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:193
+#, elixir-autogen, elixir-format
+msgid "Korrekt vinner"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:146
+#, elixir-autogen, elixir-format
+msgid "Laget i Sogndal av"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:113
+#, elixir-autogen, elixir-format
+msgid "Litt om personvern og sånn"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:37
+#: lib/tipping_web/components/home_components.ex:40
+#, elixir-autogen, elixir-format
+msgid "Logg inn med %{provider}"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:88
+#, elixir-autogen, elixir-format
+msgid "Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,\n        og vinn heder og ære."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:100
+#, elixir-autogen, elixir-format
+msgid "Poeng beregnes som følger:"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:98
+#, elixir-autogen, elixir-format
+msgid "Siste frist for å tippe på en kamp er 10 minutter før avspark."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:129
+#, elixir-autogen, elixir-format
+msgid "Tilbakemeldinger, spørsmål, ris, ros, varme tanker og blomster kan sendes til <code>post@eaj.no</code>."
+msgstr ""
+
+#: lib/tipping_web/components/layouts.ex:122
+#, elixir-autogen, elixir-format
+msgid "Vi forsøker å fikse det"
+msgstr ""
+
+#: lib/tipping_web/components/core_components.ex:81
+#, elixir-autogen, elixir-format
+msgid "lukk"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:103
+#, elixir-autogen, elixir-format
+msgid "Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt\n        muligheten til å skryte en liten stund. Det får dere avklare internt,\n        tenker jeg."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:116
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Når du logger inn lagrer vi en unik identfikator som vi får fra Google/Microsoft,\n      navnet ditt, og domenet til e-posten din (det etter <code>@</code>-tegnet).\n      Dette er de tre tingene siden trenger for å fungere, så mer enn det tar\n      vi ikke vare på."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:33
+#, elixir-autogen, elixir-format
+msgid "Nå gjenstår det bare å bevise det."
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:92
+#, elixir-autogen, elixir-format
+msgid "Regler"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:127
+#, elixir-autogen, elixir-format
+msgid "Noe du vil melde?"
+msgstr ""

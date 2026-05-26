@@ -2,6 +2,7 @@ defmodule TippingWeb.PageController do
   use TippingWeb, :controller
 
   def home(conn, params) do
+    params |> Map.get("lang", "no") |> Gettext.put_locale()
     render(conn, :home, error_message: error_message(params["feil"]))
   end
 

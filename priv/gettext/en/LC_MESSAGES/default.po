@@ -1,0 +1,135 @@
+# # "msgid"s in this file come from POT (.pot) files.
+# ##
+# ## Do not add, change, or remove "msgid"s manually here as
+# ## they're tied to the ones in the corresponding POT file
+# ## (with the same domain).
+# ##
+# ## Use "mix gettext.extract --merge" or "mix gettext.merge"
+# ## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#: lib/tipping_web/components/layouts.ex:105
+msgid "Beklager, nå surrer vi litt"
+msgstr "Sorry, we’re having some issues"
+
+#: lib/tipping_web/components/home_components.ex:43
+msgid "Bruk en bedriftskonto, så finner vi kollegaene dine :)"
+msgstr "Use a work account so we can find your colleagues :)"
+
+#: lib/tipping_web/components/home_components.ex:95
+msgid "Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder."
+msgstr "The bet is for the result after 90 minutes &nbsp; stoppage time."
+
+#: lib/tipping_web/components/home_components.ex:31
+msgid "Du vet mer<br />om fotball enn<br />kollegaene dine"
+msgstr "You know more<br />about football<br />than your<br />co-workers"
+
+#: lib/tipping_web/components/layouts.ex:110
+msgid "Et par sekunder bare, vi leter etter internett"
+msgstr "Give us a minute, we’re trying to find the internet"
+
+#: lib/tipping_web/components/home_components.ex:24
+msgid "Fotball-VM 2026"
+msgstr "World Cup 2026"
+
+#: lib/tipping_web/components/core_components.ex:375
+msgid "Handlinger"
+msgstr "Actions"
+
+#: lib/tipping_web/components/layouts.ex:117
+msgid "Hm, nå skjedde det noe"
+msgstr "Hm, something happened"
+
+#: lib/tipping_web/components/home_components.ex:86
+msgid "Konseptet er enkelt."
+msgstr "The concept is simple."
+
+#: lib/tipping_web/components/home_components.ex:189
+msgid "Korrekt målforskjell"
+msgstr "Correct goal difference"
+
+#: lib/tipping_web/components/home_components.ex:185
+msgid "Korrekt resultat"
+msgstr "Correct result"
+
+#: lib/tipping_web/components/home_components.ex:193
+msgid "Korrekt vinner"
+msgstr "Correct winner"
+
+#: lib/tipping_web/components/home_components.ex:146
+msgid "Laget i Sogndal av"
+msgstr "Made in Sogndal by"
+
+#: lib/tipping_web/components/home_components.ex:113
+msgid "Litt om personvern og sånn"
+msgstr "Regarding privacy"
+
+#: lib/tipping_web/components/home_components.ex:37
+#: lib/tipping_web/components/home_components.ex:40
+msgid "Logg inn med %{provider}"
+msgstr "Log in with %{provider}"
+
+#: lib/tipping_web/components/home_components.ex:88
+msgid ""
+"Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,\n"
+"        og vinn heder og ære."
+msgstr "Log in with a work account, bet on the World Cup results, win eternal glory."
+
+#: lib/tipping_web/components/home_components.ex:100
+msgid "Poeng beregnes som følger:"
+msgstr "Points are calculated as follows:"
+
+#: lib/tipping_web/components/home_components.ex:98
+msgid "Siste frist for å tippe på en kamp er 10 minutter før avspark."
+msgstr "Last call to make a bet is 10 minutes before kickoff."
+
+#: lib/tipping_web/components/home_components.ex:129
+msgid "Tilbakemeldinger, spørsmål, ris, ros, varme tanker og blomster kan sendes til <code>post@eaj.no</code>."
+msgstr "Feedback, questions, complaints, praise, thoughts&nbsp;&&nbsp;prayers and flowers can be sent to <code>post@eaj.no</code>."
+
+#: lib/tipping_web/components/layouts.ex:122
+msgid "Vi forsøker å fikse det"
+msgstr "We’re trying to fix things"
+
+#: lib/tipping_web/components/core_components.ex:81
+msgid "lukk"
+msgstr "close"
+
+#: lib/tipping_web/components/home_components.ex:103
+msgid ""
+"Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt\n"
+"        muligheten til å skryte en liten stund. Det får dere avklare internt,\n"
+"        tenker jeg."
+msgstr "Participation is free. The main prize is, as mentioned, eternal glory. And maybe bragging rights for a while. I’ll leave that up to you."
+
+#: lib/tipping_web/components/home_components.ex:116
+msgid ""
+"Når du logger inn lagrer vi en unik identfikator som vi får fra Google/Microsoft,\n"
+"      navnet ditt, og domenet til e-posten din (det etter <code>@</code>-tegnet).\n"
+"      Dette er de tre tingene siden trenger for å fungere, så mer enn det tar\n"
+"      vi ikke vare på."
+msgstr "When you log in we store a unique identifier we get from Google/Microsoft, your name, and the domain of your email (the part after the <code>@</code>-sign). This is all we need in order for the site to work, so we don’t keep anything else."
+
+#: lib/tipping_web/components/home_components.ex:33
+msgid "Nå gjenstår det bare å bevise det."
+msgstr "Now you’ve just got to prove it."
+
+#: lib/tipping_web/components/home_components.ex:92
+msgid "Regler"
+msgstr "Rules"
+
+#: lib/tipping_web/components/home_components.ex:127
+msgid "Noe du vil melde?"
+msgstr "Any thoughts?"

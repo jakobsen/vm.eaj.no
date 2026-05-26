@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :gettext, :default_locale, "no"
+
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :tipping,
