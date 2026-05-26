@@ -30,7 +30,7 @@ defmodule TippingWeb.MatchComponents do
       |> assign(:month, month)
 
     ~H"""
-    <h2 class="mx-auto -skew-x-20 -rotate-15 text-2xl mb-5 p-3 w-max bg-[#1C46D1]">
+    <h2 class="mx-auto -skew-x-20 -rotate-15 text-2xl mb-15 p-3 w-max bg-[#1C46D1]">
       {@day_of_week} <span class="font-extrabold">{@day_of_month}.</span> {@month}
     </h2>
     """
@@ -48,7 +48,14 @@ defmodule TippingWeb.MatchComponents do
         true -> :open
       end
 
-    assigns = assign(assigns, :status, status)
+    gradient_colors =
+      case status do
+        :locked -> "from-[#1b3a35] to-[#1a4740]"
+        :disabled -> "from-gray-500 to-gray-600"
+        :open -> "from-[#0099f7] to-[#093ca2]"
+      end
+
+    assigns = assigns |> assign(:status, status) |> assign(:gradient_colors, gradient_colors)
 
     ~H"""
     <div class="mb-15">
@@ -58,9 +65,7 @@ defmodule TippingWeb.MatchComponents do
       <form
         class={[
           "relative overflow-hidden p-[3.24px] border border-[3.24px] border-white/10 rounded-[6.5px] bg-radial",
-          @status == :locked && "from-[#1b3a35] to-[#1a4740]",
-          @status == :disabled && "from-gray-500 to-gray-600",
-          @status == :open && "from-[#0099f7] to-[#093ca2]"
+          @gradient_colors
         ]}
         phx-change="place-bet"
         phx-auto-recover="recover-bet"
@@ -71,13 +76,15 @@ defmodule TippingWeb.MatchComponents do
       >
         <.decorative_circle />
         <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-3">
-          <div class="flex justify-between">
+          <div class="grid grid-cols-3">
             <.team_display team={@match.home_team} />
             <.bet_display bet={@bet} status={@status} />
             <.team_display team={@match.away_team} />
           </div>
-          <p class="absolute top-1.5 right-1.5 bg-dark-blue rounded-full text-sm px-2 py-1">
-            {@match.stage}
+          <p class="absolute top-1.5 right-1.5 bg-dark-blue rounded-full text-sm font-light px-3 py-1 leading-none">
+            <span class="inline-block translate-y-[-1.2px]">
+              {@match.stage}
+            </span>
           </p>
         </div>
       </form>
@@ -117,7 +124,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_display(assigns) do
     ~H"""
-    <div>
+    <div class="justify-self-center">
       <p :if={@status == :locked} class="text-xs text-center small-caps font-light mb-2">Du tippet</p>
       <div class="text-2xl flex">
         <.bet_column score={get_in(@bet.home_score)} side="home" status={@status} />
@@ -149,7 +156,10 @@ defmodule TippingWeb.MatchComponents do
       ])
 
     ~H"""
-    <div class={["grid border border-white last:border-l-0", @status == :disabled && "opacity-50"]}>
+    <div class={[
+      "grid border border-white last:border-l-0",
+      @status == :disabled && "opacity-50"
+    ]}>
       <button
         class={[@shared_classes, @button_classes, "border-b"]}
         type="button"
@@ -187,7 +197,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp team_display(assigns) do
     ~H"""
-    <div class="text-black rounded-xs bg-white/90 text-sm text-center p-2 mt-8 w-20 max-w-20 h-min border border-black/5 team-card-shadow">
+    <div class="text-black aspect-23/30 rounded-xs bg-white/90 text-sm text-center p-2 mt-8 w-23 border border-black/5 team-card-shadow last:justify-self-end">
       <.flag team={@team} />
       <span class="inline-block mt-2">
         {get_in(@team.fifa_code) || "—"}
@@ -200,7 +210,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp flag(%{team: nil} = assigns) do
     ~H"""
-    <div class="mx-auto size-10 rounded text-white text-2xl font-semibold bg-gray-700 grid place-items-center">
+    <div class="text-white text-2xl font-semibold bg-gray-700 grid place-items-center flag-shadow">
       ?
     </div>
     """
@@ -209,7 +219,7 @@ defmodule TippingWeb.MatchComponents do
   defp flag(assigns) do
     ~H"""
     <img
-      class="mx-auto size-10 rounded"
+      class="flag-shadow"
       src={static_path(TippingWeb.Endpoint, "/images/flags/#{@team.fifa_code}.svg")}
     />
     """

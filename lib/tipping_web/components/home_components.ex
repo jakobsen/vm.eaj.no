@@ -13,31 +13,36 @@ defmodule TippingWeb.HomeComponents do
       <.hero_top_decoration />
       <.hero_bottom_decoration />
       <div class="relative">
-        <h2 class={[
-          "text-center leading-none tracking-[7%] text-xl font-bold uppercase mb-15.5",
-          "md:text-left"
-        ]}>
-          Fotball-VM 2026
-        </h2>
-        <div class="sm:text-center md:text-left">
-          <h1 class="text-[2rem] tracking-[2%] font-extrabold uppercase mb-6 leading-[1.08]">
-            Du vet mer<br />om fotball enn<br />kollegaene dine
-          </h1>
-          <p class="mb-8.5">Nå gjenstår det bare å bevise det.</p>
-        </div>
-        <div class="grid gap-3">
-          <.login_button href={~p"/logg-inn/google"}>
-            <.google_logo /> Logg inn med Google
-          </.login_button>
-          <.login_button href={~p"/logg-inn/microsoft"}>
-            <.ms_logo /> Logg inn med Microsoft
-          </.login_button>
-          <p class="text-sm font-light opacity-90">
-            Bruk en bedriftskonto, så finner vi kollegaene dine :)
-          </p>
-        </div>
-        <div :if={@error_message} class="font-light text-sm opacity-90 my-5">
-          {Phoenix.HTML.raw(@error_message)}
+        <div class="max-w-240 mx-auto">
+          <h2 class={[
+            "text-center leading-none tracking-[7%] text-xl font-bold uppercase mb-15.5",
+            "md:text-left"
+          ]}>
+            Fotball-VM 2026
+          </h2>
+          <div class="sm:text-center md:text-left">
+            <h1 class={[
+              "text-[2rem] tracking-[2%] font-extrabold uppercase mb-6 leading-[1.08]",
+              "lg:text-[3.5rem]"
+            ]}>
+              Du vet mer<br />om fotball enn<br />kollegaene dine
+            </h1>
+            <p class="mb-14">Nå gjenstår det bare å bevise det.</p>
+          </div>
+          <div class="grid gap-3">
+            <.login_button href={~p"/logg-inn/google"}>
+              <.google_logo /> Logg inn med Google
+            </.login_button>
+            <.login_button href={~p"/logg-inn/microsoft"}>
+              <.ms_logo /> Logg inn med Microsoft
+            </.login_button>
+            <p class="text-sm font-light opacity-90">
+              Bruk en bedriftskonto, så finner vi kollegaene dine :)
+            </p>
+          </div>
+          <div :if={@error_message} class="font-light text-sm opacity-90 my-5">
+            {Phoenix.HTML.raw(@error_message)}
+          </div>
         </div>
         <div>
           <img
@@ -67,47 +72,56 @@ defmodule TippingWeb.HomeComponents do
       assigns
       |> assign(
         :wrapper_class,
-        "mb-20 px-2.5 leading-[1.5] tracking-[1%] max-w-100 mx-auto"
+        ["mb-20 px-2.5 leading-[1.5] tracking-[1%] max-w-240 mx-auto", "lg:text-xl"]
       )
+      |> assign(:inner_wrapper_class, "max-w-180")
       |> assign(:header_class, "font-bold text-xl leading-none mb-5")
 
     ~H"""
     <section class={[@wrapper_class, "pt-42"]}>
-      <p class="mb-5">Konseptet er enkelt.</p>
-      <p class="mb-20">
-        Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,
-        og vinn heder og ære.
-      </p>
+      <div class={@inner_wrapper_class}>
+        <p class="mb-5">Konseptet er enkelt.</p>
+        <p class="mb-20">
+          Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,
+          og vinn heder og ære.
+        </p>
 
-      <h2 class="large-heading mb-15">Regler</h2>
-      <ol>
-        <.rule number={1}>Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder.</.rule>
-        <.rule number={2}>Siste frist for å tippe på en kamp er 10 minutter før avspark.</.rule>
-        <.rule number={3}>Poeng beregnes som følger:</.rule>
-        <.points_table />
-        <.rule number={4}>
-          Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt
-          muligheten til å skryte en liten stund. Det får dere avklare internt,
-          tenker jeg.
-        </.rule>
-      </ol>
+        <h2 class="large-heading mb-15">Regler</h2>
+        <ol>
+          <.rule number={1}>
+            Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder.
+          </.rule>
+          <.rule number={2}>Siste frist for å tippe på en kamp er 10 minutter før avspark.</.rule>
+          <.rule number={3}>Poeng beregnes som følger:</.rule>
+          <.points_table />
+          <.rule number={4}>
+            Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt
+            muligheten til å skryte en liten stund. Det får dere avklare internt,
+            tenker jeg.
+          </.rule>
+        </ol>
+      </div>
     </section>
 
     <section class={@wrapper_class}>
-      <h2 class={@header_class}>Litt om personvern og sånn</h2>
-      <p>
-        Når du logger inn lagrer vi en unik identfikator som vi får fra Google,
-        navnet ditt, og domenet til e-posten din (det etter <code>@</code>-tegnet).
-        Dette er de tre tingene siden trenger for å fungere, så mer enn det tar
-        vi ikke vare på.
-      </p>
+      <div class={@inner_wrapper_class}>
+        <h2 class={@header_class}>Litt om personvern og sånn</h2>
+        <p>
+          Når du logger inn lagrer vi en unik identfikator som vi får fra Google,
+          navnet ditt, og domenet til e-posten din (det etter <code>@</code>-tegnet).
+          Dette er de tre tingene siden trenger for å fungere, så mer enn det tar
+          vi ikke vare på.
+        </p>
+      </div>
     </section>
 
     <section class={@wrapper_class}>
-      <h2 class={@header_class}>Noe du vil melde?</h2>
-      <p>
-        Tilbakemeldinger, spørsmål, ris, ros, varme tanker og blomster kan sendes til <code>post@eaj.no</code>.
-      </p>
+      <div class={@inner_wrapper_class}>
+        <h2 class={@header_class}>Noe du vil melde?</h2>
+        <p>
+          Tilbakemeldinger, spørsmål, ris, ros, varme tanker og blomster kan sendes til <code>post@eaj.no</code>.
+        </p>
+      </div>
     </section>
     """
   end
@@ -157,7 +171,7 @@ defmodule TippingWeb.HomeComponents do
       ])
 
     ~H"""
-    <ol class="flex flex-col gap-0.5">
+    <ol class="flex flex-col gap-0.5 mb-5">
       <li class={@class}>
         <span>Korrekt resultat</span>
         <span>3&nbsp;p</span>

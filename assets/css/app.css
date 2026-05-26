@@ -115,3 +115,11 @@ input[type="number"] {
         11.679px 18.168px 21.412px 0 rgba(0, 0, 0, 0.09),
         2.92px 4.542px 11.679px 0 rgba(0, 0, 0, 0.1);
 }
+
+.flag-shadow {
+    box-shadow:
+        9px 14px 36px rgba(0, 0, 0, 0.1),
+        36px 56px 66px rgba(0, 0, 0, 0.09),
+        81px 125px 89px rgba(0, 0, 0, 0.05),
+        144px 222px 106px rgba(0, 0, 0, 0.01);
+}
