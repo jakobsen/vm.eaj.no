@@ -78,7 +78,7 @@ defmodule TippingWeb.CoreComponents do
           <p>{msg}</p>
         </div>
         <div class="flex-1" />
-        <button type="button" class="group self-start cursor-pointer" aria-label={gettext("close")}>
+        <button type="button" class="group self-start cursor-pointer" aria-label={gettext("lukk")}>
           <.icon name="hero-x-mark" class="size-5 opacity-40 group-hover:opacity-70" />
         </button>
       </div>
@@ -372,7 +372,7 @@ defmodule TippingWeb.CoreComponents do
         <tr>
           <th :for={col <- @col}>{col[:label]}</th>
           <th :if={@action != []}>
-            <span class="sr-only">{gettext("Actions")}</span>
+            <span class="sr-only">{gettext("Handlinger")}</span>
           </th>
         </tr>
       </thead>
