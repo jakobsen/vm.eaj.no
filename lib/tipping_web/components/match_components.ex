@@ -196,8 +196,19 @@ defmodule TippingWeb.MatchComponents do
   attr :team, WorldCup.Team
 
   defp team_display(assigns) do
+    rotation = Enum.random(-2..8)
+    y_offset = Enum.random(-10..10)
+    assigns = assigns |> assign(:rotation, rotation) |> assign(:y_offset, y_offset)
+
     ~H"""
-    <div class="grid text-black aspect-23/30 rounded-xs bg-white/90 text-xs text-center p-2 mt-8 w-23 border border-black/5 team-card-shadow last:justify-self-end">
+    <div
+      class={[
+        "grid text-black aspect-23/30 rounded-xs bg-white/90 text-xs text-center p-2 mt-8 w-23 border border-black/5 team-card-shadow",
+        "last:justify-self-end",
+        "[--rotation-sign:1] first:[--rotation-sign:-1]"
+      ]}
+      style={"transform: translateY(#{@y_offset}px) rotate(calc(var(--rotation-sign) * #{@rotation}deg));"}
+    >
       <.flag team={@team} />
       <span class="inline-block mt-2">
         {get_in(@team.name) || "—"}
