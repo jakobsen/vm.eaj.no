@@ -1,18 +1,8 @@
-# Tipping
+# Sogn Tipping
 
-To start your Phoenix server:
+<img src="./priv/static/images/og-banner.png" alt="Banner" width="600">
 
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+This is the code running [https://vm.eaj.no](https://vm.eaj.no), a friendly competition
+letting people who share a Google Workspace or Microsoft organization compete on predicting the results of the 2026 FIFA World Cup.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-* Official website: https://www.phoenixframework.org/
-* Guides: https://hexdocs.pm/phoenix/overview.html
-* Docs: https://hexdocs.pm/phoenix
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
+It is written using [Phoenix](https://www.phoenixframework.org), the most popular web framework for [Elixir](https://elixir-lang.org).
