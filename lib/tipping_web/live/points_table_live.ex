@@ -32,26 +32,34 @@ defmodule TippingWeb.PointsTableLive do
           Litt ensomt her? Hvorfor ikke dele lenken med noen kollegaer, fiender eller venner?
         </p>
         <button
-          class="mx-auto p-2 w-38 flex justify-center items-baseline gap-2 rounded border hover:bg-white/10 action:bg-black/10"
+          class="mx-auto p-2 w-38 flex justify-center items-baseline gap-2 rounded border cursor-pointer hover:bg-white/10 action:bg-black/10"
           id="copy-link"
           data-clipboard-text={url(~p"/")}
+          phx-hook=".CopyLink"
         >
           Kopier lenke <.icon name="hero-document-duplicate" />
         </button>
       </div>
     </Layouts.app>
-    <script>
-      const copyButton = document.querySelector("#copy-link");
-      const originalHtml = copyButton.innerHTML;
-
-      copyButton.addEventListener("click", () => {
-        navigator.clipboard.writeText(copyButton.dataset.clipboardText).then(() => {
-          copyButton.innerText = "Kopiert!";
-          setTimeout(() => {
-            copyButton.innerHTML = originalHtml;
-          }, 2000);
-        });
-      });
+    <script :type={Phoenix.LiveView.ColocatedHook} name=".CopyLink">
+      export default {
+        mounted() {
+          this.originalHtml = this.el.innerHTML;
+          this.onClick = () => {
+            navigator.clipboard.writeText(this.el.dataset.clipboardText).then(() => {
+              this.el.innerText = "Kopiert!";
+              this.timeout = setTimeout(() => {
+                this.el.innerHTML = this.originalHtml;
+              }, 2000);
+            });
+          };
+          this.el.addEventListener("click", this.onClick);
+        },
+        destroyed() {
+          this.el.removeEventListener("click", this.onClick);
+          if (this.timeout) clearTimeout(this.timeout);
+        }
+      }
     </script>
     """
   end
