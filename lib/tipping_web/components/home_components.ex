@@ -48,22 +48,33 @@ defmodule TippingWeb.HomeComponents do
           </div>
         </div>
         <div>
-          <img
-            class={[
-              "w-[305px] rounded-tl-full rounded-bl-full absolute -right-3 bottom-6",
-              "md:-right-20 md:-bottom-24"
-            ]}
-            src={~p"/images/misunnelig.webp"}
-            alt=""
-          />
-          <img
-            class={[
-              "w-[281px] pt-[125px] relative left-1/2 -translate-x-1/2 -bottom-8",
-              "md:translate-x-[unset] md:left-[unset] md:absolute md:right-16 md:-bottom-40"
-            ]}
-            src={~p"/images/maradona.webp"}
-            alt=""
-          />
+          <div class={[
+            "w-[305px] absolute -right-3 bottom-6",
+            "md:-right-20 md:-bottom-24"
+          ]}>
+            <img
+              class="rounded-tl-full rounded-bl-full"
+              src={~p"/images/misunnelig.webp"}
+              alt=""
+            />
+            <div class="absolute w-max top-11.5 right-35 text-xl tracking-[1.386px] bg-[#283182] px-2">
+              {gettext("Kolleagen din?")}
+            </div>
+            <.colleague_arrow class="absolute right-28 top-7" />
+          </div>
+          <div class={[
+            "w-[281px] pt-[125px] relative left-1/2 -translate-x-1/2 -bottom-8",
+            "md:translate-x-[unset] md:left-[unset] md:absolute md:right-16 md:-bottom-40"
+          ]}>
+            <img
+              src={~p"/images/maradona.webp"}
+              alt=""
+            />
+            <div class="absolute w-max top-89 left-64 text-xl tracking-[1.386px] bg-[#283182] px-2">
+              {gettext("Deg?")}
+            </div>
+            <.you_arrow class="absolute left-56.5 top-67.5" />
+          </div>
         </div>
       </div>
     </div>
@@ -196,6 +207,46 @@ defmodule TippingWeb.HomeComponents do
         <span>1&nbsp;p</span>
       </li>
     </ol>
+    """
+  end
+
+  attr :class, :string, default: nil
+
+  defp colleague_arrow(assigns) do
+    ~H"""
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="66"
+      height="14"
+      viewBox="0 0 66 14"
+      fill="none"
+      class={@class}
+    >
+      <path
+        d="M0.381511 10.7693C-0.0496788 11.1054 -0.126801 11.7274 0.209253 12.1586C0.545307 12.5897 1.16728 12.6669 1.59847 12.3308L0.98999 11.5501L0.381511 10.7693ZM64.492 12.5282C65.0322 12.4444 65.4022 11.9385 65.3184 11.3983L63.9527 2.595C63.8689 2.05479 63.363 1.68479 62.8228 1.7686C62.2826 1.8524 61.9126 2.35827 61.9964 2.89849L63.2104 10.7237L55.3852 11.9376C54.845 12.0214 54.475 12.5273 54.5588 13.0675C54.6426 13.6077 55.1484 13.9777 55.6887 13.8939L64.492 12.5282ZM0.98999 11.5501L1.59847 12.3308C11.6228 4.51816 38.1015 -6.41472 63.7559 12.349L64.3402 11.5501L64.9246 10.7511C38.2899 -8.72961 10.8035 2.64679 0.381511 10.7693L0.98999 11.5501Z"
+        fill="white"
+      />
+    </svg>
+    """
+  end
+
+  attr :class, :string, default: nil
+
+  defp you_arrow(assigns) do
+    ~H"""
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="74"
+      height="75"
+      viewBox="0 0 74 75"
+      fill="none"
+      class={@class}
+    >
+      <path
+        d="M72.3408 74.0608C72.2542 74.6005 71.7464 74.9679 71.2066 74.8812C70.6669 74.7946 70.2995 74.2868 70.3862 73.747L71.3635 73.9039L72.3408 74.0608ZM0.444129 9.2481C-0.011953 8.94669 -0.137335 8.33262 0.16407 7.87654L5.0758 0.444275C5.37721 -0.011801 5.99127 -0.137192 6.44736 0.164217C6.90344 0.465626 7.02883 1.07969 6.72742 1.53578L2.36143 8.14223L8.96789 12.5082C9.42397 12.8096 9.54936 13.4237 9.24795 13.8798C8.94654 14.3358 8.33248 14.4612 7.8764 14.1598L0.444129 9.2481ZM71.3635 73.9039L70.3862 73.747C72.5745 60.1129 71.6857 40.6177 62.0973 26.2709C57.32 19.1229 50.3744 13.2353 40.5179 9.96038C30.6471 6.68074 17.794 6.0013 1.18791 9.39213L0.989877 8.42229L0.791845 7.45245C17.6354 4.01316 30.8559 4.664 41.1421 8.08167C51.4426 11.5041 58.7373 17.6808 63.7432 25.1709C73.7209 40.1002 74.5694 60.176 72.3408 74.0608L71.3635 73.9039Z"
+        fill="white"
+      />
+    </svg>
     """
   end
 

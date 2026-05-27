@@ -21,7 +21,7 @@ msgstr ""
 msgid "Bruk en bedriftskonto, så finner vi kollegaene dine :)"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:95
+#: lib/tipping_web/components/home_components.ex:106
 #, elixir-autogen, elixir-format
 msgid "Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder."
 msgstr ""
@@ -51,32 +51,32 @@ msgstr ""
 msgid "Hm, nå skjedde det noe"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:86
+#: lib/tipping_web/components/home_components.ex:97
 #, elixir-autogen, elixir-format
 msgid "Konseptet er enkelt."
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:189
+#: lib/tipping_web/components/home_components.ex:202
 #, elixir-autogen, elixir-format
 msgid "Korrekt målforskjell"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:185
+#: lib/tipping_web/components/home_components.ex:198
 #, elixir-autogen, elixir-format
 msgid "Korrekt resultat"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:193
+#: lib/tipping_web/components/home_components.ex:206
 #, elixir-autogen, elixir-format
 msgid "Korrekt vinner"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:146
+#: lib/tipping_web/components/home_components.ex:159
 #, elixir-autogen, elixir-format
 msgid "Laget i Sogndal av"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:113
+#: lib/tipping_web/components/home_components.ex:124
 #, elixir-autogen, elixir-format
 msgid "Litt om personvern og sånn"
 msgstr ""
@@ -87,22 +87,22 @@ msgstr ""
 msgid "Logg inn med %{provider}"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:88
+#: lib/tipping_web/components/home_components.ex:99
 #, elixir-autogen, elixir-format
 msgid "Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,\n        og vinn heder og ære."
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:100
+#: lib/tipping_web/components/home_components.ex:111
 #, elixir-autogen, elixir-format
 msgid "Poeng beregnes som følger:"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:98
+#: lib/tipping_web/components/home_components.ex:109
 #, elixir-autogen, elixir-format
 msgid "Siste frist for å tippe på en kamp er 10 minutter før avspark."
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:129
+#: lib/tipping_web/components/home_components.ex:141
 #, elixir-autogen, elixir-format
 msgid "Tilbakemeldinger, spørsmål, ris, ros, varme tanker og blomster kan sendes til <code>post@eaj.no</code>."
 msgstr ""
@@ -117,12 +117,12 @@ msgstr ""
 msgid "lukk"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:103
+#: lib/tipping_web/components/home_components.ex:114
 #, elixir-autogen, elixir-format
 msgid "Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt\n        muligheten til å skryte en liten stund. Det får dere avklare internt,\n        tenker jeg."
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:116
+#: lib/tipping_web/components/home_components.ex:127
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Når du logger inn lagrer vi en unik identfikator som vi får fra Google/Microsoft,\n      navnet ditt, og domenet til e-posten din (det etter <code>@</code>-tegnet).\n      Dette er de tre tingene siden trenger for å fungere, så mer enn det tar\n      vi ikke vare på."
 msgstr ""
@@ -132,12 +132,22 @@ msgstr ""
 msgid "Nå gjenstår det bare å bevise det."
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:92
+#: lib/tipping_web/components/home_components.ex:103
 #, elixir-autogen, elixir-format
 msgid "Regler"
 msgstr ""
 
-#: lib/tipping_web/components/home_components.ex:127
+#: lib/tipping_web/components/home_components.ex:138
 #, elixir-autogen, elixir-format
 msgid "Noe du vil melde?"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:74
+#, elixir-autogen, elixir-format
+msgid "Deg?"
+msgstr ""
+
+#: lib/tipping_web/components/home_components.ex:61
+#, elixir-autogen, elixir-format
+msgid "Kolleagen din?"
 msgstr ""
