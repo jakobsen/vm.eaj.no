@@ -1,4 +1,8 @@
 defmodule TippingWeb.Auth.Google do
+  @moduledoc """
+  Functions for interacting with the Google OAuth2 service.
+  """
+
   use TippingWeb, :verified_routes
 
   @oauth2_endpoint "https://accounts.google.com/o/oauth2/v2/auth"

@@ -1,4 +1,8 @@
 defmodule TippingWeb.PointsTableComponents do
+  @moduledoc """
+  Components for the user standings page.
+  """
+
   use Phoenix.Component
 
   attr :scores, :list, required: true

@@ -1,4 +1,6 @@
 defmodule Tipping.AccountsFixtures do
+  @moduledoc false
+
   alias Tipping.Accounts
 
   def user_fixture(attrs \\ %{}) do

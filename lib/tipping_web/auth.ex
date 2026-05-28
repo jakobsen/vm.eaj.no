@@ -1,4 +1,8 @@
 defmodule TippingWeb.Auth do
+  @moduledoc """
+  Functions, plugs and on_mount callbacks for handling authentication.
+  """
+
   use TippingWeb, :verified_routes
 
   import Plug.Conn

@@ -1,4 +1,8 @@
 defmodule TippingWeb.MatchComponents do
+  @moduledoc """
+  Components for displaying matches and bets on the match list view.
+  """
+
   use TippingWeb, :verified_routes
   use Phoenix.Component
 

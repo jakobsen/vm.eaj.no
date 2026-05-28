@@ -1,4 +1,6 @@
 defmodule Tipping.WorldCupFixtures do
+  @moduledoc false
+
   alias Tipping.WorldCup
   alias Tipping.Repo
 

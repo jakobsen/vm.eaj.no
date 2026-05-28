@@ -42,6 +42,7 @@ defmodule Tipping.MixProject do
     [
       {:appsignal_phoenix, "~> 2.0"},
       {:bandit, "~> 1.5"},
+      {:credo, "~> 1.7"},
       {:dns_cluster, "~> 0.2.0"},
       {:ecto_sql, "~> 3.13"},
       {:ecto_sqlite3, ">= 0.0.0"},

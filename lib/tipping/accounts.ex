@@ -1,4 +1,8 @@
 defmodule Tipping.Accounts do
+  @moduledoc """
+  Context concerning users and auth.
+  """
+
   alias Tipping.Accounts.User
   alias Tipping.Repo
 

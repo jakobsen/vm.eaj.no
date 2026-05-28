@@ -1,4 +1,8 @@
 defmodule TippingWeb.Auth.Microsoft do
+  @moduledoc """
+  Functions for interacting with the Microsoft OAuth2 service.
+  """
+
   @oauth2_endpoint "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize"
   @token_endpoint "https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
   @jwks_url "https://login.microsoftonline.com/organizations/discovery/v2.0/keys"

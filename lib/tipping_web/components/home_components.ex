@@ -1,4 +1,8 @@
 defmodule TippingWeb.HomeComponents do
+  @moduledoc """
+  Components for use on the landing page.
+  """
+
   use Gettext, backend: TippingWeb.Gettext
   use Phoenix.Component
   use TippingWeb, :verified_routes

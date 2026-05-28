@@ -1,4 +1,8 @@
 defmodule Tipping.WorldCup do
+  @moduledoc """
+  Context concerned with games and teams.
+  """
+
   import Ecto.Query
 
   alias Tipping.Accounts

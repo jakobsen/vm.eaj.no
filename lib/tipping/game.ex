@@ -1,4 +1,8 @@
 defmodule Tipping.Game do
+  @moduledoc """
+  Context concerned with bets and user points.
+  """
+
   import Ecto.Query
 
   alias Tipping.Accounts
