@@ -61,10 +61,13 @@ defmodule TippingWeb.HomeComponents do
               src={~p"/images/misunnelig.webp"}
               alt=""
             />
-            <div class="absolute w-max top-11.5 right-35 text-xl tracking-[1.386px] bg-[#283182] px-2">
+            <div
+              data-animate="first"
+              class="absolute w-max top-11.5 right-35 text-xl tracking-[1.386px] bg-[#283182] px-2 opacity-0"
+            >
               {gettext("Kolleagen din?")}
             </div>
-            <.colleague_arrow class="absolute right-28 top-7" />
+            <.colleague_arrow class="absolute right-28 top-7 opacity-0" />
           </div>
           <div class={[
             "w-[281px] pt-[125px] relative left-1/2 -translate-x-1/2 -bottom-8",
@@ -74,10 +77,13 @@ defmodule TippingWeb.HomeComponents do
               src={~p"/images/maradona.webp"}
               alt=""
             />
-            <div class="absolute w-max top-89 left-64 text-xl tracking-[1.386px] bg-[#283182] px-2">
+            <div
+              data-animate="second"
+              class="opacity-0 absolute w-max top-89 left-64 text-xl tracking-[1.386px] bg-[#283182] px-2"
+            >
               {gettext("Deg?")}
             </div>
-            <.you_arrow class="absolute left-56.5 top-67.5" />
+            <.you_arrow class="opacity-0 absolute left-56.5 top-67.5" />
           </div>
         </div>
       </div>
@@ -219,6 +225,7 @@ defmodule TippingWeb.HomeComponents do
   defp colleague_arrow(assigns) do
     ~H"""
     <svg
+      data-animate="first"
       xmlns="http://www.w3.org/2000/svg"
       width="66"
       height="14"
@@ -239,6 +246,7 @@ defmodule TippingWeb.HomeComponents do
   defp you_arrow(assigns) do
     ~H"""
     <svg
+      data-animate="second"
       xmlns="http://www.w3.org/2000/svg"
       width="74"
       height="75"
