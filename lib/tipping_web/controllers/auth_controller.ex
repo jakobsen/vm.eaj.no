@@ -1,5 +1,6 @@
 defmodule TippingWeb.AuthController do
   use TippingWeb, :controller
+  use Gettext, backend: TippingWeb.Gettext
 
   require Logger
   alias Tipping.Accounts
@@ -10,6 +11,19 @@ defmodule TippingWeb.AuthController do
     redirect_to = Auth.Google.oauth2_url(state)
 
     conn |> put_session(:g_state, state) |> redirect(external: redirect_to)
+  end
+
+  def google_callback(conn, %{"error" => error}) do
+    Logger.warning("Error logging in with Google", error: error)
+
+    conn
+    |> put_flash(
+      :error,
+      gettext("Noe gikk galt ved innlogging. Forsøk igjen senere. Feilkode: %{error}",
+        error: error
+      )
+    )
+    |> redirect(to: ~p"/")
   end
 
   def google_callback(conn, %{"code" => code} = params) do
@@ -27,10 +41,10 @@ defmodule TippingWeb.AuthController do
         redirect(conn, to: ~p"/?feil=ikke-bedriftskonto")
 
       {:error, error} ->
-        Logger.error("Google login failed", error: inspect(error))
+        Logger.warning("Google login failed", error: inspect(error))
 
         conn
-        |> put_flash(:error, "Noe gikk galt ved innlogging. Prøv igjen")
+        |> put_flash(:error, gettext("Noe gikk galt ved innlogging. Forsøk igjen senere."))
         |> redirect(to: ~p"/")
     end
   end
@@ -40,6 +54,19 @@ defmodule TippingWeb.AuthController do
     redirect_to = Auth.Microsoft.oauth2_url(state)
 
     conn |> put_session(:ms_state, state) |> redirect(external: redirect_to)
+  end
+
+  def microsoft_callback(conn, %{"error" => error}) do
+    Logger.warning("Error logging in with Microsoft", error: error)
+
+    conn
+    |> put_flash(
+      :error,
+      gettext("Noe gikk galt ved innlogging. Forsøk igjen senere. Feilkode: %{error}",
+        error: error
+      )
+    )
+    |> redirect(to: ~p"/")
   end
 
   def microsoft_callback(conn, %{"code" => code} = params) do
