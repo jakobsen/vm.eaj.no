@@ -2,10 +2,13 @@
 default:
     @just --list
 
-# Deploy the current remote main branch to prod
-deploy:
-    mix test
+# Run Credo and tests
+check:
     mix credo
+    mix test
+
+# Deploy the current remote main branch to prod
+deploy: check
     ssh root@eaj.no 'bash -lc /root/vm/deploy.sh'
 
 # Run the dev server
