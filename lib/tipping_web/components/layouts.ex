@@ -36,7 +36,7 @@ defmodule TippingWeb.Layouts do
         <li><.link href={~p"/logg-ut"} method="post">Logg ut</.link></li>
       </ul>
     </header>
-    <main class="p-5 text-off-white max-w-110 mx-auto">
+    <main class="p-5 pb-[30svh] text-off-white max-w-110 mx-auto">
       {render_slot(@inner_block)}
     </main>
     <.flash_group flash={@flash} />
