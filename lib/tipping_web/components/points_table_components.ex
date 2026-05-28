@@ -5,7 +5,7 @@ defmodule TippingWeb.PointsTableComponents do
 
   def scoreboard(assigns) do
     ~H"""
-    <ol>
+    <ol class="grid gap-0.5">
       <li
         :for={row <- @scores}
         class={[
