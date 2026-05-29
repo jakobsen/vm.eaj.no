@@ -65,7 +65,7 @@ defmodule TippingWeb.HomeComponents do
               data-animate="first"
               class="absolute w-max top-11.5 right-35 text-xl tracking-[1.386px] bg-[#283182] px-2 opacity-0"
             >
-              {gettext("Kolleagen din?")}
+              {gettext("Kollegaen din?")}
             </div>
             <.colleague_arrow class="absolute right-28 top-7 opacity-0" />
           </div>

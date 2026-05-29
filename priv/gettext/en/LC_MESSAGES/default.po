@@ -28,7 +28,7 @@ msgstr "Sorry, we’re having some issues"
 msgid "Bruk en bedriftskonto, så finner vi kollegaene dine :)"
 msgstr "Use a work account so we can find your colleagues :)"
 
-#: lib/tipping_web/components/home_components.ex:110
+#: lib/tipping_web/components/home_components.ex:116
 msgid "Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder."
 msgstr "The bet is for the result after 90 minutes +&nbsp;stoppage time."
 
@@ -52,27 +52,27 @@ msgstr "Actions"
 msgid "Hm, nå skjedde det noe"
 msgstr "Hm, something happened"
 
-#: lib/tipping_web/components/home_components.ex:101
+#: lib/tipping_web/components/home_components.ex:107
 msgid "Konseptet er enkelt."
 msgstr "The concept is simple."
 
-#: lib/tipping_web/components/home_components.ex:206
+#: lib/tipping_web/components/home_components.ex:212
 msgid "Korrekt målforskjell"
 msgstr "Correct goal difference"
 
-#: lib/tipping_web/components/home_components.ex:202
+#: lib/tipping_web/components/home_components.ex:208
 msgid "Korrekt resultat"
 msgstr "Correct result"
 
-#: lib/tipping_web/components/home_components.ex:210
+#: lib/tipping_web/components/home_components.ex:216
 msgid "Korrekt vinner"
 msgstr "Correct winner"
 
-#: lib/tipping_web/components/home_components.ex:163
+#: lib/tipping_web/components/home_components.ex:169
 msgid "Laget i Sogndal av"
 msgstr "Made in Sogndal by"
 
-#: lib/tipping_web/components/home_components.ex:128
+#: lib/tipping_web/components/home_components.ex:134
 msgid "Litt om personvern og sånn"
 msgstr "Regarding privacy"
 
@@ -81,21 +81,21 @@ msgstr "Regarding privacy"
 msgid "Logg inn med %{provider}"
 msgstr "Log in with %{provider}"
 
-#: lib/tipping_web/components/home_components.ex:103
+#: lib/tipping_web/components/home_components.ex:109
 msgid ""
 "Logg inn med en bedriftskonto, tipp hva resultatet kommer til å bli i VM-kampene,\n"
 "        og vinn heder og ære."
 msgstr "Log in with a work account, bet on the World Cup results, win eternal glory."
 
-#: lib/tipping_web/components/home_components.ex:115
+#: lib/tipping_web/components/home_components.ex:121
 msgid "Poeng beregnes som følger:"
 msgstr "Points are calculated as follows:"
 
-#: lib/tipping_web/components/home_components.ex:113
+#: lib/tipping_web/components/home_components.ex:119
 msgid "Siste frist for å tippe på en kamp er 10 minutter før avspark."
 msgstr "Last call to make a bet is 10 minutes before kickoff."
 
-#: lib/tipping_web/components/home_components.ex:145
+#: lib/tipping_web/components/home_components.ex:151
 msgid "Tilbakemeldinger, spørsmål, ris, ros, varme tanker og blomster kan sendes til <code>post@eaj.no</code>."
 msgstr "Feedback, questions, complaints, praise, thoughts&nbsp;&&nbsp;prayers and flowers can be sent to <code>post@eaj.no</code>."
 
@@ -107,14 +107,14 @@ msgstr "We’re trying to fix things"
 msgid "lukk"
 msgstr "close"
 
-#: lib/tipping_web/components/home_components.ex:118
+#: lib/tipping_web/components/home_components.ex:124
 msgid ""
 "Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt\n"
 "        muligheten til å skryte en liten stund. Det får dere avklare internt,\n"
 "        tenker jeg."
 msgstr "Participation is free. The main prize is, as mentioned, eternal glory. And maybe bragging rights for a while. I’ll leave that up to you."
 
-#: lib/tipping_web/components/home_components.ex:131
+#: lib/tipping_web/components/home_components.ex:137
 msgid ""
 "Når du logger inn lagrer vi en unik identfikator som vi får fra Google/Microsoft,\n"
 "      navnet ditt, og domenet til e-posten din (det etter <code>@</code>-tegnet).\n"
@@ -126,21 +126,17 @@ msgstr "When you log in we store a unique identifier we get from Google/Microsof
 msgid "Nå gjenstår det bare å bevise det."
 msgstr "Now you’ve just got to prove it."
 
-#: lib/tipping_web/components/home_components.ex:107
+#: lib/tipping_web/components/home_components.ex:113
 msgid "Regler"
 msgstr "Rules"
 
-#: lib/tipping_web/components/home_components.ex:142
+#: lib/tipping_web/components/home_components.ex:148
 msgid "Noe du vil melde?"
 msgstr "Any thoughts?"
 
-#: lib/tipping_web/components/home_components.ex:78
+#: lib/tipping_web/components/home_components.ex:84
 msgid "Deg?"
 msgstr "You?"
-
-#: lib/tipping_web/components/home_components.ex:65
-msgid "Kolleagen din?"
-msgstr "Your colleague?"
 
 #: lib/tipping_web/controllers/auth_controller.ex:47
 msgid "Noe gikk galt ved innlogging. Forsøk igjen senere."
@@ -150,3 +146,7 @@ msgstr "Something went wrong when logging in. Please try again later."
 #: lib/tipping_web/controllers/auth_controller.ex:65
 msgid "Noe gikk galt ved innlogging. Forsøk igjen senere. Feilkode: %{error}"
 msgstr "Something went wrong when logging in. Please try again later. Error code: %{error}"
+
+#: lib/tipping_web/components/home_components.ex:68
+msgid "Kollegaen din?"
+msgstr "Your colleague?"
