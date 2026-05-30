@@ -13,7 +13,8 @@ defmodule TippingWeb.PointsTableComponents do
       <li
         :for={row <- @scores}
         class={[
-          "flex justify-between py-3 px-5 bg-[#27308366]",
+          row.background,
+          "flex justify-between py-3 px-5",
           "first:rounded-tr-[20px]",
           "last:rounded-bl-[20px]"
         ]}
