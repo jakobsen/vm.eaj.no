@@ -8,5 +8,7 @@ defmodule TippingWeb.PageHTML do
 
   import TippingWeb.HomeComponents
 
+  alias TippingWeb.Layouts
+
   embed_templates "page_html/*"
 end

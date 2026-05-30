@@ -12,14 +12,15 @@ defmodule TippingWeb.Layouts do
   embed_templates "layouts/*"
 
   attr :flash, :map, required: true
-  attr :current_page, :atom, values: ~w(kamper tabell)a, required: true
+  attr :current_page, :atom, values: ~w(kamper tabell regler)a, required: true
   slot :inner_block, required: true
 
   def app(assigns) do
     assigns =
       assign(assigns, :nav_items, [
         {~p"/kamper", :kamper, "Kamper"},
-        {~p"/tabell", :tabell, "Tabell"}
+        {~p"/tabell", :tabell, "Tabell"},
+        {~p"/regler", :regler, "Regler"}
       ])
 
     ~H"""

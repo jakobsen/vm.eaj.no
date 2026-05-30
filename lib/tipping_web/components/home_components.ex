@@ -185,7 +185,7 @@ defmodule TippingWeb.HomeComponents do
   attr :number, :integer
   slot :inner_block
 
-  defp rule(assigns) do
+  def rule(assigns) do
     ~H"""
     <li class="flex gap-5 px-2.5 py-5">
       <span class="font-extrabold text-[1.875rem] opacity-20">{@number}</span>
@@ -194,7 +194,7 @@ defmodule TippingWeb.HomeComponents do
     """
   end
 
-  defp points_table(assigns) do
+  def points_table(assigns) do
     assigns =
       assign(assigns, :class, [
         "py-3 px-5 flex justify-between bg-[#27308366]",

@@ -6,6 +6,10 @@ defmodule TippingWeb.PageController do
     render(conn, :home, error_message: error_message(params["feil"]))
   end
 
+  def rules(conn, _params) do
+    render(conn, :rules)
+  end
+
   defp error_message("ikke-bedriftskonto"),
     do:
       "Du må logge inn med en Google-konto tilknyttet et Workspace.<br />Personlige Gmail-kontorer er dessverre ikke støttet."

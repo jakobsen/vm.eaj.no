@@ -1,0 +1,18 @@
+<Layouts.app flash={@flash} current_page={:regler}>
+  <h2 class="large-heading mb-15">{gettext("Regler")}</h2>
+  <ol>
+    <.rule number={1}>
+      {raw(gettext("Det er resultatet etter 90 minutter +&nbsp;tilleggstid som gjelder."))}
+    </.rule>
+    <.rule number={2}>
+      {gettext("Siste frist for å tippe på en kamp er 10 minutter før avspark.")}
+    </.rule>
+    <.rule number={3}>{gettext("Poeng beregnes som følger:")}</.rule>
+    <.points_table />
+    <.rule number={4}>
+      {gettext("Å delta er gratis. Premie er som nevnt heder og ære. Eventuelt
+      muligheten til å skryte en liten stund. Det får dere avklare internt,
+      tenker jeg.")}
+    </.rule>
+  </ol>
+</Layouts.app>
