@@ -3,6 +3,7 @@ defmodule TippingWeb.MatchListLiveTest do
 
   import Tipping.AccountsFixtures
 
+  alias Tipping.WorldCup.Match
   alias Tipping.WorldCup
   alias TippingWeb.MatchListLive
 
@@ -31,5 +32,54 @@ defmodule TippingWeb.MatchListLiveTest do
 
       assert Enum.all?(matches, fn match -> match.kickoff_at.time_zone == "Europe/Oslo" end)
     end
+  end
+
+  describe "match_status/2" do
+    test "A match with unknown team IDs is disabled" do
+      assert MatchListLive.match_status(
+               %Match{},
+               ~U[2026-06-01 21:00:00Z]
+             ) == :disabled
+    end
+
+    test "A match ocurring more than 10 minutes in the future is open" do
+      assert MatchListLive.match_status(
+               %Match{kickoff_at: ~U[2026-06-11 19:00:00Z], home_team_id: 1, away_team_id: 2},
+               ~U[2026-06-01 21:00:00Z]
+             ) == :open
+    end
+  end
+
+  test "A match ocurring 10 minutes and 1 second in the future is open" do
+    assert MatchListLive.match_status(
+             %Match{kickoff_at: ~U[2026-06-11 19:00:00Z], home_team_id: 1, away_team_id: 2},
+             ~U[2026-06-11 18:49:59Z]
+           ) == :open
+  end
+
+  test "A match ocurring exactly 10 minutes in the future is locked" do
+    assert MatchListLive.match_status(
+             %Match{kickoff_at: ~U[2026-06-11 19:00:00Z], home_team_id: 1, away_team_id: 2},
+             ~U[2026-06-11 18:50:00Z]
+           ) == :locked
+  end
+
+  test "A match ocurring in the past with no score set is locked" do
+    assert MatchListLive.match_status(
+             %Match{kickoff_at: ~U[2026-06-11 19:00:00Z], home_team_id: 1, away_team_id: 2},
+             ~U[2026-06-11 20:50:00Z]
+           ) == :locked
+  end
+
+  test "A match with a score set is complete" do
+    assert MatchListLive.match_status(
+             %Match{
+               home_score: Enum.random(0..10),
+               away_score: Enum.random(0..10),
+               home_team_id: 1,
+               away_team_id: 2
+             },
+             ~U[2026-06-11 20:50:00Z]
+           ) == :complete
   end
 end

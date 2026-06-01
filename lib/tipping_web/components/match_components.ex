@@ -42,24 +42,17 @@ defmodule TippingWeb.MatchComponents do
 
   attr :bet, Game.Bet
   attr :match, WorldCup.Match, required: true
-  attr :locked?, :boolean, required: true
+  attr :status, :atom, values: ~w(disabled open locked complete)a, required: true
 
   def match_card(assigns) do
-    status =
-      cond do
-        assigns.locked? -> :locked
-        is_nil(assigns.match.home_team_id) or is_nil(assigns.match.away_team_id) -> :disabled
-        true -> :open
-      end
-
     gradient_colors =
-      case status do
+      case assigns.status do
         :locked -> "from-[#1b3a35] to-[#1a4740]"
         :disabled -> "from-gray-500 to-gray-600"
         :open -> "from-[#0099f7] to-[#093ca2]"
       end
 
-    assigns = assigns |> assign(:status, status) |> assign(:gradient_colors, gradient_colors)
+    assigns = assign(assigns, :gradient_colors, gradient_colors)
 
     ~H"""
     <div class="mb-15">
@@ -76,7 +69,7 @@ defmodule TippingWeb.MatchComponents do
         phx-value-match_id={@match.id}
         phx-hook=".BetForm"
         id={"match-#{@match.id}-bet"}
-        disabled={@locked?}
+        disabled={@status == :locked}
       >
         <.decorative_circle />
         <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-3">

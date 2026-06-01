@@ -32,7 +32,7 @@ defmodule TippingWeb.MatchListLive do
                 :for={entry <- entries}
                 bet={entry.bet}
                 match={entry.match}
-                locked?={entry.match_locked?}
+                status={entry.status}
               />
             </div>
           <% end %>
@@ -78,12 +78,21 @@ defmodule TippingWeb.MatchListLive do
     now = DateTime.utc_now()
 
     WorldCup.list_matches_with_bets(user)
-    |> Enum.map(&Map.put(&1, :match_locked?, Game.match_locked?(&1.match, now)))
+    |> Enum.map(&Map.put(&1, :status, match_status(&1.match, now)))
     |> Enum.map(fn entry ->
       update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
     end)
     |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
     |> Map.to_list()
     |> Enum.sort_by(fn {date, _} -> date end, Date)
+  end
+
+  def match_status(%WorldCup.Match{} = match, now \\ DateTime.utc_now()) do
+    cond do
+      match.home_team_id == nil or match.away_team_id == nil -> :disabled
+      match.home_score != nil and match.away_score != nil -> :complete
+      DateTime.diff(match.kickoff_at, now, :second) <= 600 -> :locked
+      true -> :open
+    end
   end
 end
