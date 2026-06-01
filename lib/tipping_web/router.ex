@@ -51,6 +51,7 @@ defmodule TippingWeb.Router do
     live_session :require_admin, on_mount: [{TippingWeb.Auth, :require_admin}] do
       live "/", Admin.MatchesLive
       live "/kamper/:id", Admin.MatchFormLive
+      live "/eventyr", Admin.MatchStoriesLive
     end
   end
 
