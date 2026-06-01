@@ -294,8 +294,8 @@ defmodule TippingWeb.HomeComponents do
       class="max-w-91.5 font-roboto block rounded-full p-0.75 bg-linear-to-r from-white/30 to-[#858585]/30"
     >
       <div class={[
-        "py-2.5 px-6 bg-[hsl(226,_76%,_46%)] rounded-full flex gap-2.5 justify-center items-center",
-        "hover:bg-[hsl(226,_76%,_51%)]"
+        "py-2.5 px-6 bg-[hsl(226,76%,46%)] rounded-full flex gap-2.5 justify-center items-center",
+        "hover:bg-[hsl(226,76%,51%)]"
       ]}>
         {render_slot(@inner_block)}
       </div>

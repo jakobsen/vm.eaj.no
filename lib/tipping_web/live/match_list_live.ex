@@ -23,7 +23,7 @@ defmodule TippingWeb.MatchListLive do
       <h1 class="text-center font-bold text-xl mb-3">Tipp i vei!</h1>
       <p class="text-center text-sm mb-8">Kampene låses 10 min før avspark.</p>
       <div class="relative pt-12">
-        <div class="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-[0.5px] bg-white" />
+        <div class="absolute top-0 bottom-0 left-1/2 w-px -translate-x-[0.5px] bg-white" />
         <div class="relative">
           <%= for {day, entries} <- @matches_by_day do %>
             <.day_label date={day} />

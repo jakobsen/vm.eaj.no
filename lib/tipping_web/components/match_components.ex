@@ -61,7 +61,7 @@ defmodule TippingWeb.MatchComponents do
       </p>
       <form
         class={[
-          "relative overflow-hidden p-[3.24px] border border-[3.24px] border-white/10 rounded-[6.5px] bg-radial",
+          "relative overflow-hidden p-[3.24px] border-[3.24px] border-white/10 rounded-[6.5px] bg-radial",
           @gradient_colors
         ]}
         phx-change="place-bet"
@@ -72,7 +72,7 @@ defmodule TippingWeb.MatchComponents do
         disabled={@status == :locked}
       >
         <.decorative_circle />
-        <div class="relative border border-[0.65px] border-white/50 rounded-[3.24px] p-3">
+        <div class="relative border-[0.65px] border-white/50 rounded-[3.24px] p-3">
           <div class="grid grid-cols-3">
             <.team_display team={@match.home_team} />
             <.bet_display bet={@bet} status={@status} />
@@ -137,7 +137,7 @@ defmodule TippingWeb.MatchComponents do
 
   defp bet_column(%{status: :locked} = assigns) do
     ~H"""
-    <div class="h-[2.5rem] w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
+    <div class="h-10 w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
       {@score || "–"}
     </div>
     """
