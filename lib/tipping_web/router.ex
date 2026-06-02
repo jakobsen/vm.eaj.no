@@ -17,6 +17,11 @@ defmodule TippingWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :protected_api do
+    plug :api
+    plug :require_valid_bearer_token
+  end
+
   scope "/", TippingWeb do
     pipe_through [:browser, :redirect_authenticated_user]
 
@@ -59,6 +64,12 @@ defmodule TippingWeb.Router do
     pipe_through :api
 
     get "/health", HealthController, :health
+  end
+
+  scope "/api", TippingWeb do
+    pipe_through :protected_api
+
+    get "/leaderboard", ApiController, :leaderboard
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
