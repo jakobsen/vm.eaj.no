@@ -68,6 +68,7 @@ defmodule Tipping.MixProject do
       {:phoenix_live_reload, "~> 1.2", [only: :dev]},
       {:phoenix_live_view, "~> 1.1.0"},
       {:req, "~> 0.5"},
+      {:sqids, "~> 0.2.2"},
       {:swoosh, "~> 1.16"},
       {:tailwind, "~> 0.3", [runtime: false]},
       {:telemetry_metrics, "~> 1.0"},
