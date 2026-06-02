@@ -57,6 +57,35 @@ defmodule Tipping.AccountsTest do
       assert second_user.name == "That's an even better name"
       assert second_user.organization == "aidn.no"
     end
+
+    test "creates an API key for a user when first created" do
+      {:ok, user} =
+        Accounts.get_or_create_user(%{
+          auth_provider_sub: "abc123",
+          name: "That's a great name",
+          organization: "dreng.no"
+        })
+
+      assert user.api_key != nil
+    end
+
+    test "API key is unchanged when the user already exists" do
+      {:ok, first_user} =
+        Accounts.get_or_create_user(%{
+          auth_provider_sub: "abc123",
+          name: "That's a great name",
+          organization: "dreng.no"
+        })
+
+      {:ok, second_user} =
+        Accounts.get_or_create_user(%{
+          auth_provider_sub: "abc123",
+          name: "That's an even better name",
+          organization: "aidn.no"
+        })
+
+      assert first_user.api_key == second_user.api_key
+    end
   end
 
   describe "make_admin/1" do

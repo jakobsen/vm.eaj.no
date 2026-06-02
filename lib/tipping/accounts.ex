@@ -26,4 +26,8 @@ defmodule Tipping.Accounts do
   def make_admin(%User{} = user) do
     user |> User.admin_changeset(true) |> Repo.update()
   end
+
+  def generate_api_key() do
+    :crypto.strong_rand_bytes(16) |> Base.encode32(padding: false, case: :lower)
+  end
 end
