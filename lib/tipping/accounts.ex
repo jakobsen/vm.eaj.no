@@ -9,6 +9,13 @@ defmodule Tipping.Accounts do
   def get_user_by_id(nil), do: nil
   def get_user_by_id(id), do: Repo.get(User, id)
 
+  def get_user_by_api_key(key) do
+    case Repo.get_by(User, api_key: key) do
+      %User{} = user -> {:ok, user}
+      _ -> {:error, :not_found}
+    end
+  end
+
   def get_or_create_user(attrs) do
     case Repo.get_by(User, auth_provider_sub: Map.get(attrs, :auth_provider_sub, "invalid_attrs")) do
       nil ->

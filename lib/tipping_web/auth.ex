@@ -56,6 +56,17 @@ defmodule TippingWeb.Auth do
     end
   end
 
+  def require_valid_bearer_token(conn, _opts) do
+    with [<<bearer::binary-size(6), " ", key::binary>>] <- get_req_header(conn, "authorization"),
+         true <- String.downcase(bearer) == "bearer",
+         {:ok, user} <- Accounts.get_user_by_api_key(key) do
+      assign(conn, :user, user)
+    else
+      _ ->
+        conn |> send_resp(:unauthorized, "missing or invalid token") |> halt()
+    end
+  end
+
   def on_mount(:require_authenticated, _params, session, socket) do
     socket = mount_current_user(socket, session)
 

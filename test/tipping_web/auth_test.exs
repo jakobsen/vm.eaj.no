@@ -82,6 +82,37 @@ defmodule TippingWeb.AuthTest do
     end
   end
 
+  describe "require_valid_bearer_token/2" do
+    test "returns a 401 when no header is present", %{conn: conn} do
+      conn = Auth.require_valid_bearer_token(conn, [])
+      assert conn.status == 401
+      assert conn.halted
+    end
+
+    test "returns a 401 when an invalid token is present", %{conn: conn} do
+      conn =
+        conn
+        |> put_req_header("authorization", "bearer this-aint-it")
+        |> Auth.require_valid_bearer_token([])
+
+      assert conn.status == 401
+      assert conn.halted
+    end
+
+    test "assigns the user when given a valid key", %{conn: conn} do
+      user = user_fixture()
+
+      conn =
+        conn
+        |> put_req_header("authorization", "bearer #{user.api_key}")
+        |> Auth.require_valid_bearer_token([])
+
+      refute conn.status
+      refute conn.halted
+      assert conn.assigns.user.id == user.id
+    end
+  end
+
   describe "on_mount: require_authenticated" do
     test "authenticates given a valid user ID in the session", %{conn: conn, user: user} do
       session = conn |> put_session(:user_id, user.id) |> get_session()
