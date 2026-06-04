@@ -28,7 +28,7 @@ defmodule TippingWeb.PointsTableLive do
       <h1 class="large-heading mb-10">Tabell</h1>
       <p class="mb-3">Stillingen i {@user.organization} så langt.</p>
       <.scoreboard scores={@scores} />
-      <div :if={@all_alone?} class="mt-10">
+      <div :if={@all_alone?} class="my-10">
         <p class="mb-5">
           Litt ensomt her? Hvorfor ikke dele lenken med noen kollegaer, fiender eller venner?
         </p>
@@ -41,6 +41,25 @@ defmodule TippingWeb.PointsTableLive do
           Kopier lenke <.icon name="hero-document-duplicate" />
         </button>
       </div>
+
+      <details>
+        <summary class="mb-2 opacity-60">Utvikler? Vil du gjøre noe med tabellen?</summary>
+        <p class="mb-2">Hent den som JSON med f.eks. curl:</p>
+        <div class="absolute left-1/2 -translate-x-1/2">
+          <pre class="mb-2 rounded p-2 w-max max-w-[calc(100vw-8px)] bg-white/10 overflow-x-scroll">
+    curl {url(~p"/api/leaderboard")} \
+      -H 'Authorization: Bearer {@user.api_key}'
+        </pre>
+          <button
+            class="mx-auto p-2 w-45 flex justify-center items-baseline gap-2 rounded border cursor-pointer hover:bg-white/10 action:bg-black/10"
+            id="copy-link"
+            data-clipboard-text={"curl #{url(~p"/api/leaderboard")} -H 'Authorization: Bearer #{@user.api_key}'"}
+            phx-hook=".CopyLink"
+          >
+            Kopier curl-snutt <.icon name="hero-document-duplicate" />
+          </button>
+        </div>
+      </details>
     </Layouts.app>
     <script :type={Phoenix.LiveView.ColocatedHook} name=".CopyLink">
       export default {

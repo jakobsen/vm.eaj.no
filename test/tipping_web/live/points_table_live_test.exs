@@ -1,5 +1,5 @@
 defmodule TippingWeb.PointsTableLiveTest do
-  use Tipping.DataCase
+  use TippingWeb.ConnCase
 
   import Tipping.AccountsFixtures
 
@@ -88,5 +88,11 @@ defmodule TippingWeb.PointsTableLiveTest do
                  current_user
                )
     end
+  end
+
+  test "users can see their API key on the page", %{conn: conn} do
+    user = user_fixture()
+    conn = conn |> init_test_session(%{user_id: user.id}) |> get(~p"/tabell")
+    assert html_response(conn, 200) =~ user.api_key
   end
 end
