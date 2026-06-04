@@ -42,7 +42,7 @@ defmodule TippingWeb.PointsTableLive do
         </button>
       </div>
 
-      <details>
+      <details class="mt-10">
         <summary class="mb-2 opacity-60">Utvikler? Vil du gjøre noe med tabellen?</summary>
         <p class="mb-2">Hent den som JSON med f.eks. curl:</p>
         <div class="absolute left-1/2 -translate-x-1/2">
