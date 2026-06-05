@@ -10,6 +10,8 @@ defmodule Tipping.Game do
   alias Tipping.Repo
   alias Tipping.WorldCup
 
+  @kernel_orgs ["aidn.no", "deepinsight.io"]
+
   def place_bet(
         %Accounts.User{} = user,
         %WorldCup.Match{} = match,
@@ -33,10 +35,7 @@ defmodule Tipping.Game do
   end
 
   def organization_scoreboard(%Accounts.User{} = user) do
-    users =
-      Repo.all(
-        from u in Accounts.User, where: u.organization == ^user.organization, preload: [:bets]
-      )
+    users = user |> users_in_org_query() |> Repo.all()
 
     matches =
       Repo.all(WorldCup.Match)
@@ -74,4 +73,13 @@ defmodule Tipping.Game do
     do:
       (bet.home_score > bet.away_score and match.home_score > match.away_score) or
         (bet.home_score < bet.away_score and match.home_score < match.away_score)
+
+  defp users_in_org_query(%Accounts.User{organization: organization})
+       when organization in @kernel_orgs do
+    from(u in Accounts.User, where: u.organization in @kernel_orgs, preload: [:bets])
+  end
+
+  defp users_in_org_query(%Accounts.User{} = user) do
+    from(u in Accounts.User, where: u.organization == ^user.organization, preload: [:bets])
+  end
 end

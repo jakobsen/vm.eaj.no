@@ -344,6 +344,22 @@ defmodule Tipping.GameTest do
 
       assert [%{points: 6}, %{points: 0}] = Game.organization_scoreboard(user)
     end
+
+    test "users from aidn.no and deepinsight.io share a table" do
+      aidn_user = user_fixture(%{organization: "aidn.no"})
+      deepinsight_user = user_fixture(%{organization: "deepinsight.io"})
+      _some_other_user = user_fixture()
+      expected_set = MapSet.new([aidn_user.id, deepinsight_user.id])
+
+      aidn_found_user_id_set =
+        Game.organization_scoreboard(aidn_user) |> Enum.map(& &1.user.id) |> MapSet.new()
+
+      deepinsight_found_user_id_set =
+        Game.organization_scoreboard(deepinsight_user) |> Enum.map(& &1.user.id) |> MapSet.new()
+
+      assert aidn_found_user_id_set == expected_set
+      assert deepinsight_found_user_id_set == expected_set
+    end
   end
 
   test "users with the same amount of points are listed alphabetically" do
