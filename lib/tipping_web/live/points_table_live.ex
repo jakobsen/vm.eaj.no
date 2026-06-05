@@ -114,7 +114,9 @@ defmodule TippingWeb.PointsTableLive do
   defp munge_organization_name(organization) do
     known_organization_names = %{
       "aidn.no" => "Kernel",
-      "deepinsight.io" => "Kernel"
+      "deepinsight.io" => "Kernel",
+      "tryg.no" => "Tryg",
+      "dreng.studio" => "Dreng"
     }
 
     Map.get(known_organization_names, organization, organization)
