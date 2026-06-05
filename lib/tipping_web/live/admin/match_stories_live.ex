@@ -50,13 +50,13 @@ defmodule TippingWeb.Admin.MatchStoriesLive do
       <.match_card bet={@bet_without_score} match={@match} status={:open} />
 
       <h2 class="text-2xl my-6">Låst kamp, uten tipp</h2>
-      <.match_card bet={@bet_without_score} match={@match} status={:locked} />
+      <.match_card match={@match} status={:locked} />
 
       <h2 class="text-2xl my-6">Låst kamp, med tipp</h2>
       <.match_card bet={@bet_with_score} match={@match} status={:locked} />
 
       <h2 class="text-2xl my-6">Ferdigspilt kamp, med tipp</h2>
-      <.match_card bet={@bet_with_score} match={@match} status={:complete} />
+      <.match_card bet={@bet_with_score} match={@match_with_score} status={:complete} />
 
       <h2 class="text-2xl my-6">Fremtidig kamp uten lag</h2>
       <.match_card bet={@bet_without_score} match={@match_without_teams} status={:disabled} />

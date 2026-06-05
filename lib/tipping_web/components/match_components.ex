@@ -40,7 +40,7 @@ defmodule TippingWeb.MatchComponents do
     """
   end
 
-  attr :bet, Game.Bet
+  attr :bet, Game.Bet, default: nil
   attr :match, WorldCup.Match, required: true
   attr :status, :atom, values: ~w(disabled open locked complete)a, required: true
 
@@ -76,7 +76,7 @@ defmodule TippingWeb.MatchComponents do
         <div class="relative border-[0.65px] border-white/50 rounded-[3.24px] p-3">
           <div class="grid grid-cols-3">
             <.team_display team={@match.home_team} />
-            <.bet_display bet={@bet} status={@status} />
+            <.bet_display bet={@bet} match={@match} status={@status} />
             <.team_display team={@match.away_team} />
           </div>
           <p class="absolute top-1.5 right-1.5 bg-dark-blue rounded-full text-sm font-light px-3 py-1 leading-none">
@@ -118,28 +118,61 @@ defmodule TippingWeb.MatchComponents do
   end
 
   attr :bet, Game.Bet
+  attr :match, WorldCup.Match, required: true
   attr :status, :atom, values: ~w(open locked disabled complete)a, required: true
 
   defp bet_display(assigns) do
     ~H"""
     <div class="justify-self-center">
-      <p :if={@status == :locked} class="text-xs text-center small-caps font-light mb-2">Du tippet</p>
-      <div class="text-2xl flex">
-        <.bet_column score={get_in(@bet.home_score)} side="home" status={@status} />
-        <.bet_column score={get_in(@bet.away_score)} side="away" status={@status} />
+      <div
+        :if={@status in [:locked, :complete]}
+        class="text-xs flex flex-col justify-center text-center gap-2 font-light mb-2 h-full"
+      >
+        <p>
+          Du tippet <span :if={@bet}><br />{@bet.home_score}&ndash;{@bet.away_score}</span>
+          <span :if={!@bet}>ikke</span>
+        </p>
+        <p :if={@match.home_score}>
+          Faktisk resultat<br />{@match.home_score}&ndash;{@match.away_score}
+        </p>
+      </div>
+      <div :if={@status == :open} class="text-2xl flex">
+        <.bet_column
+          score={get_in(@bet.home_score)}
+          actual_score={@match.home_score}
+          side="home"
+          status={@status}
+        />
+        <.bet_column
+          score={get_in(@bet.away_score)}
+          actual_score={@match.away_score}
+          side="away"
+          status={@status}
+        />
       </div>
     </div>
     """
   end
 
   attr :score, :integer, default: nil
+  attr :actual_score, :integer, default: nil
   attr :side, :string, values: ~w(home away), required: true
   attr :status, :atom
 
   defp bet_column(%{status: status} = assigns) when status in [:locked, :complete] do
     ~H"""
-    <div class="h-10 w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
-      {@score || "–"}
+    <div class="grid justify-items-center gap-2">
+      <div class="h-10 w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
+        {@score || "–"}
+      </div>
+      <div
+        :if={@actual_score}
+        class="text-sm font-light size-5 grid place-items-center rounded-full bg-white text-black"
+      >
+        <span class="-translate-y-px">
+          {@actual_score}
+        </span>
+      </div>
     </div>
     """
   end
