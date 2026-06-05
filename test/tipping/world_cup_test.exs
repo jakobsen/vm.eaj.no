@@ -101,5 +101,13 @@ defmodule Tipping.WorldCupTest do
                  away_score: away_score
                })
     end
+
+    test "After updating a score, it is possible to change only one of the scores", %{
+      admin_user: user,
+      match: match
+    } do
+      {:ok, match} = WorldCup.update_match(user, match, %{home_score: 1, away_score: 0})
+      assert {:ok, _match} = WorldCup.update_match(user, match, %{home_score: 1, away_score: 1})
+    end
   end
 end

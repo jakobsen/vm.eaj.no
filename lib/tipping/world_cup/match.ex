@@ -26,7 +26,7 @@ defmodule Tipping.WorldCup.Match do
   end
 
   defp validate_both_scores(changeset) do
-    case {get_change(changeset, :home_score), get_change(changeset, :away_score)} do
+    case {get_field(changeset, :home_score), get_field(changeset, :away_score)} do
       {nil, nil} -> changeset
       {home, away} when is_integer(home) and is_integer(away) -> changeset
       _ -> add_error(changeset, :score, "Both scores must be nil or set")
