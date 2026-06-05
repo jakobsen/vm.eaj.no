@@ -5,10 +5,12 @@ defmodule TippingWeb.PointsTableComponents do
 
   use Phoenix.Component
 
+  attr :organization, :string, required: true
   attr :scores, :list, required: true
 
   def scoreboard(assigns) do
     ~H"""
+    <p class="mb-3">Stillingen i {@organization} så langt.</p>
     <ol class="grid gap-0.5">
       <li
         :for={row <- @scores}

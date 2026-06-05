@@ -26,8 +26,7 @@ defmodule TippingWeb.PointsTableLive do
     ~H"""
     <Layouts.app current_page={:tabell} flash={@flash}>
       <h1 class="large-heading mb-10">Tabell</h1>
-      <p class="mb-3">Stillingen i {@user.organization} så langt.</p>
-      <.scoreboard scores={@scores} />
+      <.scoreboard organization={munge_organization_name(@user.organization)} scores={@scores} />
       <div :if={@all_alone?} class="my-10">
         <p class="mb-5">
           Litt ensomt her? Hvorfor ikke dele lenken med noen kollegaer, fiender eller venner?
@@ -110,5 +109,14 @@ defmodule TippingWeb.PointsTableLive do
       end)
 
     updated_scores
+  end
+
+  defp munge_organization_name(organization) do
+    known_organization_names = %{
+      "aidn.no" => "Kernel",
+      "deepinsight.io" => "Kernel"
+    }
+
+    Map.get(known_organization_names, organization, organization)
   end
 end
