@@ -49,6 +49,7 @@ defmodule TippingWeb.MatchComponents do
       case assigns.status do
         :locked -> "from-[#1b3a35] to-[#1a4740]"
         :disabled -> "from-gray-500 to-gray-600"
+        :complete -> "from-gray-500 to-gray-600"
         :open -> "from-[#0099f7] to-[#093ca2]"
       end
 
@@ -117,7 +118,7 @@ defmodule TippingWeb.MatchComponents do
   end
 
   attr :bet, Game.Bet
-  attr :status, :atom, values: ~w(open locked disabled)a, required: true
+  attr :status, :atom, values: ~w(open locked disabled complete)a, required: true
 
   defp bet_display(assigns) do
     ~H"""
@@ -135,7 +136,7 @@ defmodule TippingWeb.MatchComponents do
   attr :side, :string, values: ~w(home away), required: true
   attr :status, :atom
 
-  defp bet_column(%{status: :locked} = assigns) do
+  defp bet_column(%{status: status} = assigns) when status in [:locked, :complete] do
     ~H"""
     <div class="h-10 w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
       {@score || "–"}

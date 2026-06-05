@@ -22,6 +22,17 @@ defmodule TippingWeb.Admin.MatchStoriesLive do
          kickoff_at: ~U[2026-06-11 17:00:00Z],
          stage: "Testspill"
        },
+       match_with_score: %WorldCup.Match{
+         id: 1,
+         home_team_id: home_team.id,
+         home_team: home_team,
+         away_team_id: away_team.id,
+         away_team: away_team,
+         home_score: 2,
+         away_score: 1,
+         kickoff_at: ~U[2026-06-11 17:00:00Z],
+         stage: "Testspill"
+       },
        match_without_teams: %WorldCup.Match{
          id: 1,
          kickoff_at: ~U[2026-06-11 17:00:00Z],
@@ -43,6 +54,9 @@ defmodule TippingWeb.Admin.MatchStoriesLive do
 
       <h2 class="text-2xl my-6">Låst kamp, med tipp</h2>
       <.match_card bet={@bet_with_score} match={@match} status={:locked} />
+
+      <h2 class="text-2xl my-6">Ferdigspilt kamp, med tipp</h2>
+      <.match_card bet={@bet_with_score} match={@match} status={:complete} />
 
       <h2 class="text-2xl my-6">Fremtidig kamp uten lag</h2>
       <.match_card bet={@bet_without_score} match={@match_without_teams} status={:disabled} />
