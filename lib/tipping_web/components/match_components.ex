@@ -48,8 +48,8 @@ defmodule TippingWeb.MatchComponents do
     gradient_colors =
       case assigns.status do
         :locked -> "from-[#1b3a35] to-[#1a4740]"
+        :complete -> "from-[#1b3a35] to-[#1a4740]"
         :disabled -> "from-gray-500 to-gray-600"
-        :complete -> "from-gray-500 to-gray-600"
         :open -> "from-[#0099f7] to-[#093ca2]"
       end
 
