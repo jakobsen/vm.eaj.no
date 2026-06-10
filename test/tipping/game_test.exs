@@ -141,6 +141,10 @@ defmodule Tipping.GameTest do
   end
 
   describe "bet_score/2" do
+    test "No bet returns nil" do
+      assert Game.bet_points(nil, %Match{}) == nil
+    end
+
     test "An unfinished match is worth 0 points" do
       home_score = Enum.random(0..10)
       away_score = Enum.random(0..10)

@@ -77,7 +77,7 @@ defmodule TippingWeb.MatchComponents do
         <div class="relative border-[0.65px] border-white/50 rounded-[3.24px] p-3">
           <div class="grid grid-cols-3">
             <.team_display team={@match.home_team} />
-            <.bet_display bet={@bet} match={@match} status={@status} />
+            <.bet_display bet={@bet} match={@match} status={@status} points={@points} />
             <.team_display team={@match.away_team} />
           </div>
           <p class="absolute top-1.5 right-1.5 bg-dark-blue rounded-full text-sm font-light px-3 py-1 leading-none">
@@ -121,6 +121,7 @@ defmodule TippingWeb.MatchComponents do
   attr :bet, Game.Bet
   attr :match, WorldCup.Match, required: true
   attr :status, :atom, values: ~w(open locked disabled complete)a, required: true
+  attr :points, :integer, default: nil
 
   defp bet_display(assigns) do
     ~H"""
@@ -142,6 +143,9 @@ defmodule TippingWeb.MatchComponents do
         <p :if={@match.home_score}>
           Faktisk resultat<br />
           <span class="text-2xl tracking-[5%]">{@match.home_score}&ndash;{@match.away_score}</span>
+        </p>
+        <p :if={@points} class="font-semibold">
+          {@points} poeng
         </p>
       </div>
       <div :if={@status == :open} class="text-2xl flex">

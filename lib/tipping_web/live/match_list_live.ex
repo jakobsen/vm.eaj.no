@@ -33,6 +33,7 @@ defmodule TippingWeb.MatchListLive do
                 bet={entry.bet}
                 match={entry.match}
                 status={entry.status}
+                points={entry.points}
               />
             </div>
           <% end %>
@@ -78,7 +79,11 @@ defmodule TippingWeb.MatchListLive do
     now = DateTime.utc_now()
 
     WorldCup.list_matches_with_bets(user)
-    |> Enum.map(&Map.put(&1, :status, match_status(&1.match, now)))
+    |> Enum.map(fn entry ->
+      entry
+      |> Map.put(:status, match_status(entry.match, now))
+      |> Map.put(:points, Game.bet_points(entry.bet, entry.match))
+    end)
     |> Enum.map(fn entry ->
       update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
     end)

@@ -49,6 +49,8 @@ defmodule Tipping.Game do
     |> Enum.sort_by(&{-&1.points, &1.user.name})
   end
 
+  def bet_points(nil = _bet, %WorldCup.Match{}), do: nil
+
   def bet_points(%Game.Bet{} = bet, %WorldCup.Match{} = match) do
     cond do
       empty_scores?(match) -> 0
