@@ -34,8 +34,8 @@ defmodule TippingWeb.MatchComponents do
       |> assign(:month, month)
 
     ~H"""
-    <h2 class="mx-auto -skew-x-20 -rotate-15 text-2xl mb-15 p-3 w-max bg-[#1C46D1]">
-      {@day_of_week} <span class="font-extrabold">{@day_of_month}.</span> {@month}
+    <h2 class="mx-auto italic font-light -skew-x-15 -rotate-15 text-2xl mb-15 py-3 px-6 w-max bg-[#1C46D1]">
+      {@day_of_week} <span class="font-extrabold tracking-[5%]">{@day_of_month}.</span> {@month}
     </h2>
     """
   end
@@ -43,6 +43,7 @@ defmodule TippingWeb.MatchComponents do
   attr :bet, Game.Bet, default: nil
   attr :match, WorldCup.Match, required: true
   attr :status, :atom, values: ~w(disabled open locked complete)a, required: true
+  attr :points, :integer, default: nil
 
   def match_card(assigns) do
     gradient_colors =
@@ -126,14 +127,21 @@ defmodule TippingWeb.MatchComponents do
     <div class="justify-self-center">
       <div
         :if={@status in [:locked, :complete]}
-        class="text-xs flex flex-col justify-center text-center gap-2 font-light mb-2 h-full"
+        class="text-xs flex flex-col text-center justify-center gap-5 font-light mb-2 h-full"
       >
         <p>
-          Du tippet <span :if={@bet}><br />{@bet.home_score}&ndash;{@bet.away_score}</span>
+          Du tippet
+          <span :if={@bet}>
+            <br />
+            <span class="text-2xl tracking-[5%]">
+              {@bet.home_score}&ndash;{@bet.away_score}
+            </span>
+          </span>
           <span :if={!@bet}>ikke</span>
         </p>
         <p :if={@match.home_score}>
-          Faktisk resultat<br />{@match.home_score}&ndash;{@match.away_score}
+          Faktisk resultat<br />
+          <span class="text-2xl tracking-[5%]">{@match.home_score}&ndash;{@match.away_score}</span>
         </p>
       </div>
       <div :if={@status == :open} class="text-2xl flex">

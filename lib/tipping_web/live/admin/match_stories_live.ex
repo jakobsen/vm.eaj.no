@@ -58,6 +58,9 @@ defmodule TippingWeb.Admin.MatchStoriesLive do
       <h2 class="text-2xl my-6">Ferdigspilt kamp, med tipp</h2>
       <.match_card bet={@bet_with_score} match={@match_with_score} status={:complete} />
 
+      <h2 class="text-2xl my-6">Ferdigspilt kamp, uten tipp</h2>
+      <.match_card bet={nil} match={@match_with_score} status={:complete} />
+
       <h2 class="text-2xl my-6">Fremtidig kamp uten lag</h2>
       <.match_card bet={@bet_without_score} match={@match_without_teams} status={:disabled} />
     </main>
