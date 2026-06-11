@@ -27,7 +27,10 @@ defmodule Tipping.WorldCupTest do
 
   describe "list_matches_with_bets/1" do
     setup do
-      %{user: user_fixture(), match: Repo.one(from m in WorldCup.Match, limit: 1)}
+      %{
+        user: user_fixture(),
+        match: Repo.one(from m in WorldCup.Match, order_by: [desc: m.kickoff_at], limit: 1)
+      }
     end
 
     test "a user's bets are included", %{user: user, match: match} do
