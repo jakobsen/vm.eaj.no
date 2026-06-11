@@ -144,7 +144,7 @@ defmodule TippingWeb.MatchComponents do
           Faktisk resultat<br />
           <span class="text-2xl tracking-[5%]">{@match.home_score}&ndash;{@match.away_score}</span>
         </p>
-        <p :if={@points} class="font-semibold">
+        <p :if={@match.home_score && @match.away_score && @points} class="font-semibold">
           {@points} poeng
         </p>
       </div>
