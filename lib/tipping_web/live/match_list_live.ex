@@ -80,12 +80,9 @@ defmodule TippingWeb.MatchListLive do
 
     WorldCup.list_matches_with_bets(user)
     |> Enum.map(fn entry ->
-      entry
+      update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
       |> Map.put(:status, match_status(entry.match, now))
       |> Map.put(:points, Game.bet_points(entry.bet, entry.match))
-    end)
-    |> Enum.map(fn entry ->
-      update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
     end)
     |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
     |> Map.to_list()
