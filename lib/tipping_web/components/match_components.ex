@@ -44,6 +44,7 @@ defmodule TippingWeb.MatchComponents do
   attr :match, WorldCup.Match, required: true
   attr :status, :atom, values: ~w(disabled open locked complete)a, required: true
   attr :points, :integer, default: nil
+  attr :is_next_upcoming_match?, :boolean, default: false
 
   def match_card(assigns) do
     gradient_colors =
@@ -57,7 +58,7 @@ defmodule TippingWeb.MatchComponents do
     assigns = assign(assigns, :gradient_colors, gradient_colors)
 
     ~H"""
-    <div class="mb-15">
+    <div class="mb-15" id={@is_next_upcoming_match? && "next-upcoming-match"}>
       <p class="p-2.5 mb-2.5 bg-dark-blue text-center tracking-[3%] leading-none text-lg">
         {format_kickoff_time(@match.kickoff_at)}
       </p>

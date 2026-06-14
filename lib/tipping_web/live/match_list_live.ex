@@ -11,8 +11,9 @@ defmodule TippingWeb.MatchListLive do
 
   def mount(_params, _session, socket) do
     {:ok,
-     assign(socket,
-       matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user)
+     assign(
+       socket,
+       matches_with_bets_grouped_by_day(socket.assigns.user)
      )}
   end
 
@@ -22,6 +23,12 @@ defmodule TippingWeb.MatchListLive do
     <Layouts.app flash={@flash} current_page={:kamper}>
       <h1 class="text-center font-bold text-xl mb-3">Tipp i vei!</h1>
       <p class="text-center text-sm mb-8">Kampene låses 10 min før avspark.</p>
+      <a
+        href="#next-upcoming-match"
+        class="block w-max py-2 px-6 border rounded-full mx-auto mb-4 hover:bg-white/10 active:bg-black/10"
+      >
+        Til neste kamp
+      </a>
       <div class="relative pt-12">
         <div class="absolute top-0 bottom-0 left-1/2 w-px -translate-x-[0.5px] bg-white" />
         <div class="relative">
@@ -34,6 +41,7 @@ defmodule TippingWeb.MatchListLive do
                 match={entry.match}
                 status={entry.status}
                 points={entry.points}
+                is_next_upcoming_match?={entry.match.id == @next_upcoming_match_id}
               />
             </div>
           <% end %>
@@ -50,8 +58,9 @@ defmodule TippingWeb.MatchListLive do
     end
 
     {:noreply,
-     assign(socket,
-       matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user)
+     assign(
+       socket,
+       matches_with_bets_grouped_by_day(socket.assigns.user)
      )}
   end
 
@@ -69,8 +78,9 @@ defmodule TippingWeb.MatchListLive do
       end
 
       {:noreply,
-       assign(socket,
-         matches_by_day: matches_with_bets_grouped_by_day(socket.assigns.user)
+       assign(
+         socket,
+         matches_with_bets_grouped_by_day(socket.assigns.user)
        )}
     end
   end
@@ -78,15 +88,24 @@ defmodule TippingWeb.MatchListLive do
   def matches_with_bets_grouped_by_day(%Accounts.User{} = user) do
     now = DateTime.utc_now()
 
-    WorldCup.list_matches_with_bets(user)
-    |> Enum.map(fn entry ->
-      update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
-      |> Map.put(:status, match_status(entry.match, now))
-      |> Map.put(:points, Game.bet_points(entry.bet, entry.match))
-    end)
-    |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
-    |> Map.to_list()
-    |> Enum.sort_by(fn {date, _} -> date end, Date)
+    matches_with_bets = WorldCup.list_matches_with_bets(user)
+
+    next_upcoming_match_id =
+      Enum.find_value(matches_with_bets, &(&1.match.kickoff_at >= now && &1.match.id))
+
+    %{
+      matches_by_day:
+        matches_with_bets
+        |> Enum.map(fn entry ->
+          update_in(entry.match.kickoff_at, &DateTime.shift_zone!(&1, "Europe/Oslo"))
+          |> Map.put(:status, match_status(entry.match, now))
+          |> Map.put(:points, Game.bet_points(entry.bet, entry.match))
+        end)
+        |> Enum.group_by(&DateTime.to_date(&1.match.kickoff_at))
+        |> Map.to_list()
+        |> Enum.sort_by(fn {date, _} -> date end, Date),
+      next_upcoming_match_id: next_upcoming_match_id
+    }
   end
 
   def match_status(%WorldCup.Match{} = match, now \\ DateTime.utc_now()) do
