@@ -151,13 +151,11 @@ defmodule TippingWeb.MatchComponents do
       <div :if={@status == :open} class="text-2xl flex">
         <.bet_column
           score={get_in(@bet.home_score)}
-          actual_score={@match.home_score}
           side="home"
           status={@status}
         />
         <.bet_column
           score={get_in(@bet.away_score)}
-          actual_score={@match.away_score}
           side="away"
           status={@status}
         />
@@ -167,7 +165,6 @@ defmodule TippingWeb.MatchComponents do
   end
 
   attr :score, :integer, default: nil
-  attr :actual_score, :integer, default: nil
   attr :side, :string, values: ~w(home away), required: true
   attr :status, :atom
 
@@ -176,14 +173,6 @@ defmodule TippingWeb.MatchComponents do
     <div class="grid justify-items-center gap-2">
       <div class="h-10 w-[2.8rem] border text-center self-center last:border-l-0 text-lg font-semibold grid place-items-center">
         {@score || "–"}
-      </div>
-      <div
-        :if={@actual_score}
-        class="text-sm font-light size-5 grid place-items-center rounded-full bg-white text-black"
-      >
-        <span class="-translate-y-px">
-          {@actual_score}
-        </span>
       </div>
     </div>
     """
