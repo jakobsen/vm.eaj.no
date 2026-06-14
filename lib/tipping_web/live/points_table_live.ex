@@ -51,7 +51,7 @@ defmodule TippingWeb.PointsTableLive do
         </pre>
           <button
             class="mx-auto p-2 w-45 flex justify-center items-baseline gap-2 rounded border cursor-pointer hover:bg-white/10 action:bg-black/10"
-            id="copy-link"
+            id="copy-curl-link"
             data-clipboard-text={"curl #{url(~p"/api/leaderboard")} -H 'Authorization: Bearer #{@user.api_key}'"}
             phx-hook=".CopyLink"
           >
