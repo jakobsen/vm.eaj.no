@@ -16,6 +16,7 @@ defmodule Tipping.Application do
        repos: Application.fetch_env!(:tipping, :ecto_repos), skip: skip_migrations?()},
       {DNSCluster, query: Application.get_env(:tipping, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Tipping.PubSub},
+      {Oban, Application.fetch_env!(:tipping, Oban)},
       # Start a worker by calling: Tipping.Worker.start_link(arg)
       # {Tipping.Worker, arg},
       # Start to serve requests, typically the last entry

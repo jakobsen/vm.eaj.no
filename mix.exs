@@ -61,6 +61,7 @@ defmodule Tipping.MixProject do
       {:joken, "~> 2.6"},
       {:lazy_html, ">= 0.1.0", [only: :test]},
       {:live_debugger, "~> 1.0.0", only: :dev},
+      {:oban, "~> 2.23"},
       {:phoenix, "~> 1.8.7"},
       {:phoenix_ecto, "~> 4.5"},
       {:phoenix_html, "~> 4.1"},

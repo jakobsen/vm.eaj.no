@@ -26,6 +26,12 @@ config :tipping, TippingWeb.Endpoint,
   pubsub_server: Tipping.PubSub,
   live_view: [signing_salt: "ZIZ3hTw2"]
 
+# Oban
+config :tipping, Oban,
+  engine: Oban.Engines.Lite,
+  queues: [default: 10],
+  repo: Tipping.Repo
+
 # Configure the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
