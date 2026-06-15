@@ -314,7 +314,7 @@ defmodule Tipping.GameTest do
         user_fixture(%{organization: "another_org"})
       ]
 
-      scoreboard = Game.organization_scoreboard(user)
+      scoreboard = Game.organization_scoreboard(user.organization)
       assert length(scoreboard) == 4
       found_ids = scoreboard |> Enum.map(& &1.user.id) |> MapSet.new()
       expected_ids = [user.id | Enum.map(other_users_to_find, & &1.id)] |> MapSet.new()
@@ -322,7 +322,7 @@ defmodule Tipping.GameTest do
     end
 
     test "if a user has made no bets they have 0 points", %{user: user} do
-      assert [%{points: points}] = Game.organization_scoreboard(user)
+      assert [%{points: points}] = Game.organization_scoreboard(user.organization)
       assert points == 0
     end
 
@@ -346,7 +346,7 @@ defmodule Tipping.GameTest do
         DateTime.shift(second_match.kickoff_at, hour: -1)
       )
 
-      assert [%{points: 6}, %{points: 0}] = Game.organization_scoreboard(user)
+      assert [%{points: 6}, %{points: 0}] = Game.organization_scoreboard(user.organization)
     end
 
     test "users from aidn.no and deepinsight.io share a table" do
@@ -356,10 +356,14 @@ defmodule Tipping.GameTest do
       expected_set = MapSet.new([aidn_user.id, deepinsight_user.id])
 
       aidn_found_user_id_set =
-        Game.organization_scoreboard(aidn_user) |> Enum.map(& &1.user.id) |> MapSet.new()
+        Game.organization_scoreboard(aidn_user.organization)
+        |> Enum.map(& &1.user.id)
+        |> MapSet.new()
 
       deepinsight_found_user_id_set =
-        Game.organization_scoreboard(deepinsight_user) |> Enum.map(& &1.user.id) |> MapSet.new()
+        Game.organization_scoreboard(deepinsight_user.organization)
+        |> Enum.map(& &1.user.id)
+        |> MapSet.new()
 
       assert aidn_found_user_id_set == expected_set
       assert deepinsight_found_user_id_set == expected_set
@@ -382,7 +386,7 @@ defmodule Tipping.GameTest do
       user_b = user_fixture(%{organization: "alphabet", name: "b"})
       user_å = user_fixture(%{organization: "alphabet", name: "å"})
 
-      scoreboard_user_ids = Game.organization_scoreboard(user_f) |> Enum.map(& &1.user.id)
+      scoreboard_user_ids = Game.organization_scoreboard("alphabet") |> Enum.map(& &1.user.id)
 
       assert scoreboard_user_ids == [
                top_scoring_user.id,
@@ -414,7 +418,7 @@ defmodule Tipping.GameTest do
         DateTime.shift(second_match.kickoff_at, hour: -1)
       )
 
-      assert [%{position: 1}, %{position: 2}] = Game.organization_scoreboard(user)
+      assert [%{position: 1}, %{position: 2}] = Game.organization_scoreboard(user.organization)
     end
 
     test "users with the same amount of points share a position on the board" do
@@ -429,9 +433,9 @@ defmodule Tipping.GameTest do
       )
 
       _user_c = user_fixture(%{organization: "alphabet", name: "c"})
-      user_a = user_fixture(%{organization: "alphabet", name: "a"})
+      _user_a = user_fixture(%{organization: "alphabet", name: "a"})
 
-      scoreboard_positions = Game.organization_scoreboard(user_a) |> Enum.map(& &1.position)
+      scoreboard_positions = Game.organization_scoreboard("alphabet") |> Enum.map(& &1.position)
 
       assert scoreboard_positions == [
                1,

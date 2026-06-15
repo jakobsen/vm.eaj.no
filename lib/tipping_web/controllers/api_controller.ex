@@ -4,7 +4,7 @@ defmodule TippingWeb.ApiController do
 
   def leaderboard(conn, _params) do
     scores =
-      Game.organization_scoreboard(conn.assigns.user)
+      Game.organization_scoreboard(conn.assigns.user.organization)
       |> Enum.map(fn score ->
         %{user: %{name: score.user.name, id: encode_id(score.user.id)}, points: score.points}
       end)

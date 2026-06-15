@@ -9,7 +9,7 @@ defmodule TippingWeb.PointsTableLive do
   @impl true
   def mount(_params, _session, socket) do
     scores =
-      socket.assigns.user
+      socket.assigns.user.organization
       |> Game.organization_scoreboard()
       |> prepare_table(socket.assigns.user)
 

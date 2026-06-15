@@ -34,8 +34,8 @@ defmodule Tipping.Game do
     DateTime.diff(match.kickoff_at, now, :second) <= 600
   end
 
-  def organization_scoreboard(%Accounts.User{} = user) do
-    users = user |> users_in_org_query() |> Repo.all()
+  def organization_scoreboard(organization) when is_binary(organization) do
+    users = Repo.all(users_in_org_query(organization))
 
     matches =
       Repo.all(WorldCup.Match)
@@ -87,12 +87,12 @@ defmodule Tipping.Game do
       (bet.home_score > bet.away_score and match.home_score > match.away_score) or
         (bet.home_score < bet.away_score and match.home_score < match.away_score)
 
-  defp users_in_org_query(%Accounts.User{organization: organization})
+  defp users_in_org_query(organization)
        when organization in @kernel_orgs do
     from(u in Accounts.User, where: u.organization in @kernel_orgs, preload: [:bets])
   end
 
-  defp users_in_org_query(%Accounts.User{} = user) do
-    from(u in Accounts.User, where: u.organization == ^user.organization, preload: [:bets])
+  defp users_in_org_query(organization) do
+    from(u in Accounts.User, where: u.organization == ^organization, preload: [:bets])
   end
 end
