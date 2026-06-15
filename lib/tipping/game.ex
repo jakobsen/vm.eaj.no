@@ -41,12 +41,23 @@ defmodule Tipping.Game do
       Repo.all(WorldCup.Match)
       |> Map.new(&{&1.id, &1})
 
-    users
-    |> Enum.map(fn u ->
-      total_points = Enum.sum_by(u.bets, &bet_points(&1, Map.fetch!(matches, &1.match_id)))
-      %{user: u, points: total_points}
-    end)
-    |> Enum.sort_by(&{-&1.points, &1.user.name})
+    {points_table, _last_row} =
+      users
+      |> Enum.map(fn u ->
+        total_points = Enum.sum_by(u.bets, &bet_points(&1, Map.fetch!(matches, &1.match_id)))
+        %{user: u, points: total_points}
+      end)
+      |> Enum.sort_by(&{-&1.points, &1.user.name})
+      |> Enum.with_index(1)
+      |> Enum.map_reduce(%{points: :infinity}, fn {row, idx}, prev_row ->
+        position = if row.points == prev_row.points, do: prev_row.position, else: idx
+
+        updated_row = Map.put(row, :position, position)
+
+        {updated_row, updated_row}
+      end)
+
+    points_table
   end
 
   def bet_points(nil = _bet, %WorldCup.Match{}), do: nil

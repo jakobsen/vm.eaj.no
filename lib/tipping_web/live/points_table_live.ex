@@ -91,24 +91,14 @@ defmodule TippingWeb.PointsTableLive do
   def prepare_table([]), do: []
 
   def prepare_table(scores, %Accounts.User{} = current_user) do
-    {updated_scores, _acc} =
-      scores
-      |> Enum.with_index(1)
-      |> Enum.map_reduce(%{points: :infinity}, fn {row, idx}, prev_row ->
-        position = if row.points == prev_row.points, do: prev_row.position, else: idx
-        background = if row.user.id == current_user.id, do: "bg-white/10", else: "bg-[#27308366]"
+    Enum.map(scores, fn row ->
+      background = if row.user.id == current_user.id, do: "bg-white/10", else: "bg-[#27308366]"
 
-        updated_row =
-          row
-          |> Map.put(:position, position)
-          |> Map.put(:name, row.user.name)
-          |> Map.put(:background, background)
-          |> Map.delete(:user)
-
-        {updated_row, updated_row}
-      end)
-
-    updated_scores
+      row
+      |> Map.put(:name, row.user.name)
+      |> Map.put(:background, background)
+      |> Map.delete(:user)
+    end)
   end
 
   defp munge_organization_name(organization) do

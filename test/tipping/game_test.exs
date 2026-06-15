@@ -364,34 +364,80 @@ defmodule Tipping.GameTest do
       assert aidn_found_user_id_set == expected_set
       assert deepinsight_found_user_id_set == expected_set
     end
-  end
 
-  test "users with the same amount of points are listed alphabetically" do
-    top_scoring_user = user_fixture(%{organization: "alphabet", name: "z"})
-    match = match_fixture(%{home_score: 0, away_score: 0})
+    test "users with the same amount of points are listed alphabetically" do
+      top_scoring_user = user_fixture(%{organization: "alphabet", name: "z"})
+      match = match_fixture(%{home_score: 0, away_score: 0})
 
-    Game.place_bet(
-      top_scoring_user,
-      match,
-      %{home_score: 1, away_score: 1},
-      DateTime.shift(match.kickoff_at, hour: -1)
-    )
+      Game.place_bet(
+        top_scoring_user,
+        match,
+        %{home_score: 1, away_score: 1},
+        DateTime.shift(match.kickoff_at, hour: -1)
+      )
 
-    user_c = user_fixture(%{organization: "alphabet", name: "c"})
-    user_a = user_fixture(%{organization: "alphabet", name: "a"})
-    user_f = user_fixture(%{organization: "alphabet", name: "f"})
-    user_b = user_fixture(%{organization: "alphabet", name: "b"})
-    user_å = user_fixture(%{organization: "alphabet", name: "å"})
+      user_c = user_fixture(%{organization: "alphabet", name: "c"})
+      user_a = user_fixture(%{organization: "alphabet", name: "a"})
+      user_f = user_fixture(%{organization: "alphabet", name: "f"})
+      user_b = user_fixture(%{organization: "alphabet", name: "b"})
+      user_å = user_fixture(%{organization: "alphabet", name: "å"})
 
-    scoreboard_user_ids = Game.organization_scoreboard(user_f) |> Enum.map(& &1.user.id)
+      scoreboard_user_ids = Game.organization_scoreboard(user_f) |> Enum.map(& &1.user.id)
 
-    assert scoreboard_user_ids == [
-             top_scoring_user.id,
-             user_a.id,
-             user_b.id,
-             user_c.id,
-             user_f.id,
-             user_å.id
-           ]
+      assert scoreboard_user_ids == [
+               top_scoring_user.id,
+               user_a.id,
+               user_b.id,
+               user_c.id,
+               user_f.id,
+               user_å.id
+             ]
+    end
+
+    test "the scoreboard includes the position on the board",
+         %{user: user} do
+      first_match = match_fixture(%{home_score: 2, away_score: 1})
+      second_match = match_fixture(%{home_score: 1, away_score: 1})
+      _another_user = user_fixture(%{organization: user.organization})
+
+      Game.place_bet(
+        user,
+        first_match,
+        %{home_score: 2, away_score: 1},
+        DateTime.shift(first_match.kickoff_at, hour: -1)
+      )
+
+      Game.place_bet(
+        user,
+        second_match,
+        %{home_score: 1, away_score: 1},
+        DateTime.shift(second_match.kickoff_at, hour: -1)
+      )
+
+      assert [%{position: 1}, %{position: 2}] = Game.organization_scoreboard(user)
+    end
+
+    test "users with the same amount of points share a position on the board" do
+      top_scoring_user = user_fixture(%{organization: "alphabet", name: "z"})
+      match = match_fixture(%{home_score: 0, away_score: 0})
+
+      Game.place_bet(
+        top_scoring_user,
+        match,
+        %{home_score: 1, away_score: 1},
+        DateTime.shift(match.kickoff_at, hour: -1)
+      )
+
+      _user_c = user_fixture(%{organization: "alphabet", name: "c"})
+      user_a = user_fixture(%{organization: "alphabet", name: "a"})
+
+      scoreboard_positions = Game.organization_scoreboard(user_a) |> Enum.map(& &1.position)
+
+      assert scoreboard_positions == [
+               1,
+               2,
+               2
+             ]
+    end
   end
 end

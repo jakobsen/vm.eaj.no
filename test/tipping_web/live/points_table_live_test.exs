@@ -10,32 +10,6 @@ defmodule TippingWeb.PointsTableLiveTest do
       %{user: user_fixture()}
     end
 
-    test "adds a position attribute in ascending order to a list of descending points", %{
-      user: user
-    } do
-      assert [%{position: 1}, %{position: 2}, %{position: 3}] =
-               PointsTableLive.prepare_table(
-                 [
-                   %{points: 3, user: user},
-                   %{points: 2, user: user},
-                   %{points: 1, user: user}
-                 ],
-                 user
-               )
-    end
-
-    test "handles ties", %{user: user} do
-      assert [%{position: 1}, %{position: 1}, %{position: 3}] =
-               PointsTableLive.prepare_table(
-                 [
-                   %{points: 3, user: user},
-                   %{points: 3, user: user},
-                   %{points: 1, user: user}
-                 ],
-                 user
-               )
-    end
-
     test "preserves points", %{user: user} do
       assert [%{points: 3}, %{points: 3}, %{points: 1}] =
                PointsTableLive.prepare_table(
