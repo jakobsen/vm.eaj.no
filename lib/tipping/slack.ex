@@ -1,4 +1,8 @@
 defmodule Tipping.Slack do
+  @moduledoc """
+  Functions for interacting with Slack.
+  """
+
   @greetings [
     "¡Buenos días!",
     "Goeiemôre!",
@@ -23,6 +27,13 @@ defmodule Tipping.Slack do
     "God morgen!",
     "Xayrli tong!"
   ]
+
+  def send_message(message, channel, token) do
+    Req.post("https://slack.com/api/chat.postMessage",
+      json: Map.put(message, :channel, channel),
+      headers: %{Authorization: "Bearer #{token}"}
+    )
+  end
 
   def format_message(greeting, standings) do
     %{
