@@ -30,7 +30,14 @@ config :tipping, TippingWeb.Endpoint,
 config :tipping, Oban,
   engine: Oban.Engines.Lite,
   queues: [default: 10],
-  repo: Tipping.Repo
+  repo: Tipping.Repo,
+  plugins: [
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"30 8 * * *", Tipping.Workers.SlackWorker}
+     ],
+     timezone: "Europe/Oslo"}
+  ]
 
 # Configure the mailer
 #
