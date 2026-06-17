@@ -10,7 +10,7 @@ defmodule Tipping.Workers.SlackWorker do
 
   @impl true
   def perform(_job) do
-    standings = get_scoreboard("aidn.no")
+    standings = get_standings()
     channel = get_channel!()
     token = get_token!()
 
@@ -19,9 +19,21 @@ defmodule Tipping.Workers.SlackWorker do
     |> Slack.send_message(channel, token)
   end
 
-  defp get_scoreboard(organization) do
-    Game.organization_scoreboard(organization)
-    |> Enum.map(&Map.put(&1, :name, &1.user.name))
+  def get_standings(now \\ DateTime.utc_now()) do
+    yesterday = DateTime.add(now, -1, :day)
+
+    yesterdays_standings =
+      Game.organization_scoreboard("aidn.no", include_matches_until: yesterday)
+      |> Enum.map(&{&1.user.id, &1})
+      |> Map.new()
+
+    Game.organization_scoreboard("aidn.no", include_matches_until: now)
+    |> Enum.map(fn row ->
+      row
+      |> Map.put(:previous_position, yesterdays_standings[row.user.id][:position])
+      |> Map.put(:previous_points, yesterdays_standings[row.user.id][:points])
+      |> Map.put(:name, row.user.name)
+    end)
   end
 
   defp get_channel!() do

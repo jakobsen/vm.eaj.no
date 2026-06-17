@@ -39,7 +39,8 @@ defmodule Tipping.Game do
 
   ## Options
     * `:include_matches_until` (DateTime). Only include matches with kickoff before
-      the given DateTime. Defaults to DateTime.utc_now().
+      the given DateTime. Defaults to DateTime.utc_now(). Users that didn't exist at
+      that point will appear at the bottom with 0 points.
   """
   def organization_scoreboard(organization, opts \\ []) when is_binary(organization) do
     include_matches_until = Keyword.get(opts, :include_matches_until, DateTime.utc_now())

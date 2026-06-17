@@ -81,7 +81,7 @@ defmodule Tipping.Slack do
           %{
             type: "raw_number",
             value: row.position,
-            text: Integer.to_string(row.position)
+            text: format_position(row)
           },
           %{
             type: "raw_text",
@@ -90,7 +90,7 @@ defmodule Tipping.Slack do
           %{
             type: "raw_number",
             value: row.points,
-            text: Integer.to_string(row.points)
+            text: format_points(row)
           }
         ]
       end)
@@ -101,5 +101,17 @@ defmodule Tipping.Slack do
       page_size: 10,
       rows: [header | rows]
     }
+  end
+
+  defp format_position(%{position: position, previous_position: previous_position}) do
+    cond do
+      position > previous_position -> "#{position} (▿#{position - previous_position})"
+      previous_position > position -> "#{position} (▵#{previous_position - position})"
+      true -> "#{position} (–)"
+    end
+  end
+
+  defp format_points(%{points: points, previous_points: previous_points}) do
+    "#{points} (+#{points - previous_points})"
   end
 end
