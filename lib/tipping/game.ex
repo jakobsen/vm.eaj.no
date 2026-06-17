@@ -35,11 +35,13 @@ defmodule Tipping.Game do
   end
 
   def organization_scoreboard(organization) when is_binary(organization) do
-    users = Repo.all(users_in_org_query(organization))
-
     matches =
-      Repo.all(WorldCup.Match)
+      Repo.all(
+        from m in WorldCup.Match, where: not is_nil(m.home_score) and not is_nil(m.away_score)
+      )
       |> Map.new(&{&1.id, &1})
+
+    users = users_in_org_query(organization, Map.keys(matches)) |> Repo.all()
 
     {points_table, _last_row} =
       users
@@ -87,12 +89,22 @@ defmodule Tipping.Game do
       (bet.home_score > bet.away_score and match.home_score > match.away_score) or
         (bet.home_score < bet.away_score and match.home_score < match.away_score)
 
-  defp users_in_org_query(organization)
+  defp users_in_org_query(organization, bet_match_ids)
        when organization in @kernel_orgs do
-    from(u in Accounts.User, where: u.organization in @kernel_orgs, preload: [:bets])
+    bets_query = from(b in Game.Bet, where: b.match_id in ^bet_match_ids)
+
+    from(u in Accounts.User,
+      where: u.organization in @kernel_orgs,
+      preload: [bets: ^bets_query]
+    )
   end
 
-  defp users_in_org_query(organization) do
-    from(u in Accounts.User, where: u.organization == ^organization, preload: [:bets])
+  defp users_in_org_query(organization, bet_match_ids) do
+    bets_query = from(b in Game.Bet, where: b.match_id in ^bet_match_ids)
+
+    from(u in Accounts.User,
+      where: u.organization == ^organization,
+      preload: [bets: ^bets_query]
+    )
   end
 end

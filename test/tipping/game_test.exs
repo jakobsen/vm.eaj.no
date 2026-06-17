@@ -326,6 +326,29 @@ defmodule Tipping.GameTest do
       assert points == 0
     end
 
+    test "if a user has only made bets on matches that haven't finished, they have 0 points", %{
+      user: user
+    } do
+      first_match = match_fixture()
+      second_match = match_fixture()
+
+      Game.place_bet(
+        user,
+        first_match,
+        %{home_score: 2, away_score: 1},
+        DateTime.shift(first_match.kickoff_at, hour: -1)
+      )
+
+      Game.place_bet(
+        user,
+        second_match,
+        %{home_score: 1, away_score: 1},
+        DateTime.shift(second_match.kickoff_at, hour: -1)
+      )
+
+      assert [%{points: 0}] = Game.organization_scoreboard(user.organization)
+    end
+
     test "if a user has two spot-on bets, they have six points and rank above a user with no bets",
          %{user: user} do
       first_match = match_fixture(%{home_score: 2, away_score: 1})
