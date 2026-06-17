@@ -466,5 +466,32 @@ defmodule Tipping.GameTest do
                2
              ]
     end
+
+    test ":include_matches_until ignores matches after the given datetime", %{user: user} do
+      match_to_include =
+        match_fixture(%{home_score: 1, away_score: 1, kickoff_at: ~U[2026-07-01 12:00:00Z]})
+
+      match_to_ignore =
+        match_fixture(%{home_score: 1, away_score: 1, kickoff_at: ~U[2026-07-02 12:00:00Z]})
+
+      Game.place_bet(
+        user,
+        match_to_include,
+        %{home_score: 1, away_score: 1},
+        ~U[2026-06-30 12:00:00Z]
+      )
+
+      Game.place_bet(
+        user,
+        match_to_ignore,
+        %{home_score: 1, away_score: 1},
+        ~U[2026-06-30 12:00:00Z]
+      )
+
+      assert [%{points: 3}] =
+               Game.organization_scoreboard(user.organization,
+                 include_matches_until: ~U[2026-07-01 13:00:00Z]
+               )
+    end
   end
 end

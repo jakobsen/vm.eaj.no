@@ -34,10 +34,23 @@ defmodule Tipping.Game do
     DateTime.diff(match.kickoff_at, now, :second) <= 600
   end
 
-  def organization_scoreboard(organization) when is_binary(organization) do
+  @doc """
+  Get the scoreboard for an organization.
+
+  ## Options
+    * `:include_matches_until` (DateTime). Only include matches with kickoff before
+      the given DateTime. Defaults to DateTime.utc_now().
+  """
+  def organization_scoreboard(organization, opts \\ []) when is_binary(organization) do
+    include_matches_until = Keyword.get(opts, :include_matches_until, DateTime.utc_now())
+
     matches =
       Repo.all(
-        from m in WorldCup.Match, where: not is_nil(m.home_score) and not is_nil(m.away_score)
+        from m in WorldCup.Match,
+          where:
+            m.kickoff_at <= ^include_matches_until and
+              not is_nil(m.home_score) and
+              not is_nil(m.away_score)
       )
       |> Map.new(&{&1.id, &1})
 
