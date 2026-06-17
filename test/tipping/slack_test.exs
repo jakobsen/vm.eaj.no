@@ -14,13 +14,12 @@ defmodule Tipping.SlackTest do
       assert result == %{
                blocks: [
                  %{
-                   type: "header",
+                   type: "section",
                    text: %{
                      type: "plain_text",
                      text: "God morgen!",
                      emoji: true
-                   },
-                   level: 1
+                   }
                  },
                  %{
                    type: "data_table",

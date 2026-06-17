@@ -50,13 +50,12 @@ defmodule Tipping.Slack do
 
   defp header(greeting) do
     %{
-      type: "header",
+      type: "section",
       text: %{
         type: "plain_text",
         text: greeting,
         emoji: true
-      },
-      level: 1
+      }
     }
   end
 
