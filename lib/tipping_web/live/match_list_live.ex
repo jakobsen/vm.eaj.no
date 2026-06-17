@@ -91,7 +91,10 @@ defmodule TippingWeb.MatchListLive do
     matches_with_bets = WorldCup.list_matches_with_bets(user)
 
     next_upcoming_match_id =
-      Enum.find_value(matches_with_bets, &(&1.match.kickoff_at >= now && &1.match.id))
+      Enum.find_value(
+        matches_with_bets,
+        &(DateTime.after?(&1.match.kickoff_at, now) && &1.match.id)
+      )
 
     %{
       matches_by_day:
