@@ -29,6 +29,6 @@ defmodule TippingWeb.Admin.MatchesLive do
   end
 
   defp format_kickoff(%{kickoff_at: kickoff}) do
-    Calendar.strftime(kickoff, "%-d.%-m. %H.%M")
+    kickoff |> DateTime.shift_zone!("Europe/Oslo") |> Calendar.strftime("%-d.%-m. %H.%M")
   end
 end
