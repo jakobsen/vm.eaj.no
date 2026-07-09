@@ -35,7 +35,7 @@ config :tipping, Oban,
     {Oban.Plugins.Cron,
      crontab: [
        # weekdays
-       # {"30 8 * * 1-5", Tipping.Workers.SlackWorker},
+       {"30 8 * * 1-5", Tipping.Workers.SlackWorker},
        # weekend
        {"0 10 * * 6,0", Tipping.Workers.SlackWorker}
      ],
