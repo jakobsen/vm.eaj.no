@@ -31,6 +31,10 @@ defmodule Tipping.WorldCup do
     )
   end
 
+  def count_matches_in_timespan(%DateTime{} = from, %DateTime{} = to) do
+    Repo.count(from m in WorldCup.Match, where: m.kickoff_at >= ^from and m.kickoff_at <= ^to)
+  end
+
   def list_teams(), do: Repo.all(from t in WorldCup.Team, order_by: t.name)
 
   def update_match(%Accounts.User{admin?: true}, %WorldCup.Match{} = match, attrs) do

@@ -3,6 +3,7 @@ defmodule Tipping.WorldCupTest do
 
   import Ecto.Query
   import Tipping.AccountsFixtures
+  import Tipping.WorldCupFixtures
 
   alias Tipping.Game
   alias Tipping.WorldCup
@@ -55,6 +56,25 @@ defmodule Tipping.WorldCupTest do
     test "If no bets are made, the bet lists as nil", %{user: user} do
       matches_with_bets = WorldCup.list_matches_with_bets(user)
       assert Enum.all?(matches_with_bets, &is_nil(&1.bet))
+    end
+  end
+
+  describe "count_matches_in_timespan/2" do
+    test "returns 0 when no matches occur in given timespan" do
+      assert WorldCup.count_matches_in_timespan(
+               ~U[1800-01-01 12:00:00Z],
+               ~U[1801-01-01 12:00:00Z]
+             ) == 0
+    end
+
+    test "counts only matches in given timespan" do
+      _match_to_find = match_fixture(kickoff_at: ~U[1800-01-01 12:00:00Z])
+      _match_to_ignore = match_fixture(kickoff_at: ~U[1801-01-01 12:00:00Z])
+
+      assert WorldCup.count_matches_in_timespan(
+               ~U[1800-01-01 11:00:00Z],
+               ~U[1800-01-01 13:00:00Z]
+             ) == 1
     end
   end
 

@@ -7,10 +7,23 @@ defmodule Tipping.Workers.SlackWorker do
 
   alias Tipping.Game
   alias Tipping.Slack
+  alias Tipping.WorldCup
 
   @impl true
   def perform(_job) do
-    standings = get_standings()
+    now = DateTime.utc_now()
+    yesterday = DateTime.add(now, -1, :day)
+    send_latest_standings? = WorldCup.count_matches_in_timespan(yesterday, now) > 0
+
+    if send_latest_standings? do
+      send_message(now)
+    else
+      {:cancel, "No relevant matches"}
+    end
+  end
+
+  def send_message(now \\ DateTime.utc_now()) do
+    standings = get_standings(now)
     channel = get_channel!()
     token = get_token!()
 
