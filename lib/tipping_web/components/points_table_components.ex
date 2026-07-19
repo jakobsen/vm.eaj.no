@@ -10,7 +10,7 @@ defmodule TippingWeb.PointsTableComponents do
 
   def scoreboard(assigns) do
     ~H"""
-    <p class="mb-3">Stillingen i {@organization} så langt.</p>
+    <p class="mb-3">Endelig stilling i {@organization}.</p>
     <ol class="grid gap-0.5">
       <li
         :for={row <- @scores}

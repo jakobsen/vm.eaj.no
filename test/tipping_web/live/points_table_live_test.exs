@@ -74,13 +74,13 @@ defmodule TippingWeb.PointsTableLiveTest do
     test "aidn.no users organization heading says Kernel", %{conn: conn} do
       user = user_fixture(organization: "aidn.no")
       conn = conn |> init_test_session(%{user_id: user.id}) |> get(~p"/tabell")
-      assert html_response(conn, 200) =~ "Stillingen i Kernel så langt"
+      assert html_response(conn, 200) =~ "Endelig stilling i Kernel."
     end
 
     test "deepinsight.io users organization heading says Kernel", %{conn: conn} do
       user = user_fixture(organization: "deepinsight.io")
       conn = conn |> init_test_session(%{user_id: user.id}) |> get(~p"/tabell")
-      assert html_response(conn, 200) =~ "Stillingen i Kernel så langt"
+      assert html_response(conn, 200) =~ "Endelig stilling i Kernel."
     end
 
     test "users in an unknown organization's heading says the domain name unchanged", %{
@@ -93,7 +93,7 @@ defmodule TippingWeb.PointsTableLiveTest do
 
       user = user_fixture(organization: org_name)
       conn = conn |> init_test_session(%{user_id: user.id}) |> get(~p"/tabell")
-      assert html_response(conn, 200) =~ "Stillingen i #{org_name} så langt"
+      assert html_response(conn, 200) =~ "Endelig stilling i #{org_name}."
     end
   end
 end

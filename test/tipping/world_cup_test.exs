@@ -28,9 +28,11 @@ defmodule Tipping.WorldCupTest do
 
   describe "list_matches_with_bets/1" do
     setup do
+      tomorrow = DateTime.utc_now() |> DateTime.add(1, :day) |> DateTime.truncate(:second)
+
       %{
         user: user_fixture(),
-        match: Repo.one(from m in WorldCup.Match, order_by: [desc: m.kickoff_at], limit: 1)
+        match: match_fixture(kickoff_at: tomorrow)
       }
     end
 

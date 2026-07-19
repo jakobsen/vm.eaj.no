@@ -42,7 +42,7 @@ defmodule Tipping.SlackTest do
                  },
                  %{
                    type: "data_table",
-                   caption: "Aidn standings",
+                   caption: "Final Aidn standings",
                    page_size: 10,
                    rows: [
                      [
