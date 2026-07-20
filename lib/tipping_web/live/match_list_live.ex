@@ -24,6 +24,7 @@ defmodule TippingWeb.MatchListLive do
       <h1 class="text-center font-bold text-xl mb-3">Tipp i vei!</h1>
       <p class="text-center text-sm mb-8">Kampene låses 10 min før avspark.</p>
       <a
+        :if={@next_upcoming_match_id}
         href="#next-upcoming-match"
         class="block w-max py-2 px-6 border rounded-full mx-auto mb-4 hover:bg-white/10 active:bg-black/10"
       >
