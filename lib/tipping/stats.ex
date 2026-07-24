@@ -15,17 +15,26 @@ defmodule Tipping.Stats do
       points = Enum.map(user.bets, fn bet -> Game.bet_points(bet, bet.match) end)
       number_of_bets = length(points)
       total_points = Enum.sum(points)
+      three_pointers = Enum.count(points, &(&1 == 3))
+      two_pointers = Enum.count(points, &(&1 == 2))
+      one_pointers = Enum.count(points, &(&1 == 1))
+      misses = Enum.count(points, &(&1 == 0))
 
       %{
         name: user.name,
+        number_of_bets: number_of_bets,
         total_points: total_points,
         best_streak: best_streak(points),
         worst_streak: worst_streak(points),
         average_score: total_points / number_of_bets,
-        three_pointers: Enum.count(points, &(&1 == 3)),
-        two_pointers: Enum.count(points, &(&1 == 2)),
-        one_pointers: Enum.count(points, &(&1 == 1)),
-        misses: Enum.count(points, &(&1 == 0))
+        three_pointers: three_pointers,
+        three_point_fraction: three_pointers / number_of_bets,
+        two_pointers: two_pointers,
+        two_pointers_fraction: two_pointers / number_of_bets,
+        one_pointers: one_pointers,
+        one_pointers_fraction: one_pointers / number_of_bets,
+        misses: misses,
+        misses_fraction: misses / number_of_bets
       }
     end)
   end
