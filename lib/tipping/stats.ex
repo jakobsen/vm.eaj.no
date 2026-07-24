@@ -1,4 +1,8 @@
 defmodule Tipping.Stats do
+  @moduledoc """
+  Functions for calculating score statistics for users and organizations.
+  """
+
   alias Tipping.Accounts
   alias Tipping.Game
   alias Tipping.Repo
