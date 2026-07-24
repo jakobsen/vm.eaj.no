@@ -6,6 +6,8 @@ defmodule Tipping.Accounts do
   alias Tipping.Accounts.User
   alias Tipping.Repo
 
+  import Ecto.Query
+
   def get_user_by_id(nil), do: nil
   def get_user_by_id(id), do: Repo.get(User, id)
 
@@ -28,6 +30,10 @@ defmodule Tipping.Accounts do
         |> User.changeset(attrs)
         |> Repo.update()
     end
+  end
+
+  def list_users_in_organization(organization) do
+    Repo.all(from u in User, where: u.organization == ^organization)
   end
 
   def make_admin(%User{} = user) do
