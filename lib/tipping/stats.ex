@@ -10,6 +10,7 @@ defmodule Tipping.Stats do
   def for_organization(organization) do
     Accounts.list_users_in_organization(organization)
     |> Repo.preload(bets: [:match])
+    |> Enum.reject(fn user -> user.bets == [] end)
     |> Enum.map(fn user ->
       points = Enum.map(user.bets, fn bet -> Game.bet_points(bet, bet.match) end)
       number_of_bets = length(points)
